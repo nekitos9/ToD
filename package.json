@@ -7,12 +7,18 @@
     "node": ">=24.19.0 <25"
   },
   "scripts": {
+    "import:data": "node scripts/import-game-data.ts",
+    "predev": "npm run import:data",
     "dev": "vite",
+    "prebuild": "npm run import:data",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "pretest": "npm run import:data",
     "test": "vitest run",
+    "test:importer": "vitest run scripts/xlsx/importer.test.ts",
     "test:watch": "vitest",
+    "pretypecheck": "npm run import:data",
     "typecheck": "tsc -b --pretty false"
   },
   "dependencies": {
@@ -23,12 +29,14 @@
     "@eslint/js": "10.0.1",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.2.0",
+    "@types/node": "24.13.3",
     "@types/react": "19.0.8",
     "@types/react-dom": "19.0.3",
     "@vitejs/plugin-react": "6.1.0",
     "eslint": "10.9.1",
     "eslint-plugin-react-hooks": "7.1.1",
     "eslint-plugin-react-refresh": "0.5.4",
+    "exceljs": "4.4.0",
     "globals": "17.11.0",
     "jsdom": "30.0.1",
     "typescript": "5.9.3",

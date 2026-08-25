@@ -10,5 +10,13 @@ describe('App', () => {
       screen.getByRole('heading', { name: 'Правда или Действие' }),
     ).toBeInTheDocument()
   })
-})
 
+  it('shows the imported workbook summary', () => {
+    render(<App />)
+
+    expect(screen.getByText('103')).toBeInTheDocument()
+    expect(screen.getByText('8')).toBeInTheDocument()
+    expect(screen.getByText('3')).toBeInTheDocument()
+    expect(screen.getByText('2')).toBeInTheDocument()
+  })
+})
