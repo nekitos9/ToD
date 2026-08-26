@@ -5,11 +5,13 @@ import {
   advanceTurn,
   canChooseType,
   completePackCard,
+  completeTableTurn,
   createGame,
   drawCard,
   getCurrentPlayer,
   isCardPlayableForTurn,
   recordTypeChoice,
+  type ActiveGameState,
 } from './game-state'
 import { shuffle, type RandomSource } from './random'
 
@@ -51,12 +53,21 @@ describe('active game state', () => {
   })
 
   it('allows at most two Truth choices per player and resets the count after Dare', () => {
-    let game = createGame(setup(), data)
-    game = recordTypeChoice(recordTypeChoice(game, 'truth'), 'truth')
+    let game: ActiveGameState = { ...createGame(setup(), data), mode: 'manual' }
+    game = completeTableTurn(game, 'truth')
+    game = completeTableTurn(game, 'dare')
+    game = completeTableTurn(game, 'dare')
+    game = completeTableTurn(game, 'truth')
+    game = completeTableTurn(game, 'dare')
+    game = completeTableTurn(game, 'dare')
     expect(getCurrentPlayer(game).truthCount).toBe(2)
     expect(canChooseType(game, 'truth')).toBe(false)
-    expect(() => recordTypeChoice(game, 'truth')).toThrow('третью Правду')
-    game = recordTypeChoice(game, 'dare')
+    const beforeThirdTruth = game
+    expect(() => completeTableTurn(game, 'truth')).toThrow('третью Правду')
+    expect(game).toBe(beforeThirdTruth)
+    game = completeTableTurn(game, 'dare')
+    game = completeTableTurn(game, 'dare')
+    game = completeTableTurn(game, 'dare')
     expect(getCurrentPlayer(game).truthCount).toBe(0)
     expect(canChooseType(game, 'truth')).toBe(true)
   })
@@ -72,16 +83,60 @@ describe('active game state', () => {
 
   it('draws by type without losing skipped cards and never repeats used cards', () => {
     const game = { ...createGame(setup(), data), queue: ['dare-low', 'truth-low', 'truth-high', 'dare-single'] }
-    const first = drawCard(game, 'truth', data)
+    const first = drawCard(recordTypeChoice(game, 'truth'), 'truth', data)
     expect(first.card?.id).toBe('truth-low')
     expect(first.state.queue).toContain('dare-low')
     expect(first.state.usedCardIds).toEqual([])
     const completed = completePackCard(first.state)
     expect(completed.usedCardIds).toEqual(['truth-low'])
-    const second = drawCard(completed, 'truth', data)
+    const second = drawCard(recordTypeChoice(completed, 'truth'), 'truth', data)
     expect(second.card?.id).toBe('truth-high')
     expect(second.state.usedCardIds).toEqual(['truth-low'])
     expect(second.state.queue).not.toContain('truth-low')
+  })
+
+  it('changes Truth count exactly once across the full public card lifecycle', () => {
+    const chosen = recordTypeChoice(createGame(setup(), data), 'truth')
+    expect(chosen.players[0].truthCount).toBe(1)
+    const drawn = drawCard(chosen, 'truth', data).state
+    const completed = completePackCard(drawn)
+    expect(completed.players[0].truthCount).toBe(1)
+    expect(completed.players[0].answeredTruths).toBe(1)
+  })
+
+  it('rejects turn advance and a second draw while a card is active', () => {
+    const drawn = drawCard(recordTypeChoice(createGame(setup(), data), 'truth'), 'truth', data).state
+    const playerId = getCurrentPlayer(drawn).id
+    const turn = drawn.currentTurn
+    expect(() => advanceTurn(drawn)).toThrow('активной карточке')
+    expect(getCurrentPlayer(drawn).id).toBe(playerId)
+    expect(drawn.currentTurn).toBe(turn)
+    const repeated = drawCard(drawn, 'truth', data)
+    expect(repeated.card).toBeNull()
+    expect(repeated.state).toBe(drawn)
+  })
+
+  it('preserves the order of cards skipped while searching by type', () => {
+    const game = {
+      ...createGame(setup(), data),
+      queue: ['dare-low', 'dare-single', 'truth-low', 'truth-high'],
+    }
+    const drawn = drawCard(recordTypeChoice(game, 'truth'), 'truth', data)
+    expect(drawn.card?.id).toBe('truth-low')
+    expect(drawn.state.queue).toEqual(['truth-high', 'dare-low', 'dare-single'])
+  })
+
+  it('never redraws a used id even if it reappears in the queue', () => {
+    const chosen = recordTypeChoice(createGame(setup(), data), 'truth')
+    const completed = completePackCard(drawCard(chosen, 'truth', data).state)
+    const usedId = completed.usedCardIds[0]
+    const corrupted = { ...completed, queue: [usedId] }
+    const result = drawCard(recordTypeChoice(corrupted, 'truth'), 'truth', data)
+    expect(result.card).toBeNull()
+  })
+
+  it('rejects setup with fewer than two players', () => {
+    expect(() => createGame({ ...setup(), players: setup().players.slice(0, 1) }, data)).toThrow('минимум два')
   })
 
   it('filters the actor and additional participants by boundary and relationship', () => {
@@ -104,15 +159,20 @@ describe('active game state', () => {
   it('does not consume the queue when no compatible card exists', () => {
     const game = { ...createGame(setup(), data), queue: ['truth-high'] }
     const state = { ...game, players: game.players.map((player) => ({ ...player, boundary: 'virgin' as const })) }
-    const result = drawCard(state, 'truth', data)
+    const chosen = recordTypeChoice(state, 'truth')
+    const result = drawCard(chosen, 'truth', data)
     expect(result.card).toBeNull()
-    expect(result.state).toBe(state)
+    expect(result.state).toBe(chosen)
   })
 })
 
 describe('random source', () => {
   it('makes Fisher-Yates shuffling reproducible', () => {
     expect(shuffle([1, 2, 3, 4], sequenceRandom([0.5, 0.25, 0.75]))).toEqual([4, 2, 1, 3])
+  })
+
+  it.each([1, -0.01, Number.NaN])('rejects an out-of-range value: %s', (value) => {
+    expect(() => shuffle([1, 2], { next: () => value })).toThrow('диапазона [0, 1)')
   })
 })
 

@@ -33,6 +33,7 @@ export interface ActiveGameState {
   readonly queue: readonly string[]
   readonly removeAfterAbsence: boolean
   readonly removeAfterRefusal: boolean
+  readonly selectedType: CardType | null
   readonly selectedPackIds: readonly string[]
   readonly usedCardIds: readonly string[]
 }
@@ -47,6 +48,7 @@ export function createGame(
   data: GameData,
   random: RandomSource = mathRandomSource,
 ): ActiveGameState {
+  if (setup.players.length < 2) throw new Error('Для начала игры нужно минимум два игрока')
   const selectedPackIds = new Set(setup.selectedPackIds)
   const queue = shuffle(
     data.cards.filter((card) => selectedPackIds.has(card.packId)).map((card) => card.id),
@@ -71,6 +73,7 @@ export function createGame(
     queue,
     removeAfterAbsence: setup.removeAfterAbsence,
     removeAfterRefusal: setup.removeAfterRefusal,
+    selectedType: null,
     selectedPackIds: [...setup.selectedPackIds],
     usedCardIds: [],
   }
@@ -81,6 +84,7 @@ export function getCurrentPlayer(state: ActiveGameState): ActiveGamePlayer {
 }
 
 export function advanceTurn(state: ActiveGameState): ActiveGameState {
+  if (state.currentTurn !== null) throw new Error('Нельзя перейти к следующему игроку при активной карточке')
   return {
     ...state,
     currentPlayerIndex: (state.currentPlayerIndex + 1) % state.players.length,
@@ -92,11 +96,15 @@ export function canChooseType(state: ActiveGameState, type: CardType): boolean {
 }
 
 export function recordTypeChoice(state: ActiveGameState, type: CardType): ActiveGameState {
+  if (state.selectedType !== null || state.currentTurn !== null) {
+    throw new Error('Тип текущего хода уже выбран')
+  }
   if (!canChooseType(state, type)) throw new Error('Нельзя выбрать третью Правду подряд')
   const current = getCurrentPlayer(state)
   const truthCount = type === 'truth' ? ((current.truthCount + 1) as TruthCount) : 0
   return {
     ...state,
+    selectedType: type,
     players: state.players.map((player, index) =>
       index === state.currentPlayerIndex ? { ...player, truthCount } : player,
     ),
@@ -109,7 +117,7 @@ export function drawCard(
   data: Pick<GameData, 'boundaries' | 'cards'>,
   random: RandomSource = mathRandomSource,
 ): CardDrawResult {
-  if (state.currentTurn !== null || !canChooseType(state, type)) return { card: null, state }
+  if (state.currentTurn !== null || state.selectedType !== type) return { card: null, state }
   const cardsById = new Map(data.cards.map((card) => [card.id, card]))
   const usedIds = new Set(state.usedCardIds)
   const matchIndex = state.queue.findIndex((id) => {
@@ -144,7 +152,7 @@ export function completePackCard(state: ActiveGameState): ActiveGameState {
   if (turn === null) throw new Error('Нет активной карточки для завершения')
   const actorIndex = state.currentPlayerIndex
   const secondaryIds = new Set(turn.secondaryPlayerIds)
-  const withResult = recordTypeChoice({
+  const withResult: ActiveGameState = {
     ...state,
     players: state.players.map((player, index) => {
       if (index === actorIndex) {
@@ -157,10 +165,11 @@ export function completePackCard(state: ActiveGameState): ActiveGameState {
       }
       return player
     }),
-  }, turn.type)
+  }
   return advanceTurn({
     ...withResult,
     currentTurn: null,
+    selectedType: null,
     usedCardIds: [...withResult.usedCardIds, turn.cardId],
   })
 }
@@ -168,7 +177,8 @@ export function completePackCard(state: ActiveGameState): ActiveGameState {
 export function completeTableTurn(state: ActiveGameState, type: CardType): ActiveGameState {
   if (state.mode !== 'manual') throw new Error('Вопрос от стола доступен только в ручном режиме')
   if (state.currentTurn !== null) throw new Error('Нельзя завершить вопрос от стола при активной карточке')
-  return advanceTurn(recordTypeChoice(state, type))
+  const withChoice = recordTypeChoice(state, type)
+  return advanceTurn({ ...withChoice, selectedType: null })
 }
 
 export function isCardPlayableForTurn(

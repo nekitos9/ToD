@@ -1,7 +1,7 @@
 import type { BoundaryDefinition, GameCard } from '../data/game-data'
 import { BOUNDARY_DATA_NAMES } from '../setup/setup-state'
 import type { ActiveGamePlayer, ActiveGameState } from './game-state'
-import type { RandomSource } from './random'
+import { nextRandom, type RandomSource } from './random'
 
 export function getEligibleSecondaryPlayers(
   card: GameCard,
@@ -33,7 +33,7 @@ export function selectSecondaryParticipants(
     const pool = card.type === 'dare'
       ? candidates.filter((player) => player.activityPoints === Math.min(...candidates.map((item) => item.activityPoints)))
       : candidates
-    const choice = pool[Math.floor(random.next() * pool.length)]
+    const choice = pool[Math.floor(nextRandom(random) * pool.length)]
     selected.push(choice)
     candidates.splice(candidates.findIndex((player) => player.id === choice.id), 1)
   }

@@ -8,6 +8,7 @@ import {
   drawCard,
   getCurrentPlayer,
   isCardPlayableForTurn,
+  recordTypeChoice,
   type ActiveGameState,
 } from './game-state'
 import { selectSecondaryParticipants } from './participants'
@@ -27,6 +28,13 @@ describe('secondary participants', () => {
     expect(selected.map((player) => player.id)).toEqual(['p2', 'p3', 'p4'])
     expect(new Set(selected.map((player) => player.id)).size).toBe(3)
     expect(selected.map((player) => player.id)).not.toContain(getCurrentPlayer(game).id)
+  })
+
+  it('distinguishes players by id when their names are equal', () => {
+    const game = withPlayers(makeGame(), [{}, { name: 'Same' }, { name: 'Same' }, {}])
+    const selected = selectSecondaryParticipants(makeCard({ otherPlayers: 2 }), game, boundaries, fixedRandom(0))!
+    expect(selected.map((player) => player.name)).toEqual(['Same', 'Same'])
+    expect(selected.map((player) => player.id)).toEqual(['p2', 'p3'])
   })
 
   it('rejects cards with too few eligible players by boundary or relationship', () => {
@@ -92,10 +100,25 @@ describe('token resolver', () => {
     expect(first).toMatch(/^\+7 \(9\d{2}\) \d{3}-\d{2}-\d{2}$/)
   })
 
+  it('uses one generated number for repeated PHONE_NUM tokens', () => {
+    const resolved = resolveCardTokens(
+      '*PHONE_NUM* и снова *PHONE_NUM*',
+      [],
+      sequenceRandom([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]),
+    )
+    expect(resolved.text).toBe('+7 (901) 234-56-78 и снова +7 (901) 234-56-78')
+    expect(resolved.phoneNumber).toBe('+7 (901) 234-56-78')
+  })
+
+  it('throws instead of leaving an unresolved PLAYER token', () => {
+    expect(() => resolveCardTokens('*PLAYER2*', makeGame().players.slice(1, 2), fixedRandom(0)))
+      .toThrow('Не найден участник для токена *PLAYER2*')
+  })
+
   it('stores resolved random values in the current turn', () => {
     const card = makeCard({ otherPlayers: 1, text: '*PLAYER* звонит на *PHONE_NUM*' })
     const game = makeGame([card])
-    const drawn = drawCard(game, 'dare', gameData([card]), fixedRandom(0))
+    const drawn = drawCard(recordTypeChoice(game, 'dare'), 'dare', gameData([card]), fixedRandom(0))
     const snapshot = JSON.stringify(drawn.state.currentTurn)
     expect(drawn.state.currentTurn).toMatchObject({
       phoneNumber: '+7 (900) 000-00-00',
@@ -109,7 +132,8 @@ describe('token resolver', () => {
 describe('turn completion', () => {
   it('updates Dare statistics, activity points and advances the turn', () => {
     const card = makeCard({ otherPlayers: 2, type: 'dare' })
-    const drawn = drawCard(makeGame([card]), 'dare', gameData([card]), fixedRandom(0)).state
+    const game = recordTypeChoice(makeGame([card]), 'dare')
+    const drawn = drawCard(game, 'dare', gameData([card]), fixedRandom(0)).state
     const completed = completePackCard(drawn)
     expect(completed.players[0].completedDares).toBe(1)
     expect(completed.players[1].activityPoints).toBe(1)
@@ -122,7 +146,8 @@ describe('turn completion', () => {
 
   it('updates Truth statistics without awarding activity points', () => {
     const card = makeCard({ otherPlayers: 1, type: 'truth' })
-    const completed = completePackCard(drawCard(makeGame([card]), 'truth', gameData([card]), fixedRandom(0)).state)
+    const game = recordTypeChoice(makeGame([card]), 'truth')
+    const completed = completePackCard(drawCard(game, 'truth', gameData([card]), fixedRandom(0)).state)
     expect(completed.players[0].answeredTruths).toBe(1)
     expect(completed.players.every((player) => player.activityPoints === 0)).toBe(true)
     expect(completed.players[0].truthCount).toBe(1)
@@ -140,6 +165,17 @@ describe('turn completion', () => {
     ])
     expect(completed.players[0].truthCount).toBe(1)
     expect(getCurrentPlayer(completed).id).toBe('p2')
+  })
+
+  it('rejects a third manual Truth without changing state or advancing', () => {
+    const game = {
+      ...withPlayers(makeGame(), [{ truthCount: 2 }, {}, {}, {}]),
+      mode: 'manual' as const,
+    }
+    const snapshot = JSON.stringify(game)
+    expect(() => completeTableTurn(game, 'truth')).toThrow('третью Правду')
+    expect(JSON.stringify(game)).toBe(snapshot)
+    expect(getCurrentPlayer(game).id).toBe('p1')
   })
 })
 
