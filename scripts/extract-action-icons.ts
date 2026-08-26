@@ -9,6 +9,7 @@ const icons = {
   reroll: '28e4bc3c255fa39b',
   question: 'c118e162d75e8370',
   questionSmall: '57f6713464de01c4',
+  ruleCheck: '8a7f4edb2093fee6',
 } as const
 
 interface VectorAsset {

@@ -3,29 +3,34 @@ import { describe, expect, it } from 'vitest'
 import { App } from './App'
 
 describe('App', () => {
-  it('renders the component gallery', () => {
+  it('moves from Welcome to Rules and back', () => {
     render(<App />)
 
-    expect(screen.getByRole('heading', { name: 'Компоненты' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Далее' })).toBeDisabled()
+    expect(screen.getByRole('heading', { name: 'Правда или Действие' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Начать' }))
+    expect(screen.getByRole('heading', { name: 'Правила игры' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Назад' }))
+    expect(screen.getByRole('heading', { name: 'Правда или Действие' })).toBeInTheDocument()
   })
 
-  it('shows the imported workbook summary', () => {
+  it('keeps both independent rule settings after navigating back and forward', () => {
     render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Начать' }))
 
-    expect(screen.getByText('103')).toBeInTheDocument()
-    expect(screen.getByText('8')).toBeInTheDocument()
-    expect(screen.getByText('3')).toBeInTheDocument()
-    expect(screen.getByText('2')).toBeInTheDocument()
-  })
+    const refusal = screen.getByRole('checkbox', { name: /От заданий нельзя отказываться/ })
+    const absence = screen.getByRole('checkbox', { name: /У пользователя есть право пропустить/ })
+    expect(refusal).not.toBeChecked()
+    expect(absence).not.toBeChecked()
+    fireEvent.click(refusal)
+    expect(refusal).toBeChecked()
+    expect(absence).not.toBeChecked()
+    fireEvent.click(absence)
+    expect(refusal).toBeChecked()
+    expect(absence).toBeChecked()
 
-  it('opens and closes the example dialog', () => {
-    render(<App />)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Открыть окно' }))
-    expect(screen.getByRole('dialog')).toBeVisible()
-
-    fireEvent.click(screen.getByRole('button', { name: 'Нет' }))
-    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Назад' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Начать' }))
+    expect(screen.getByRole('checkbox', { name: /От заданий нельзя отказываться/ })).toBeChecked()
+    expect(screen.getByRole('checkbox', { name: /У пользователя есть право пропустить/ })).toBeChecked()
   })
 })

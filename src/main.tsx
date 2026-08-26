@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import '@fontsource/el-messiri/cyrillic-700.css'
+import '@fontsource/el-messiri/cyrillic-400.css'
 import '@fontsource/brygada-1918/cyrillic-400.css'
 import '@fontsource/brygada-1918/cyrillic-700.css'
 import { App } from './app/App'

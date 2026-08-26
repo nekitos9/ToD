@@ -37,6 +37,11 @@
   border-color: rgb(66 105 190 / 38%);
 }
 
+.button--accent {
+  background: #cf25e9;
+  color: var(--color-surface);
+}
+
 .button--truth {
   --control-focus-color: var(--color-focus-on-green);
   width: min(234px, 100%);

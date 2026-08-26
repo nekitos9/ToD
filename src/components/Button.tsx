@@ -1,7 +1,7 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
 import './controls.css'
 
-export type ButtonVariant = 'primary' | 'truth' | 'dare' | 'ghost'
+export type ButtonVariant = 'primary' | 'accent' | 'truth' | 'dare' | 'ghost'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   readonly variant?: ButtonVariant
@@ -21,4 +21,3 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     </button>
   )
 })
-

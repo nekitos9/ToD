@@ -26,7 +26,7 @@ export function FocusRegion({ children }: PropsWithChildren) {
       if (!first) return
 
       event.preventDefault()
-      first.focus()
+      focusAndReveal(first)
     }
 
     document.addEventListener('keydown', activateFromArrow)
@@ -34,6 +34,17 @@ export function FocusRegion({ children }: PropsWithChildren) {
   }, [])
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (
+      event.key === 'Enter' &&
+      event.target instanceof HTMLInputElement &&
+      event.target.type === 'checkbox'
+    ) {
+      event.preventDefault()
+      event.target.click()
+      event.target.focus()
+      return
+    }
+
     const direction = directionFromKey(event.key)
     if (!direction || !(event.target instanceof HTMLElement)) return
     if (isTextControl(event.target)) return
@@ -46,10 +57,26 @@ export function FocusRegion({ children }: PropsWithChildren) {
     if (!next) return
 
     event.preventDefault()
-    next.focus()
+    focusAndReveal(next)
   }
 
   return <div ref={regionRef} onKeyDown={handleKeyDown}>{children}</div>
+}
+
+function focusAndReveal(element: HTMLElement) {
+  element.focus({ preventScroll: true })
+
+  const revealTarget = element.matches('input[type="checkbox"], input[type="radio"]')
+    ? element.closest('label')
+    : element
+  if (!revealTarget || typeof revealTarget.scrollIntoView !== 'function') return
+
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  revealTarget.scrollIntoView({
+    behavior: reducedMotion ? 'auto' : 'smooth',
+    block: 'nearest',
+    inline: 'nearest',
+  })
 }
 
 function getFocusableElements(region: HTMLElement): HTMLElement[] {
@@ -67,7 +94,9 @@ function directionFromKey(key: string): Direction | undefined {
 
 function isTextControl(element: HTMLElement): boolean {
   return (
-    element.matches('input, textarea, select, [contenteditable="true"]') ||
+    element.matches(
+      'textarea, select, input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="tel"], input[type="password"], input[type="number"], [contenteditable="true"]',
+    ) ||
     Boolean(element.closest('[role="textbox"]'))
   )
 }
