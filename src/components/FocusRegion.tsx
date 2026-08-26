@@ -34,6 +34,7 @@ export function FocusRegion({ children }: PropsWithChildren) {
   }, [])
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.defaultPrevented) return
     if (
       event.key === 'Enter' &&
       event.target instanceof HTMLInputElement &&

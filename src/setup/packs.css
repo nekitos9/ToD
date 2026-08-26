@@ -1,0 +1,250 @@
+.setup-screen--packs {
+  background: #427cbe;
+  color: #fff;
+}
+
+.setup-screen--packs .setup-screen__circle {
+  background: rgb(202 166 222 / 10%);
+}
+
+.setup-screen--transition.setup-screen--packs {
+  animation: packs-background-enter 520ms ease-out both;
+}
+
+.packs {
+  --packs-gutter: 29px;
+  width: 100%;
+  min-height: 100dvh;
+  padding: 120px var(--packs-gutter) 180px;
+}
+
+.packs h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 37.13px;
+  line-height: 50px;
+}
+
+.packs header p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 15px;
+}
+
+.packs__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 15px 20px;
+  margin-top: 25px;
+}
+
+.pack-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 169px;
+  padding: 10px 14px 44px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.pack-card[data-theme='personal'] { background: #5aa092; color: #fff; }
+.pack-card[data-theme='spicy'] { background: #9242be; color: #fff; }
+.pack-card[data-theme='hot'] { background: #be4244; color: #fff; }
+.pack-card[data-theme='underworld'] { background: #000; color: #fff; }
+.pack-card[data-theme='limitless-street'] { background: #9242be; color: #fff; }
+.pack-card[data-theme='other-people'] { background: #58981c; color: #fff; }
+
+.pack-card[data-active='false'] {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.pack-card > input {
+  position: absolute;
+  right: 14px;
+  bottom: 17px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+}
+
+.pack-card:has(input:focus-visible) {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
+.pack-card__header {
+  display: grid;
+  min-width: 0;
+  min-height: 38px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: start;
+  border-bottom: 1px solid #427cbe;
+}
+
+.pack-card__header strong {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.pack-card__types {
+  display: flex;
+  gap: 7px;
+}
+
+.pack-card__type {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pack-card__type--truth { background: #00ad1d; }
+.pack-card__type--dare { background: #ad0003; }
+
+.pack-card__description {
+  display: block;
+  font-size: 19px;
+  line-height: 22px;
+}
+
+.pack-card__count {
+  position: absolute;
+  bottom: 13px;
+  left: 14px;
+  color: #4269be;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.pack-card[data-theme]:not([data-theme='default']) .pack-card__count { color: currentcolor; }
+
+.pack-card__selection {
+  position: absolute;
+  right: 14px;
+  bottom: 17px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #4269be;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.pack-card[data-theme]:not([data-theme='default']) .pack-card__selection {
+  border-color: #fff;
+  background: transparent;
+}
+
+.pack-card[data-theme]:not([data-theme='default']) input:checked ~ .pack-card__selection {
+  background: #fff;
+}
+
+.pack-card input:checked ~ .pack-card__selection::after {
+  display: block;
+  width: 7px;
+  height: 13px;
+  margin: 1px 0 0 6px;
+  border: solid #ff0004;
+  border-width: 0 2px 2px 0;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.setup-screen--packs .bottom-navigation {
+  background: linear-gradient(to bottom, transparent, rgb(66 124 190 / 88%) 35%);
+}
+
+.packs__notice {
+  position: absolute;
+  right: 20px;
+  bottom: calc(var(--navigation-height) + 16px);
+  left: 20px;
+  z-index: 20;
+  width: min(520px, calc(100% - 40px));
+  margin-inline: auto;
+  padding: 14px 18px;
+  border: 1px solid rgb(190 66 68 / 45%);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+  color: #000;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  animation: packs-notice-in 160ms ease-out both;
+}
+
+.packs__notice[data-state='closing'] {
+  animation: packs-notice-out 160ms ease-in both;
+}
+
+@keyframes packs-notice-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes packs-notice-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes packs-background-enter {
+  from { background-color: #9242be; }
+  to { background-color: #427cbe; }
+}
+
+@media (max-width: 374px) {
+  .packs { --packs-gutter: 20px; }
+  .pack-card { padding-inline: 10px; }
+  .pack-card__header strong { font-size: 21px; }
+  .pack-card__description { font-size: 17px; line-height: 20px; }
+}
+
+@media (min-width: 768px) {
+  .packs {
+    --packs-gutter: clamp(54px, calc(7vw - 0.68px), 100px);
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: clamp(60px, 7.78vw, 112px) var(--packs-gutter) 180px;
+  }
+  .packs h1 { font-size: 45px; line-height: 60px; }
+  .packs header p { font-size: 16px; line-height: 19px; }
+  .packs__grid { max-width: 400px; margin-top: clamp(32px, 3.89vw, 56px); }
+  .pack-card { max-width: 400px; padding-inline: 15.3px; }
+  .pack-card__header strong { font-size: 29px; }
+  .pack-card__type { width: 32px; height: 32px; font-size: 18.62px; }
+  .pack-card__description { font-size: 20px; line-height: 23px; }
+  .pack-card__count { bottom: 9px; left: 15.3px; font-size: 16px; }
+  .pack-card > input, .pack-card__selection { right: 15.3px; bottom: 13px; width: 21.86px; height: 20px; }
+  .setup-screen--packs .bottom-navigation__inner { margin-left: 0; }
+}
+
+@media (min-width: 875px) {
+  .packs__grid { max-width: 820px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1325px) {
+  .packs__grid { max-width: 1240px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (min-width: 768px) and (max-height: 800px) {
+  .packs { padding-top: clamp(40px, 6dvh, 56px); }
+  .packs__grid { margin-top: 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .setup-screen--packs, .packs__notice { animation: none; }
+}

@@ -26,6 +26,10 @@ for (const viewport of viewports) {
     await expect(page.getByRole('heading', { name: 'Игроки' })).toBeVisible()
     await assertNoHorizontalOverflow(page)
     await assertPlayerCardsDoNotOverlap(page)
+    await completePlayers(page)
+    await expect(page.getByRole('heading', { name: 'Паки вопросов' })).toBeVisible()
+    await assertNoHorizontalOverflow(page)
+    await assertPackCardsDoNotOverlap(page)
   })
 }
 
@@ -125,6 +129,67 @@ test('keeps the player help close button clear of the dialog on a low wide viewp
   expect(overlaps).toBe(false)
 })
 
+test('enters Packs and selects a pack without mouse or Tab', async ({ page }) => {
+  await page.goto('/')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('Enter')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('ArrowRight')
+  await page.keyboard.press('Enter')
+
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.type('Первый')
+  await page.keyboard.press('ArrowDown')
+  await chooseFirstSelectOption(page)
+  await page.keyboard.press('ArrowRight')
+  await page.keyboard.press('ArrowRight')
+  await page.keyboard.press('ArrowUp')
+  await page.keyboard.type('Второй')
+  await page.keyboard.press('ArrowDown')
+  await chooseFirstSelectOption(page)
+
+  const playersNext = page.getByRole('button', { name: 'Далее' })
+  for (let step = 0; step < 8 && !(await playersNext.evaluate((element) => element === document.activeElement)); step += 1) {
+    await page.keyboard.press('ArrowDown')
+  }
+  await expect(playersNext).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.getByRole('heading', { name: 'Паки вопросов' })).toBeVisible()
+
+  await page.keyboard.press('ArrowDown')
+  const ordinary = page.getByRole('checkbox', { name: 'Обычный' })
+  await expect(ordinary).toBeFocused()
+  await page.keyboard.press('Space')
+  await expect(ordinary).toBeChecked()
+  await expect(page.getByRole('button', { name: 'Далее' })).toBeEnabled()
+})
+
+test('moves predictably through the three-column pack grid and skips disabled packs', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1024 })
+  await openPacks(page)
+  await page.keyboard.press('ArrowDown')
+  await expect(page.getByRole('checkbox', { name: 'Обычный' })).toBeFocused()
+  await page.keyboard.press('ArrowRight')
+  await expect(page.getByRole('checkbox', { name: 'Личное-публичное' })).toBeFocused()
+  await page.keyboard.press('ArrowDown')
+  await expect(page.getByRole('checkbox', { name: 'Нижний мир' })).toBeFocused()
+  await page.keyboard.press('ArrowDown')
+  await expect(page.getByRole('checkbox', { name: 'Другие люди' })).toBeFocused()
+  await page.keyboard.press('Space')
+  await expect(page.getByRole('checkbox', { name: 'Другие люди' })).toBeChecked()
+
+  await page.getByRole('button', { name: 'Назад' }).click()
+  for (const boundary of await page.getByRole('combobox', { name: 'Грань игрока' }).all()) await boundary.selectOption('virgin')
+  for (const relationship of await page.getByRole('checkbox', { name: 'Отношения' }).all()) await relationship.check()
+  await page.getByRole('button', { name: 'Далее' }).click()
+  await expect(page.getByRole('checkbox', { name: 'Горячий' })).toBeDisabled()
+  await page.keyboard.press('ArrowDown')
+  await expect(page.getByRole('checkbox', { name: 'Обычный' })).toBeFocused()
+})
+
 test('scrolls the complete checkbox label above fixed navigation when focused', async ({ page }) => {
   await page.setViewportSize({ width: 424, height: 917 })
   await page.goto('/')
@@ -178,9 +243,49 @@ async function assertPlayerCardsDoNotOverlap(page: Page) {
   }
 }
 
+async function assertPackCardsDoNotOverlap(page: Page) {
+  const descriptionsFit = await page.locator('.pack-card__description').evaluateAll((elements) =>
+    elements.every((element) => element.scrollHeight <= element.clientHeight),
+  )
+  expect(descriptionsFit).toBe(true)
+  const cards = await page.locator('.pack-card').evaluateAll((elements) => elements.map((element) => {
+    const rect = element.getBoundingClientRect()
+    return { bottom: rect.bottom, left: rect.left, right: rect.right, top: rect.top }
+  }))
+  for (let left = 0; left < cards.length; left += 1) {
+    for (let right = left + 1; right < cards.length; right += 1) {
+      const a = cards[left]
+      const b = cards[right]
+      expect(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top).toBe(true)
+    }
+  }
+}
+
 async function openPlayers(page: Page) {
   await page.goto('/')
   await page.getByRole('button', { name: 'Начать' }).click()
   await page.getByRole('button', { name: 'Далее' }).click()
   await expect(page.getByRole('heading', { name: 'Игроки' })).toBeVisible()
+}
+
+async function completePlayers(page: Page, boundary = 'full') {
+  const names = page.getByRole('textbox', { name: 'Имя игрока' })
+  const boundaries = page.getByRole('combobox', { name: 'Грань игрока' })
+  for (let index = 0; index < await names.count(); index += 1) {
+    await names.nth(index).fill(`Игрок ${index + 1}`)
+    await boundaries.nth(index).selectOption(boundary)
+  }
+  await page.getByRole('button', { name: 'Далее' }).click()
+}
+
+async function openPacks(page: Page) {
+  await openPlayers(page)
+  await completePlayers(page)
+  await expect(page.getByRole('heading', { name: 'Паки вопросов' })).toBeVisible()
+}
+
+async function chooseFirstSelectOption(page: Page) {
+  await page.keyboard.press('Enter')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('Enter')
 }

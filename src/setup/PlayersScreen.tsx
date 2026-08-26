@@ -11,11 +11,12 @@ import './players.css'
 interface PlayersScreenProps {
   readonly animateTransition: boolean
   readonly onBack: () => void
+  readonly onNext: () => void
   readonly onSetupChange: (setup: SetupState) => void
   readonly setup: SetupState
 }
 
-export function PlayersScreen({ animateTransition, onBack, onSetupChange, setup }: PlayersScreenProps) {
+export function PlayersScreen({ animateTransition, onBack, onNext, onSetupChange, setup }: PlayersScreenProps) {
   const [helpOpen, setHelpOpen] = useState(false)
   const [showBoundaryErrors, setShowBoundaryErrors] = useState(false)
   const pendingFocus = useRef<string | null>(null)
@@ -47,6 +48,15 @@ export function PlayersScreen({ animateTransition, onBack, onSetupChange, setup 
   }
 
   const namesValid = setup.players.every((player) => player.name.trim().length > 0)
+  const boundariesValid = setup.players.every((player) => player.boundary !== null)
+
+  function continueSetup() {
+    if (!boundariesValid) {
+      setShowBoundaryErrors(true)
+      return
+    }
+    onNext()
+  }
 
   return (
     <FocusRegion>
@@ -92,7 +102,7 @@ export function PlayersScreen({ animateTransition, onBack, onSetupChange, setup 
         </div>
         <BottomNavigation>
           <Button onClick={onBack}>Назад</Button>
-          <Button disabled={!namesValid} onClick={() => setShowBoundaryErrors(true)}>Далее</Button>
+          <Button disabled={!namesValid} onClick={continueSetup}>Далее</Button>
         </BottomNavigation>
         <PlayersHelpDialog onClose={() => setHelpOpen(false)} open={helpOpen} />
       </main>

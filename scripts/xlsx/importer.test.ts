@@ -59,9 +59,18 @@ describe('XLSX importer', () => {
       cardTypeCount: 2,
     })
     expect(result.packs.find((pack) => pack.name === 'Обычный')).toMatchObject({
+      id: 'pack-2',
       cardCount: 33,
       availableTypes: ['truth', 'dare'],
     })
+  })
+
+  it('derives stable pack ids from source row numbers and links cards to them', () => {
+    const workbook = createValidWorkbook()
+    const result = importGameDataFromWorkbook(workbook)
+
+    expect(result.packs[0].id).toBe('pack-2')
+    expect(result.cards[0].packId).toBe('pack-2')
   })
 
   it('reports a missing sheet', () => {

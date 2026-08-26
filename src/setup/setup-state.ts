@@ -1,7 +1,13 @@
-export type SetupStep = 'welcome' | 'rules' | 'players'
+export type SetupStep = 'welcome' | 'rules' | 'players' | 'packs'
 
 export type Boundary = 'virgin' | 'regular' | 'full'
 export type GameMode = 'automatic' | 'manual'
+
+export const BOUNDARY_DATA_NAMES: Readonly<Record<Boundary, string>> = {
+  virgin: 'Целочка',
+  regular: 'Обычный',
+  full: 'Полный раж',
+}
 
 export interface SetupPlayer {
   readonly boundary: Boundary | null
@@ -16,6 +22,7 @@ export interface SetupState {
   readonly mode: GameMode
   readonly nextPlayerId: number
   readonly players: readonly SetupPlayer[]
+  readonly selectedPackIds: readonly string[]
 }
 
 export const initialSetupState: SetupState = {
@@ -24,6 +31,7 @@ export const initialSetupState: SetupState = {
   mode: 'automatic',
   nextPlayerId: 3,
   players: [createPlayer('player-1'), createPlayer('player-2')],
+  selectedPackIds: [],
 }
 
 export function createPlayer(id: string): SetupPlayer {

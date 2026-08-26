@@ -245,7 +245,7 @@ function readPacks(context: ImportContext, table: SheetTable): PackDefinition[] 
     }
 
     names.add(name)
-    result.push({ name, description, cardCount: 0, availableTypes: [] })
+    result.push({ id: `pack-${rowNumber}`, name, description, cardCount: 0, availableTypes: [] })
   })
 
   return result
@@ -262,7 +262,7 @@ function readCards(
   const ids = new Set<string>()
   const cardTypeByName = new Map(cardTypes.map((definition) => [definition.name, definition.type]))
   const boundaryNames = new Set(boundaries.map((boundary) => boundary.name))
-  const packNames = new Set(packs.map((pack) => pack.name))
+  const packByName = new Map(packs.map((pack) => [pack.name, pack]))
   const columns = REQUIRED_COLUMNS.Вопросы
 
   forEachDataRow(context, table, columns, (rowNumber, values) => {
@@ -294,7 +294,7 @@ function readCards(
     if (typeName && !type) {
       addCellIssue(context, table, rowNumber, 'ПД', `недопустимый тип карточки «${typeName}»`, id)
     }
-    if (pack && !packNames.has(pack)) {
+    if (pack && !packByName.has(pack)) {
       addCellIssue(context, table, rowNumber, 'Пак', `пак «${pack}» не существует`, id)
     }
     if (boundary && !boundaryNames.has(boundary)) {
@@ -319,7 +319,7 @@ function readCards(
       text &&
       type &&
       pack &&
-      packNames.has(pack) &&
+      packByName.has(pack) &&
       boundary &&
       boundaryNames.has(boundary) &&
       (relationship === 'Да' || relationship === 'Нет') &&
@@ -330,6 +330,7 @@ function readCards(
         text,
         type,
         pack,
+        packId: packByName.get(pack)!.id,
         boundary,
         relationshipAllowed: relationship === 'Да',
         otherPlayers,

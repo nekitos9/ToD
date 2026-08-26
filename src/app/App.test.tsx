@@ -1,5 +1,6 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
+import { gameData } from '../generated/game-data'
 import { App } from './App'
 
 describe('App', () => {
@@ -142,9 +143,116 @@ describe('App', () => {
     expect(screen.getAllByRole('textbox', { name: 'Имя игрока' })[1]).toHaveFocus()
     expect(screen.queryByText('player-3')).not.toBeInTheDocument()
   })
+
+  it('renders all generated packs with their real counts and available types', () => {
+    render(<App />)
+    openPacks()
+
+    expect(screen.getAllByRole('checkbox', { name: /.+/ })).toHaveLength(8)
+    for (const pack of gameData.packs) {
+      const card = document.querySelector(`[data-pack-id="${pack.id}"]`)
+      expect(card).not.toBeNull()
+      expect(within(card as HTMLElement).getByText(pack.description)).toBeInTheDocument()
+      expect(within(card as HTMLElement).getByText(`${pack.cardCount} карт`)).toBeInTheDocument()
+      const availableTypes: readonly string[] = pack.availableTypes
+      if (availableTypes.includes('truth')) expect(within(card as HTMLElement).getByTitle('Правда')).toBeInTheDocument()
+      else expect(within(card as HTMLElement).queryByTitle('Правда')).not.toBeInTheDocument()
+      if (availableTypes.includes('dare')) expect(within(card as HTMLElement).getByTitle('Действие')).toBeInTheDocument()
+      else expect(within(card as HTMLElement).queryByTitle('Действие')).not.toBeInTheDocument()
+    }
+  })
+
+  it('supports multiple pack selection and blocks Next without a selection', () => {
+    render(<App />)
+    openPacks()
+    const ordinary = screen.getByRole('checkbox', { name: 'Обычный' })
+    const spicy = screen.getByRole('checkbox', { name: 'Спайси' })
+    const next = screen.getByRole('button', { name: 'Далее' })
+    expect(next).toBeDisabled()
+
+    fireEvent.click(ordinary)
+    fireEvent.click(spicy)
+    expect(ordinary).toBeChecked()
+    expect(spicy).toBeChecked()
+    expect(next).toBeEnabled()
+    fireEvent.click(ordinary)
+    expect(next).toBeEnabled()
+    fireEvent.click(spicy)
+    expect(next).toBeDisabled()
+  })
+
+  it('keeps active selections when navigating Packs to Players and back', () => {
+    render(<App />)
+    openPacks()
+    fireEvent.click(screen.getByRole('checkbox', { name: 'Обычный' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Назад' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
+    expect(screen.getByRole('checkbox', { name: 'Обычный' })).toBeChecked()
+  })
+
+  it('disables incompatible packs and clears a stale selection after player changes', () => {
+    render(<App />)
+    openPacks()
+    const hot = screen.getByRole('checkbox', { name: 'Горячий' })
+    fireEvent.click(hot)
+    expect(hot).toBeChecked()
+    fireEvent.click(screen.getByRole('button', { name: 'Назад' }))
+
+    for (const boundary of screen.getAllByRole('combobox', { name: 'Грань игрока' })) {
+      fireEvent.change(boundary, { target: { value: 'virgin' } })
+    }
+    for (const relationship of screen.getAllByRole('checkbox', { name: 'Отношения' })) {
+      fireEvent.click(relationship)
+    }
+    fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
+
+    const normalizedHot = screen.getByRole('checkbox', { name: 'Горячий' })
+    expect(normalizedHot).toBeDisabled()
+    expect(normalizedHot).not.toBeChecked()
+    expect(screen.getByRole('button', { name: 'Далее' })).toBeDisabled()
+  })
+
+  it('explains an inactive pack attempt and hides the notice after four seconds', () => {
+    vi.useFakeTimers()
+    try {
+      render(<App />)
+      openPacks()
+      fireEvent.click(screen.getByRole('button', { name: 'Назад' }))
+      for (const boundary of screen.getAllByRole('combobox', { name: 'Грань игрока' })) {
+        fireEvent.change(boundary, { target: { value: 'virgin' } })
+      }
+      for (const relationship of screen.getAllByRole('checkbox', { name: 'Отношения' })) {
+        fireEvent.click(relationship)
+      }
+      fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
+
+      const hot = screen.getByRole('checkbox', { name: 'Горячий' })
+      expect(hot).toBeDisabled()
+      fireEvent.click(hot.closest('.pack-card')!)
+      expect(screen.getByRole('status')).toHaveTextContent('Нет 2 пользователей, которые бы на такое согласились. Поменяйте грани')
+      act(() => vi.advanceTimersByTime(3840))
+      expect(screen.getByRole('status')).toHaveAttribute('data-state', 'closing')
+      act(() => vi.advanceTimersByTime(159))
+      expect(screen.getByRole('status')).toBeInTheDocument()
+      act(() => vi.advanceTimersByTime(1))
+      expect(screen.queryByRole('status')).not.toBeInTheDocument()
+      expect(hot).not.toBeChecked()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
 })
 
 function openPlayers() {
   fireEvent.click(screen.getByRole('button', { name: 'Начать' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
+}
+
+function openPacks() {
+  openPlayers()
+  const names = screen.getAllByRole('textbox', { name: 'Имя игрока' })
+  const boundaries = screen.getAllByRole('combobox', { name: 'Грань игрока' })
+  names.forEach((name, index) => fireEvent.change(name, { target: { value: `Игрок ${index + 1}` } }))
+  boundaries.forEach((boundary) => fireEvent.change(boundary, { target: { value: 'full' } }))
   fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
 }
