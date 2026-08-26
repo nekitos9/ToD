@@ -4,6 +4,7 @@ import type { SetupState } from '../setup/setup-state'
 import {
   advanceTurn,
   canChooseType,
+  completePackCard,
   createGame,
   drawCard,
   getCurrentPlayer,
@@ -74,10 +75,12 @@ describe('active game state', () => {
     const first = drawCard(game, 'truth', data)
     expect(first.card?.id).toBe('truth-low')
     expect(first.state.queue).toContain('dare-low')
-    expect(first.state.usedCardIds).toEqual(['truth-low'])
-    const second = drawCard(first.state, 'truth', data)
+    expect(first.state.usedCardIds).toEqual([])
+    const completed = completePackCard(first.state)
+    expect(completed.usedCardIds).toEqual(['truth-low'])
+    const second = drawCard(completed, 'truth', data)
     expect(second.card?.id).toBe('truth-high')
-    expect(second.state.usedCardIds).toEqual(['truth-low', 'truth-high'])
+    expect(second.state.usedCardIds).toEqual(['truth-low'])
     expect(second.state.queue).not.toContain('truth-low')
   })
 

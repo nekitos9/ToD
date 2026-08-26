@@ -1,6 +1,8 @@
 import type { BoundaryDefinition, CardType, GameCard, GameData } from '../data/game-data'
 import { BOUNDARY_DATA_NAMES, type Boundary, type GameMode, type SetupState } from '../setup/setup-state'
+import { selectSecondaryParticipants } from './participants'
 import { mathRandomSource, shuffle, type RandomSource } from './random'
+import { resolveCardTokens } from './token-resolver'
 
 export type TruthCount = 0 | 1 | 2
 
@@ -9,11 +11,23 @@ export interface ActiveGamePlayer {
   readonly id: string
   readonly inRelationship: boolean
   readonly name: string
+  readonly activityPoints: number
+  readonly answeredTruths: number
+  readonly completedDares: number
   readonly truthCount: TruthCount
+}
+
+export interface CurrentTurn {
+  readonly cardId: string
+  readonly phoneNumber: string | null
+  readonly resolvedText: string
+  readonly secondaryPlayerIds: readonly string[]
+  readonly type: CardType
 }
 
 export interface ActiveGameState {
   readonly currentPlayerIndex: number
+  readonly currentTurn: CurrentTurn | null
   readonly mode: GameMode
   readonly players: readonly ActiveGamePlayer[]
   readonly queue: readonly string[]
@@ -41,10 +55,18 @@ export function createGame(
 
   return {
     currentPlayerIndex: 0,
+    currentTurn: null,
     mode: setup.mode,
     players: setup.players.map((player) => {
       if (player.boundary === null) throw new Error(`У игрока ${player.id} не выбрана грань`)
-      return { ...player, boundary: player.boundary, truthCount: 0 }
+      return {
+        ...player,
+        activityPoints: 0,
+        answeredTruths: 0,
+        boundary: player.boundary,
+        completedDares: 0,
+        truthCount: 0,
+      }
     }),
     queue,
     removeAfterAbsence: setup.removeAfterAbsence,
@@ -85,8 +107,9 @@ export function drawCard(
   state: ActiveGameState,
   type: CardType,
   data: Pick<GameData, 'boundaries' | 'cards'>,
+  random: RandomSource = mathRandomSource,
 ): CardDrawResult {
-  if (!canChooseType(state, type)) return { card: null, state }
+  if (state.currentTurn !== null || !canChooseType(state, type)) return { card: null, state }
   const cardsById = new Map(data.cards.map((card) => [card.id, card]))
   const usedIds = new Set(state.usedCardIds)
   const matchIndex = state.queue.findIndex((id) => {
@@ -97,14 +120,55 @@ export function drawCard(
 
   const cardId = state.queue[matchIndex]
   const card = cardsById.get(cardId)!
+  const participants = selectSecondaryParticipants(card, state, data.boundaries, random)
+  if (participants === null) return { card: null, state }
+  const resolved = resolveCardTokens(card.text, participants, random)
   return {
     card,
     state: {
       ...state,
+      currentTurn: {
+        cardId,
+        phoneNumber: resolved.phoneNumber,
+        resolvedText: resolved.text,
+        secondaryPlayerIds: participants.map((player) => player.id),
+        type: card.type,
+      },
       queue: [...state.queue.slice(matchIndex + 1), ...state.queue.slice(0, matchIndex)],
-      usedCardIds: [...state.usedCardIds, cardId],
     },
   }
+}
+
+export function completePackCard(state: ActiveGameState): ActiveGameState {
+  const turn = state.currentTurn
+  if (turn === null) throw new Error('Нет активной карточки для завершения')
+  const actorIndex = state.currentPlayerIndex
+  const secondaryIds = new Set(turn.secondaryPlayerIds)
+  const withResult = recordTypeChoice({
+    ...state,
+    players: state.players.map((player, index) => {
+      if (index === actorIndex) {
+        return turn.type === 'truth'
+          ? { ...player, answeredTruths: player.answeredTruths + 1 }
+          : { ...player, completedDares: player.completedDares + 1 }
+      }
+      if (turn.type === 'dare' && secondaryIds.has(player.id)) {
+        return { ...player, activityPoints: player.activityPoints + 1 }
+      }
+      return player
+    }),
+  }, turn.type)
+  return advanceTurn({
+    ...withResult,
+    currentTurn: null,
+    usedCardIds: [...withResult.usedCardIds, turn.cardId],
+  })
+}
+
+export function completeTableTurn(state: ActiveGameState, type: CardType): ActiveGameState {
+  if (state.mode !== 'manual') throw new Error('Вопрос от стола доступен только в ручном режиме')
+  if (state.currentTurn !== null) throw new Error('Нельзя завершить вопрос от стола при активной карточке')
+  return advanceTurn(recordTypeChoice(state, type))
 }
 
 export function isCardPlayableForTurn(
