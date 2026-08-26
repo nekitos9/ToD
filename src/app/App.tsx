@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { RulesScreen } from '../setup/RulesScreen'
+import { PlayersScreen } from '../setup/PlayersScreen'
 import { initialSetupState, type SetupState, type SetupStep } from '../setup/setup-state'
 import { WelcomeScreen } from '../setup/WelcomeScreen'
 
@@ -18,8 +19,20 @@ export function App() {
       <RulesScreen
         animateTransition={hasNavigated}
         onBack={() => navigate('welcome')}
+        onNext={() => navigate('players')}
         onSettingsChange={setSetup}
         settings={setup}
+      />
+    )
+  }
+
+  if (step === 'players') {
+    return (
+      <PlayersScreen
+        animateTransition={hasNavigated}
+        onBack={() => navigate('rules')}
+        onSetupChange={setSetup}
+        setup={setup}
       />
     )
   }

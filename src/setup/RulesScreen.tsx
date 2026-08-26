@@ -9,11 +9,12 @@ import { DecorativeCircles } from './WelcomeScreen'
 interface RulesScreenProps {
   readonly animateTransition: boolean
   readonly onBack: () => void
+  readonly onNext: () => void
   readonly onSettingsChange: (settings: SetupState) => void
   readonly settings: SetupState
 }
 
-export function RulesScreen({ animateTransition, onBack, onSettingsChange, settings }: RulesScreenProps) {
+export function RulesScreen({ animateTransition, onBack, onNext, onSettingsChange, settings }: RulesScreenProps) {
   return (
     <FocusRegion>
       <main className={`setup-screen setup-screen--rules${animateTransition ? ' setup-screen--transition' : ''}`}>
@@ -39,7 +40,7 @@ export function RulesScreen({ animateTransition, onBack, onSettingsChange, setti
         </div>
         <BottomNavigation>
           <Button onClick={onBack}>Назад</Button>
-          <Button disabled>Далее</Button>
+          <Button onClick={onNext}>Далее</Button>
         </BottomNavigation>
       </main>
     </FocusRegion>

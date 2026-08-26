@@ -63,6 +63,12 @@
 @media (min-width: 768px) and (max-height: 800px) {
   .setup-screen__circle--first { top: 4.5dvh; }
   .setup-screen__circle--second { top: 69.8dvh; }
+  .welcome h1 { top: clamp(40px, 6dvh, 56px); }
+  .welcome__greeting { top: clamp(138px, calc(6dvh + 98px), 154px); }
+  .welcome__contact { top: clamp(216px, calc(6dvh + 176px), 232px); }
+  .welcome__start { top: clamp(283px, calc(6dvh + 243px), 299px); }
+  .welcome__disclaimer { top: clamp(367px, calc(6dvh + 327px), 383px); }
+  .rules { padding-top: clamp(40px, 6dvh, 56px); }
 }
 
 .setup-screen--transition.setup-screen--welcome {

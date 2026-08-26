@@ -47,7 +47,21 @@ export function FocusRegion({ children }: PropsWithChildren) {
 
     const direction = directionFromKey(event.key)
     if (!direction || !(event.target instanceof HTMLElement)) return
-    if (isTextControl(event.target)) return
+    if (preservesArrow(event.target, direction)) return
+
+    const explicitTarget = findExplicitTarget(event.target, direction, event.currentTarget)
+    if (explicitTarget) {
+      event.preventDefault()
+      focusAndReveal(explicitTarget)
+      return
+    }
+
+    const localTarget = findPlayerCardTarget(event.target, direction)
+    if (localTarget) {
+      event.preventDefault()
+      focusAndReveal(localTarget)
+      return
+    }
 
     const focusables = getFocusableElements(event.currentTarget)
     const currentIndex = focusables.indexOf(event.target)
@@ -61,6 +75,31 @@ export function FocusRegion({ children }: PropsWithChildren) {
   }
 
   return <div ref={regionRef} onKeyDown={handleKeyDown}>{children}</div>
+}
+
+function findExplicitTarget(
+  element: HTMLElement,
+  direction: Direction,
+  region: HTMLElement,
+): HTMLElement | undefined {
+  const attribute = `data-focus-${direction}`
+  const selector = element.getAttribute(attribute)
+  return selector ? region.querySelector<HTMLElement>(selector) ?? undefined : undefined
+}
+
+function findPlayerCardTarget(element: HTMLElement, direction: Direction): HTMLElement | undefined {
+  const card = element.closest<HTMLElement>('[data-player-id]')
+  if (!card) return undefined
+
+  const name = card.querySelector<HTMLElement>('.player-card__name')
+  const boundary = card.querySelector<HTMLElement>('.player-card__boundary')
+  const relationship = card.querySelector<HTMLElement>('.relationship-toggle input')
+
+  if (element === name && direction === 'down') return boundary ?? relationship ?? undefined
+  if (element === boundary && direction === 'right') return relationship ?? undefined
+  if (element === relationship && direction === 'left') return boundary ?? undefined
+  if ((element === boundary || element === relationship) && direction === 'up') return name ?? undefined
+  return undefined
 }
 
 function focusAndReveal(element: HTMLElement) {
@@ -92,13 +131,12 @@ function directionFromKey(key: string): Direction | undefined {
   return undefined
 }
 
-function isTextControl(element: HTMLElement): boolean {
-  return (
+function preservesArrow(element: HTMLElement, direction: Direction): boolean {
+  const isTextControl =
     element.matches(
-      'textarea, select, input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="tel"], input[type="password"], input[type="number"], [contenteditable="true"]',
-    ) ||
-    Boolean(element.closest('[role="textbox"]'))
-  )
+      'textarea, input:not([type]), input[type="text"], input[type="search"], input[type="email"], input[type="url"], input[type="tel"], input[type="password"], input[type="number"], [contenteditable="true"]',
+    ) || Boolean(element.closest('[role="textbox"]'))
+  return isTextControl && (direction === 'left' || direction === 'right')
 }
 
 function findDirectionalTarget(
@@ -120,7 +158,6 @@ function findDirectionalTarget(
     if (primary <= 1) continue
 
     const secondary = direction === 'left' || direction === 'right' ? Math.abs(dy) : Math.abs(dx)
-    if (secondary > primary) continue
     const score = primary * 1000 + secondary * 10 + Math.hypot(dx, dy)
     if (!best || score < best.score) best = { element: candidate, score }
   }
