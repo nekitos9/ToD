@@ -1,0 +1,1135 @@
+{
+  "id": "32:1083",
+  "name": "Правила игры (2)",
+  "type": "FRAME",
+  "layout": {
+    "width": 1440,
+    "height": 1024,
+    "x": 1746,
+    "y": 174,
+    "relativeTransform": [
+      [
+        1,
+        0,
+        1746
+      ],
+      [
+        0,
+        1,
+        174
+      ]
+    ],
+    "renderBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1024
+    },
+    "gridRowAnchorIndex": -1,
+    "gridColumnAnchorIndex": -1,
+    "gridRowSpan": 1,
+    "gridColumnSpan": 1,
+    "gridChildHorizontalAlign": "auto",
+    "gridChildVerticalAlign": "auto",
+    "layoutAlign": "inherit",
+    "constraints": {
+      "horizontal": "min",
+      "vertical": "min"
+    },
+    "overflow": "hidden",
+    "mode": "none",
+    "sizing": {
+      "horizontal": "fixed",
+      "vertical": "fixed"
+    }
+  },
+  "style": {
+    "blendMode": "pass_through",
+    "fills": [
+      {
+        "type": "solid",
+        "sourceType": "SOLID",
+        "color": "#427CBE"
+      }
+    ],
+    "backgroundColor": "#427CBE"
+  },
+  "children": [
+    {
+      "id": "32:1084",
+      "name": "Ellipse 3",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -762,
+        "y": 158,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -762
+          ],
+          [
+            0,
+            1,
+            158
+          ]
+        ],
+        "renderBounds": {
+          "x": 762,
+          "y": 0,
+          "width": 250,
+          "height": 866
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.1,
+            "color": "#CAA6DE"
+          }
+        ],
+        "backgroundColor": "#CAA6DE",
+        "backgroundOpacity": 0.1
+      }
+    },
+    {
+      "id": "32:1085",
+      "name": "Ellipse 4",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -209,
+        "y": 715,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -209
+          ],
+          [
+            0,
+            1,
+            715
+          ]
+        ],
+        "renderBounds": {
+          "x": 209,
+          "y": 0,
+          "width": 803,
+          "height": 309
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.1,
+            "color": "#CAA6DE"
+          }
+        ],
+        "backgroundColor": "#CAA6DE",
+        "backgroundOpacity": 0.1
+      }
+    },
+    {
+      "id": "32:1086",
+      "name": "Правила игры",
+      "type": "TEXT",
+      "text": "Правила игры",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "textStyleName": "PC_H1",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Bold",
+        "fontSize": 45,
+        "fontWeight": 700,
+        "textAlignVertical": "top",
+        "textAutoResize": "width-and-height",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 292,
+        "height": 70,
+        "x": 100,
+        "y": 112,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            112
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.67,
+          "y": 16.3,
+          "width": 290.76,
+          "height": 38.25
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "center",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:1087",
+      "name": "У каждой игры должны быть правила",
+      "type": "TEXT",
+      "text": "У каждой игры должны быть правила",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "textStyleName": "PC_UnderHeader",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "height",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 366,
+        "height": 19,
+        "x": 100,
+        "y": 172,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            172
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.18,
+          "y": 3,
+          "width": 288.68,
+          "height": 16
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:1088",
+      "name": "Нельзя выбирать более двух прав подряд. Задания не могут быть связаны с физическим вредом самому себе или другим участникам Задания не могут быть связаны с насильным опьянением другого человека Все что происходит в игре - остается в игре. Если задание подразумевает взамодействие с людьми вне игры - по согласованию со столом его можно пропустить",
+      "type": "TEXT",
+      "text": "Нельзя выбирать более двух прав подряд.\nЗадания не могут быть связаны с физическим вредом самому себе или другим участникам\nЗадания не могут быть связаны с насильным опьянением другого человека\nВсе что происходит в игре - остается в игре. Если задание подразумевает взамодействие с людьми вне игры - по согласованию со столом его можно пропустить",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "textStyleName": "PC_Text",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 25,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "height",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 1145,
+        "height": 205,
+        "x": 90,
+        "y": 239,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            90
+          ],
+          [
+            0,
+            1,
+            239
+          ]
+        ],
+        "renderBounds": {
+          "x": 9.9,
+          "y": 4.25,
+          "width": 1121.18,
+          "height": 201.25
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:1089",
+      "name": "Нельзя отказаться от задания более двух раз",
+      "type": "TEXT",
+      "text": "Нельзя отказаться от задания более двух раз",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "textStyleName": "PC_Text",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 25,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "height",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 790,
+        "height": 29,
+        "x": 136,
+        "y": 465,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            136
+          ],
+          [
+            0,
+            1,
+            465
+          ]
+        ],
+        "renderBounds": {
+          "x": 1.25,
+          "y": 4.25,
+          "width": 527.27,
+          "height": 25.25
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:1090",
+      "name": "У пользователя есть право пропустить круг только дважды, если его нет за столом",
+      "type": "TEXT",
+      "text": "У пользователя есть право пропустить круг только дважды, если его нет за столом",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "textStyleName": "PC_Text",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 25,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "height",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 1105,
+        "height": 29,
+        "x": 136,
+        "y": 512,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            136
+          ],
+          [
+            0,
+            1,
+            512
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.27,
+          "y": 6.25,
+          "width": 977.56,
+          "height": 23.25
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:1091",
+      "name": "Rectangle 7",
+      "type": "RECTANGLE",
+      "layout": {
+        "width": 25,
+        "height": 25,
+        "x": 100,
+        "y": 514,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            514
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 25,
+          "height": 25
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "targetAspectRatio": {
+          "x": 20,
+          "y": 20
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "backgroundColor": "#FFFFFF",
+        "borderRadius": 100
+      }
+    },
+    {
+      "id": "32:1092",
+      "name": "Group 1",
+      "type": "INSTANCE",
+      "layout": {
+        "width": 25,
+        "height": 25,
+        "x": 100,
+        "y": 467,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            467
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 25,
+          "height": 25
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "targetAspectRatio": {
+          "x": 20,
+          "y": 20
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through"
+      },
+      "children": [
+        {
+          "id": "I32:1092;9:53",
+          "name": "Rectangle 6",
+          "type": "RECTANGLE",
+          "layout": {
+            "width": 25,
+            "height": 25,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "renderBounds": {
+              "x": 0,
+              "y": 0,
+              "width": 25,
+              "height": 25
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "scale",
+              "vertical": "scale"
+            },
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          },
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "solid",
+                "sourceType": "SOLID",
+                "color": "#FFFFFF"
+              }
+            ],
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 1000
+          }
+        },
+        {
+          "id": "I32:1092;9:100",
+          "name": "twemoji:check-mark",
+          "type": "FRAME",
+          "layout": {
+            "width": 17.5,
+            "height": 17.5,
+            "x": 3.75,
+            "y": 3,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                3.75
+              ],
+              [
+                0,
+                1,
+                3
+              ]
+            ],
+            "renderBounds": {
+              "x": 0,
+              "y": 0,
+              "width": 17.5,
+              "height": 17.5
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "scale",
+              "vertical": "min"
+            },
+            "targetAspectRatio": {
+              "x": 18,
+              "y": 18
+            },
+            "overflow": "hidden",
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          },
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "solid",
+                "sourceType": "SOLID",
+                "visible": false,
+                "color": "#FFFFFF"
+              }
+            ]
+          },
+          "children": [
+            {
+              "id": "I32:1092;9:101",
+              "name": "Vector",
+              "type": "VECTOR",
+              "vectorPaths": [
+                {
+                  "windingRule": "NONZERO",
+                  "data": "M 16.621706557060843 0.23479696040527134 C 16.29725422044087 0.02437431939036408 15.902510231656544 -0.04856473049985685 15.524286795581515 0.032020844549682084 C 15.146063359506487 0.11260641959922102 14.8153324270691 0.3401176523386526 14.604831531103809 0.6645192558959585 L 6.4333037747556805 13.260145262341792 L 2.4481652498442967 9.575422835537205 C 2.3075642131342637 9.44541873892673 2.1427337751630833 9.344381257743889 1.963084948218038 9.278078820199273 C 1.7834361212729923 9.211776382654657 1.5924869431689561 9.181507427642826 1.4011402207216856 9.189000599923446 C 1.0146980866698037 9.20413374460319 0.6500952635688608 9.372160817618484 0.38754015091943067 9.65611746329337 C 0.12498503827000051 9.940074108968256 -0.01401514544283392 10.316699956320058 0.0011179978269281311 10.703142126377433 C 0.016251141096690184 11.089584296434808 0.18427797809211183 11.454187617098148 0.4682345973102598 11.7167427542103 L 5.700734365353953 16.554518831732047 C 5.700734365353953 16.554518831732047 5.85094252811441 16.683824958423827 5.920456418330914 16.72903329579429 C 6.081127714670991 16.83330004094494 6.2607650242605155 16.904894997211496 6.449109005520021 16.939728311427235 C 6.637452986779526 16.974561625642973 6.830814145412882 16.97195030407458 7.018149235303165 16.932045669576105 C 7.2054843251934475 16.892141035077632 7.383123844435245 16.815724974911266 7.540922089356903 16.707159184455666 C 7.698720334278562 16.598593394000066 7.83358633640285 16.46000580991861 7.937817751948518 16.299311594280486 L 17.051428218536728 2.2516721308163743 C 17.261850839946188 1.9272197639666053 17.334790636377015 1.5324746953219368 17.254205068835773 1.154251224007165 C 17.17361950129453 0.7760277526923931 16.946108130393085 0.4452978759833003 16.621706557060843 0.23479696040527134 Z"
+                }
+              ],
+              "fillGeometry": [
+                {
+                  "windingRule": "NONZERO",
+                  "data": "M16.6217 0.234797 C16.2973 0.0243743 15.9025 -0.0485647 15.5243 0.0320208 C15.1461 0.112606 14.8153 0.340118 14.6048 0.664519 L6.4333 13.2601 L2.44817 9.57542 C2.30756 9.44542 2.14273 9.34438 1.96308 9.27808 C1.78344 9.21178 1.59249 9.18151 1.40114 9.189 C1.0147 9.20413 0.650095 9.37216 0.38754 9.65612 C0.124985 9.94007 -0.0140151 10.3167 0.001118 10.7031 C0.0162511 11.0896 0.184278 11.4542 0.468235 11.7167 L5.70073 16.5545 C5.70073 16.5545 5.85094 16.6838 5.92046 16.729 C6.08113 16.8333 6.26077 16.9049 6.44911 16.9397 C6.63745 16.9746 6.83081 16.972 7.01815 16.932 C7.20548 16.8921 7.38312 16.8157 7.54092 16.7072 C7.69872 16.5986 7.83359 16.46 7.93782 16.2993 L17.0514 2.25167 C17.2619 1.92722 17.3348 1.53247 17.2542 1.15425 C17.1736 0.776028 16.9461 0.445298 16.6217 0.234797 Z"
+                }
+              ],
+              "layout": {
+                "width": 17.29,
+                "height": 16.96,
+                "x": 0.13,
+                "y": 0.43,
+                "relativeTransform": [
+                  [
+                    1,
+                    0,
+                    0.13
+                  ],
+                  [
+                    0,
+                    1,
+                    0.43
+                  ]
+                ],
+                "renderBounds": {
+                  "x": 0,
+                  "y": 0,
+                  "width": 17.29,
+                  "height": 16.96
+                },
+                "gridRowAnchorIndex": -1,
+                "gridColumnAnchorIndex": -1,
+                "gridRowSpan": 1,
+                "gridColumnSpan": 1,
+                "gridChildHorizontalAlign": "auto",
+                "gridChildVerticalAlign": "auto",
+                "layoutAlign": "inherit",
+                "constraints": {
+                  "horizontal": "scale",
+                  "vertical": "scale"
+                },
+                "mode": "none",
+                "sizing": {
+                  "horizontal": "fixed",
+                  "vertical": "fixed"
+                }
+              },
+              "style": {
+                "blendMode": "pass_through",
+                "fills": [
+                  {
+                    "type": "solid",
+                    "sourceType": "SOLID",
+                    "color": "#FF0004"
+                  }
+                ],
+                "backgroundColor": "#FF0004"
+              }
+            }
+          ],
+          "prototype": {
+            "overflowDirection": "none",
+            "overlayPositionType": "center",
+            "overlayBackground": {
+              "type": "NONE"
+            },
+            "overlayBackgroundInteraction": "none"
+          }
+        }
+      ],
+      "prototype": {
+        "overflowDirection": "none",
+        "overlayPositionType": "center",
+        "overlayBackground": {
+          "type": "NONE"
+        },
+        "overlayBackgroundInteraction": "none"
+      }
+    },
+    {
+      "id": "32:1094",
+      "name": "Rectangle 22",
+      "type": "RECTANGLE",
+      "layout": {
+        "width": 295,
+        "height": 80,
+        "x": 100,
+        "y": 588,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            588
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 295,
+          "height": 80
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "backgroundColor": "#FFFFFF",
+        "borderRadius": 43.5
+      }
+    },
+    {
+      "id": "42:4048",
+      "name": "Group 49",
+      "type": "GROUP",
+      "layout": {
+        "width": 295,
+        "height": 80,
+        "x": 415,
+        "y": 588,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            415
+          ],
+          [
+            0,
+            1,
+            588
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 295,
+          "height": 80
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through"
+      },
+      "children": [
+        {
+          "id": "32:1093",
+          "name": "Rectangle 3",
+          "type": "RECTANGLE",
+          "layout": {
+            "width": 295,
+            "height": 80,
+            "x": 415,
+            "y": 588,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                415
+              ],
+              [
+                0,
+                1,
+                588
+              ]
+            ],
+            "renderBounds": {
+              "x": 0,
+              "y": 0,
+              "width": 295,
+              "height": 80
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "min",
+              "vertical": "min"
+            },
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          },
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "solid",
+                "sourceType": "SOLID",
+                "color": "#FFFFFF"
+              }
+            ],
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 43.5
+          }
+        },
+        {
+          "id": "32:1095",
+          "name": "Далее",
+          "type": "TEXT",
+          "text": "Далее",
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "solid",
+                "sourceType": "SOLID",
+                "color": "#4269BE"
+              }
+            ],
+            "color": "#4269BE",
+            "fontFamily": "El Messiri",
+            "fontStyleName": "Bold",
+            "fontSize": 32,
+            "fontWeight": 700,
+            "textAlign": "center",
+            "textAlignVertical": "center",
+            "textAutoResize": "none",
+            "textTruncation": "disabled",
+            "leadingTrim": "none"
+          },
+          "layout": {
+            "width": 295,
+            "height": 80,
+            "x": 415,
+            "y": 588,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                415
+              ],
+              [
+                0,
+                1,
+                588
+              ]
+            ],
+            "renderBounds": {
+              "x": 103.06,
+              "y": 26.88,
+              "width": 87.83,
+              "height": 27.01
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "min",
+              "vertical": "min"
+            },
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "32:1096",
+      "name": "Назад",
+      "type": "TEXT",
+      "text": "Назад",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#4269BE"
+          }
+        ],
+        "color": "#4269BE",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Bold",
+        "fontSize": 32,
+        "fontWeight": 700,
+        "textAlign": "center",
+        "textAlignVertical": "center",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 295,
+        "height": 80,
+        "x": 100,
+        "y": 588,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            588
+          ]
+        ],
+        "renderBounds": {
+          "x": 103.9,
+          "y": 26.88,
+          "width": 87.42,
+          "height": 26.24
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    }
+  ],
+  "prototype": {
+    "overflowDirection": "none",
+    "overlayPositionType": "center",
+    "overlayBackground": {
+      "type": "NONE"
+    },
+    "overlayBackgroundInteraction": "none"
+  }
+}

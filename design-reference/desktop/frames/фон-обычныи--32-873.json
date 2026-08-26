@@ -1,0 +1,193 @@
+{
+  "id": "32:873",
+  "name": "Фон - Обычный",
+  "type": "FRAME",
+  "layout": {
+    "width": 1440,
+    "height": 1024,
+    "x": 10748,
+    "y": 171,
+    "relativeTransform": [
+      [
+        1,
+        0,
+        10748
+      ],
+      [
+        0,
+        1,
+        171
+      ]
+    ],
+    "renderBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1024
+    },
+    "gridRowAnchorIndex": -1,
+    "gridColumnAnchorIndex": -1,
+    "gridRowSpan": 1,
+    "gridColumnSpan": 1,
+    "gridChildHorizontalAlign": "auto",
+    "gridChildVerticalAlign": "auto",
+    "layoutAlign": "inherit",
+    "constraints": {
+      "horizontal": "min",
+      "vertical": "min"
+    },
+    "overflow": "hidden",
+    "mode": "none",
+    "sizing": {
+      "horizontal": "fixed",
+      "vertical": "fixed"
+    }
+  },
+  "style": {
+    "blendMode": "pass_through",
+    "fills": [
+      {
+        "type": "solid",
+        "sourceType": "SOLID",
+        "color": "#427CBE"
+      }
+    ],
+    "backgroundColor": "#427CBE"
+  },
+  "children": [
+    {
+      "id": "32:874",
+      "name": "Ellipse 3",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -762,
+        "y": 158,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -762
+          ],
+          [
+            0,
+            1,
+            158
+          ]
+        ],
+        "renderBounds": {
+          "x": 762,
+          "y": 0,
+          "width": 250,
+          "height": 866
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.1,
+            "color": "#CAA6DE"
+          }
+        ],
+        "backgroundColor": "#CAA6DE",
+        "backgroundOpacity": 0.1
+      }
+    },
+    {
+      "id": "32:875",
+      "name": "Ellipse 4",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -209,
+        "y": 715,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -209
+          ],
+          [
+            0,
+            1,
+            715
+          ]
+        ],
+        "renderBounds": {
+          "x": 209,
+          "y": 0,
+          "width": 803,
+          "height": 309
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.1,
+            "color": "#CAA6DE"
+          }
+        ],
+        "backgroundColor": "#CAA6DE",
+        "backgroundOpacity": 0.1
+      }
+    }
+  ],
+  "prototype": {
+    "overflowDirection": "none",
+    "overlayPositionType": "center",
+    "overlayBackground": {
+      "type": "NONE"
+    },
+    "overlayBackgroundInteraction": "none"
+  }
+}

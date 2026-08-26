@@ -1,0 +1,47 @@
+:root {
+  --color-background-mobile: #4269be;
+  --color-background-wide: #427cbe;
+  --color-background-accent: #9a3bc2;
+  --color-surface: #ffffff;
+  --color-text: #ffffff;
+  --color-text-on-surface: #171717;
+  --color-primary: #4269be;
+  --color-truth: #0bd32a;
+  --color-dare: #ed1c24;
+  --color-warning: #ffbd12;
+  --color-focus: #07963d;
+  --color-focus-on-green: #111111;
+  --color-divider: #b9a0dc;
+  --color-overlay: rgb(24 74 151 / 72%);
+  --color-circle: rgb(255 255 255 / 8%);
+
+  --font-display: 'El Messiri', Georgia, serif;
+  --font-body: 'Brygada 1918', Georgia, serif;
+
+  --font-size-title: 37px;
+  --font-size-subtitle: 13px;
+  --font-size-body: 20px;
+  --font-size-button: 32px;
+
+  --screen-gutter: 29px;
+  --screen-top: 120px;
+  --screen-max-width: 1240px;
+  --navigation-height: 114px;
+  --control-height: 80px;
+  --control-radius: 44px;
+  --surface-radius: 10px;
+  --focus-width: 2px;
+  --focus-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --font-size-title: 45px;
+    --font-size-subtitle: 16px;
+    --font-size-body: 25px;
+    --screen-gutter: 100px;
+    --screen-top: 112px;
+    --navigation-height: 156px;
+  }
+}
+

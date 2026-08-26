@@ -1,6 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import '@fontsource/el-messiri/cyrillic-700.css'
+import '@fontsource/brygada-1918/cyrillic-400.css'
+import '@fontsource/brygada-1918/cyrillic-700.css'
 import { App } from './app/App'
+import './styles/tokens.css'
 import './styles/global.css'
 
 const rootElement = document.getElementById('root')
@@ -14,4 +18,3 @@ createRoot(rootElement).render(
     <App />
   </StrictMode>,
 )
-

@@ -1,0 +1,2753 @@
+{
+  "id": "22:563",
+  "name": "Игровой процесс (5) - Выход",
+  "type": "FRAME",
+  "layout": {
+    "width": 424,
+    "height": 917,
+    "x": 2723,
+    "y": 174,
+    "relativeTransform": [
+      [
+        1,
+        0,
+        2723
+      ],
+      [
+        0,
+        1,
+        174
+      ]
+    ],
+    "renderBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 424,
+      "height": 917
+    },
+    "gridRowAnchorIndex": -1,
+    "gridColumnAnchorIndex": -1,
+    "gridRowSpan": 1,
+    "gridColumnSpan": 1,
+    "gridChildHorizontalAlign": "auto",
+    "gridChildVerticalAlign": "auto",
+    "layoutAlign": "inherit",
+    "constraints": {
+      "horizontal": "min",
+      "vertical": "min"
+    },
+    "overflow": "hidden",
+    "mode": "none",
+    "sizing": {
+      "horizontal": "fixed",
+      "vertical": "fixed"
+    }
+  },
+  "style": {
+    "blendMode": "pass_through",
+    "fills": [
+      {
+        "type": "solid",
+        "sourceType": "SOLID",
+        "color": "#427CBE"
+      }
+    ],
+    "backgroundColor": "#427CBE"
+  },
+  "children": [
+    {
+      "id": "22:566",
+      "name": "Ellipse 3",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -713,
+        "y": 1,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -713
+          ],
+          [
+            0,
+            1,
+            1
+          ]
+        ],
+        "renderBounds": {
+          "x": 713,
+          "y": 0,
+          "width": 299,
+          "height": 916
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.1,
+            "color": "#CAA6DE"
+          }
+        ],
+        "backgroundColor": "#CAA6DE",
+        "backgroundOpacity": 0.1
+      }
+    },
+    {
+      "id": "22:567",
+      "name": "Ellipse 4",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -571,
+        "y": 536,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -571
+          ],
+          [
+            0,
+            1,
+            536
+          ]
+        ],
+        "renderBounds": {
+          "x": 571,
+          "y": 0,
+          "width": 424,
+          "height": 381
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.1,
+            "color": "#CAA6DE"
+          }
+        ],
+        "backgroundColor": "#CAA6DE",
+        "backgroundOpacity": 0.1
+      }
+    },
+    {
+      "id": "22:568",
+      "name": "Правда или действие",
+      "type": "TEXT",
+      "text": "Правда или действие",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "textStyleName": "H1",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Bold",
+        "fontSize": 37.13,
+        "fontWeight": 700,
+        "textAlignVertical": "top",
+        "textAutoResize": "width-and-height",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 364,
+        "height": 58,
+        "x": 29,
+        "y": 120,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            29
+          ],
+          [
+            0,
+            1,
+            120
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.56,
+          "y": 13.49,
+          "width": 361.32,
+          "height": 31.56
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "center",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "22:569",
+      "name": "Автоматический",
+      "type": "TEXT",
+      "text": "Автоматический",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "textStyleName": "Under_H1",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 13,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "width-and-height",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 106,
+        "height": 15,
+        "x": 29,
+        "y": 176,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            29
+          ],
+          [
+            0,
+            1,
+            176
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.2,
+          "y": 3.06,
+          "width": 104.34,
+          "height": 9.07
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "center",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "22:570",
+      "name": "Rectangle 25",
+      "type": "RECTANGLE",
+      "layout": {
+        "width": 366,
+        "height": 563,
+        "x": 29,
+        "y": 210,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            29
+          ],
+          [
+            0,
+            1,
+            210
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 366,
+          "height": 563
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "backgroundColor": "#FFFFFF",
+        "borderRadius": 20
+      }
+    },
+    {
+      "id": "22:571",
+      "name": "Никита",
+      "type": "TEXT",
+      "text": "Никита",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#427CBE"
+          }
+        ],
+        "color": "#427CBE",
+        "textStyleName": "H1",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Bold",
+        "fontSize": 37.13,
+        "fontWeight": 700,
+        "textAlign": "center",
+        "textAlignVertical": "center",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 366,
+        "height": 71,
+        "x": 29,
+        "y": 210,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            29
+          ],
+          [
+            0,
+            1,
+            210
+          ]
+        ],
+        "renderBounds": {
+          "x": 121.44,
+          "y": 19.49,
+          "width": 121.74,
+          "height": 24.88
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "center",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "22:572",
+      "name": "Открывай галерею, начинай быстро листать фотки перед игроками. Останавливаешься, когда тебе говорят «Стоп».",
+      "type": "TEXT",
+      "text": "Открывай галерею, начинай быстро листать фотки перед игроками. Останавливаешься, когда тебе говорят «Стоп».",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#000000"
+          }
+        ],
+        "color": "#000000",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 24,
+        "fontWeight": 400,
+        "textAlign": "center",
+        "textAlignVertical": "center",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 328,
+        "height": 392,
+        "x": 50,
+        "y": 313,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            50
+          ],
+          [
+            0,
+            1,
+            313
+          ]
+        ],
+        "renderBounds": {
+          "x": 1.49,
+          "y": 131.49,
+          "width": 325.27,
+          "height": 134.51
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "center",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "22:573",
+      "name": "Личное-публичное",
+      "type": "TEXT",
+      "text": "Личное-публичное",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#427CBE"
+          }
+        ],
+        "color": "#427CBE",
+        "textStyleName": "Text",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 20,
+        "fontWeight": 400,
+        "textAlign": "center",
+        "textAlignVertical": "center",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 366,
+        "height": 54,
+        "x": 29,
+        "y": 719,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            29
+          ],
+          [
+            0,
+            1,
+            719
+          ]
+        ],
+        "renderBounds": {
+          "x": 92.12,
+          "y": 19,
+          "width": 181.27,
+          "height": 20.2
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "center",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "22:574",
+      "name": "Действие",
+      "type": "TEXT",
+      "text": "Действие",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FF2A2D"
+          }
+        ],
+        "color": "#FF2A2D",
+        "textStyleName": "Text",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 20,
+        "fontWeight": 400,
+        "textAlign": "center",
+        "textAlignVertical": "center",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 366,
+        "height": 45,
+        "x": 29,
+        "y": 254,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            29
+          ],
+          [
+            0,
+            1,
+            254
+          ]
+        ],
+        "renderBounds": {
+          "x": 138.13,
+          "y": 15.24,
+          "width": 89.24,
+          "height": 17.86
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "center",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "22:575",
+      "name": "Ellipse 6",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 64,
+        "height": 64,
+        "x": 105,
+        "y": 811,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            105
+          ],
+          [
+            0,
+            1,
+            811
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "id": "22:576",
+      "name": "Ellipse 7",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 64,
+        "height": 64,
+        "x": 180,
+        "y": 811,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            180
+          ],
+          [
+            0,
+            1,
+            811
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "id": "22:577",
+      "name": "Ellipse 8",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 64,
+        "height": 64,
+        "x": 256,
+        "y": 811,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            256
+          ],
+          [
+            0,
+            1,
+            811
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "id": "22:578",
+      "name": "Ellipse 9",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 64,
+        "height": 64,
+        "x": 331,
+        "y": 811,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            331
+          ],
+          [
+            0,
+            1,
+            811
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "id": "22:579",
+      "name": "Group 21",
+      "type": "GROUP",
+      "layout": {
+        "width": 64,
+        "height": 64,
+        "x": 29,
+        "y": 811,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            29
+          ],
+          [
+            0,
+            1,
+            811
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 64,
+          "height": 64
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through"
+      },
+      "children": [
+        {
+          "id": "22:580",
+          "name": "Ellipse 5",
+          "type": "ELLIPSE",
+          "arcData": {
+            "startingAngle": 0,
+            "endingAngle": 6.2831854820251465,
+            "innerRadius": 0
+          },
+          "layout": {
+            "width": 64,
+            "height": 64,
+            "x": 29,
+            "y": 811,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                29
+              ],
+              [
+                0,
+                1,
+                811
+              ]
+            ],
+            "renderBounds": {
+              "x": 0,
+              "y": 0,
+              "width": 64,
+              "height": 64
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "min",
+              "vertical": "min"
+            },
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          },
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "solid",
+                "sourceType": "SOLID",
+                "color": "#FFFFFF"
+              }
+            ],
+            "backgroundColor": "#FFFFFF"
+          }
+        },
+        {
+          "id": "22:581",
+          "name": "Vector",
+          "type": "VECTOR",
+          "vectorPaths": [
+            {
+              "windingRule": "NONZERO",
+              "data": "M 27.538835525512695 0.8272116196289151 C 28.10230588912964 0.29076757184339186 28.852136611938477 -0.005800500167278792 29.63010597229004 0.00008598140898326022 C 30.4080753326416 0.005972462985245312 31.153331756591797 0.31385388297349937 31.708620071411133 0.8587629830323077 C 32.26390838623047 1.403672083091116 32.585794780403376 2.1429882432824208 32.60635757446289 2.92070815576281 C 32.626920368522406 3.6984280682431994 32.34455227851868 4.453721731478247 31.81883430480957 5.027212512505495 L 15.858835220336914 24.987214971629317 C 15.584399163722992 25.282807957054516 15.253172188997269 25.52002273348488 14.88496208190918 25.684679012159204 C 14.51675197482109 25.84933529083353 14.11911916732788 25.93805225600476 13.715839385986328 25.94552040096312 C 13.312559604644775 25.952988545921478 12.91191479563713 25.87905431791486 12.537860870361328 25.728143675998915 C 12.163806945085526 25.57723303408297 11.82402566075325 25.352442518943825 11.538833618164062 25.067212993867564 L 0.9548335671424866 14.483212582025962 C 0.6600863933563232 14.208564282884332 0.4236777424812317 13.877363539657358 0.259709894657135 13.509366074889545 C 0.09574204683303833 13.141368610121733 0.007574016955913976 12.74411524639654 0.0004668792535085231 12.341303778939775 C -0.00664025844889693 11.93849231148301 0.06745925545692444 11.538375093377446 0.2183433175086975 11.164822445505871 C 0.3692273795604706 10.791269797634296 0.593805730342865 10.451934748332208 0.8786807656288147 10.167059692104482 C 1.1635558009147644 9.882184635876756 1.5028907656669617 9.657606268585127 1.8764433860778809 9.506722195441542 C 2.2499960064888 9.355838122297957 2.650113195180893 9.28173860687394 3.052924633026123 9.288845745098806 C 3.455736070871353 9.295952883323672 3.8529894053936005 9.384120915753199 4.220986843109131 9.548088775630925 C 4.588984280824661 9.71205663550865 4.920184999704361 9.94846530376265 5.194833278656006 10.24321249921631 L 13.57083511352539 18.615212855260573 L 27.46283531188965 0.9152128773187791 L 27.538835525512695 0.8272116196289151 Z"
+            }
+          ],
+          "fillGeometry": [
+            {
+              "windingRule": "NONZERO",
+              "data": "M27.5388 0.827212 C28.1023 0.290768 28.8521 -0.0058005 29.6301 8.59814e-05 C30.4081 0.00597246 31.1533 0.313854 31.7086 0.858763 C32.2639 1.40367 32.5858 2.14299 32.6064 2.92071 C32.6269 3.69843 32.3446 4.45372 31.8188 5.02721 L15.8588 24.9872 C15.5844 25.2828 15.2532 25.52 14.885 25.6847 C14.5168 25.8493 14.1191 25.9381 13.7158 25.9455 C13.3126 25.953 12.9119 25.8791 12.5379 25.7281 C12.1638 25.5772 11.824 25.3524 11.5388 25.0672 L0.954834 14.4832 C0.660086 14.2086 0.423678 13.8774 0.25971 13.5094 C0.095742 13.1414 0.00757402 12.7441 0.000466879 12.3413 C-0.00664026 11.9385 0.0674593 11.5384 0.218343 11.1648 C0.369227 10.7913 0.593806 10.4519 0.878681 10.1671 C1.16356 9.88218 1.50289 9.65761 1.87644 9.50672 C2.25 9.35584 2.65011 9.28174 3.05292 9.28885 C3.45574 9.29595 3.85299 9.38412 4.22099 9.54809 C4.58898 9.71206 4.92019 9.94847 5.19483 10.2432 L13.5708 18.6152 L27.4628 0.915213 L27.5388 0.827212 Z"
+            }
+          ],
+          "layout": {
+            "width": 32.61,
+            "height": 25.95,
+            "x": 45.34,
+            "y": 830.05,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                45.34
+              ],
+              [
+                0,
+                1,
+                830.05
+              ]
+            ],
+            "renderBounds": {
+              "x": 0,
+              "y": 0,
+              "width": 32.61,
+              "height": 25.95
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "scale",
+              "vertical": "scale"
+            },
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          },
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "gradient",
+                "sourceType": "GRADIENT_LINEAR",
+                "gradientType": "linear",
+                "css": "linear-gradient(#00FF33 0%, #ECFFC7 100%)",
+                "gradientStops": [
+                  {
+                    "color": "#00FF33",
+                    "position": 0
+                  },
+                  {
+                    "color": "#ECFFC7",
+                    "position": 1
+                  }
+                ],
+                "transform": [
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    -1,
+                    0,
+                    1
+                  ]
+                ]
+              }
+            ],
+            "backgroundGradient": "linear-gradient(#00FF33 0%, #ECFFC7 100%)",
+            "backgroundGradientType": "linear",
+            "backgroundGradientStops": [
+              {
+                "color": "#00FF33",
+                "position": 0
+              },
+              {
+                "color": "#ECFFC7",
+                "position": 1
+              }
+            ],
+            "backgroundGradientTransform": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1,
+                0,
+                1
+              ]
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "22:582",
+      "name": "Vector",
+      "type": "VECTOR",
+      "vectorPaths": [
+        {
+          "windingRule": "NONZERO",
+          "data": "M 2.0462586879730225 0.013742653653025627 C 1.6877541840076447 0.030241863802075386 1.3374346792697906 0.13088738918304443 1.0231293439865112 0.3239281475543976 C 0.39124464988708496 0.7067098319530487 0 1.3963766694068909 0 2.127291679382324 L 0 23.886449813842773 C 0 24.617364823818207 0.39124464988708496 25.305383920669556 1.0231293439865112 25.689815521240234 C 1.363626778125763 25.899355500936508 1.7581458389759064 26 2.149390459060669 26 C 2.4767918288707733 26 2.817289024591446 25.94555303454399 3.1201353073120117 25.793760299682617 L 13.096055030822754 17.801542282104492 L 13.096055030822754 23.886449813842773 C 13.096055030822754 24.617364823818207 13.487299799919128 25.305383920669556 14.119184494018555 25.689815521240234 C 14.459681928157806 25.899355500936508 14.852562665939331 26 15.245444297790527 26 C 15.572845667600632 26 15.9133440554142 25.94555303454399 16.216190338134766 25.793760299682617 L 29.824628829956055 14.914179801940918 C 30.479431569576263 14.293809533119202 31 13.807082951068878 31 13.006871223449707 C 31 12.206659495830536 30.558007955551147 11.752931356430054 29.824628829956055 11.099562644958496 L 16.216190338134766 0.2199828028678894 C 15.88590070605278 0.059226810932159424 15.520888328552246 -0.01548969466239214 15.154546737670898 0.002669236622750759 C 14.78820514678955 0.020828167907893658 14.432229787111282 0.13128313422203064 14.119184494018555 0.3239281475543976 C 13.487299799919128 0.7067098319530487 13.096055030822754 1.3963766694068909 13.096055030822754 2.127291679382324 L 13.096055030822754 8.212200164794922 L 3.1201353073120117 0.2199828028678894 C 2.7849616408348083 0.061678797006607056 2.4157054722309113 -0.009237594902515411 2.0462586879730225 0.013742653653025627 Z"
+        }
+      ],
+      "fillGeometry": [
+        {
+          "windingRule": "NONZERO",
+          "data": "M2.04626 0.0137427 C1.68775 0.0302419 1.33743 0.130887 1.02313 0.323928 C0.391245 0.70671 0 1.39638 0 2.12729 L0 23.8864 C0 24.6174 0.391245 25.3054 1.02313 25.6898 C1.36363 25.8994 1.75815 26 2.14939 26 C2.47679 26 2.81729 25.9456 3.12014 25.7938 L13.0961 17.8015 L13.0961 23.8864 C13.0961 24.6174 13.4873 25.3054 14.1192 25.6898 C14.4597 25.8994 14.8526 26 15.2454 26 C15.5728 26 15.9133 25.9456 16.2162 25.7938 L29.8246 14.9142 C30.4794 14.2938 31 13.8071 31 13.0069 C31 12.2067 30.558 11.7529 29.8246 11.0996 L16.2162 0.219983 C15.8859 0.0592268 15.5209 -0.0154897 15.1545 0.00266924 C14.7882 0.0208282 14.4322 0.131283 14.1192 0.323928 C13.4873 0.70671 13.0961 1.39638 13.0961 2.12729 L13.0961 8.2122 L3.12014 0.219983 C2.78496 0.0616788 2.41571 -0.00923759 2.04626 0.0137427 Z"
+        }
+      ],
+      "layout": {
+        "width": 31,
+        "height": 26,
+        "x": 124,
+        "y": 830,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            124
+          ],
+          [
+            0,
+            1,
+            830
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 31,
+          "height": 26
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "scale",
+          "vertical": "scale"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "gradient",
+            "sourceType": "GRADIENT_LINEAR",
+            "gradientType": "linear",
+            "css": "linear-gradient(#FFDD00 0%, #FF952B 100%)",
+            "gradientStops": [
+              {
+                "color": "#FFDD00",
+                "position": 0
+              },
+              {
+                "color": "#FF952B",
+                "position": 1
+              }
+            ],
+            "transform": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1,
+                0,
+                1
+              ]
+            ]
+          }
+        ],
+        "backgroundGradient": "linear-gradient(#FFDD00 0%, #FF952B 100%)",
+        "backgroundGradientType": "linear",
+        "backgroundGradientStops": [
+          {
+            "color": "#FFDD00",
+            "position": 0
+          },
+          {
+            "color": "#FF952B",
+            "position": 1
+          }
+        ],
+        "backgroundGradientTransform": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "22:583",
+      "name": "Vector",
+      "type": "VECTOR",
+      "vectorPaths": [
+        {
+          "windingRule": "NONZERO",
+          "data": "M 31.479166666666664 19.333333333333332 C 31.479166666666664 19.402777776122093 31.47222222263614 19.451388888061043 31.458333333333332 19.479166666666664 C 30.56944441795349 23.2013889948527 28.708333333333332 26.21875 25.875 28.53125 C 23.041666666666668 30.84375 19.722222328186035 32 15.916666666666666 32 C 13.888888835906982 32 11.927083333333334 31.618055582046505 10.03125 30.854166666666664 C 8.135416666666666 30.090277751286823 6.444444497426351 29 4.958333333333333 27.583333333333332 L 2.270833333333333 30.270833333333332 C 2.006944437821706 30.53472222884496 1.694444457689921 30.666666666666664 1.3333333333333333 30.666666666666664 C 0.9722222089767456 30.666666666666664 0.6597222288449605 30.53472222884496 0.3958333333333333 30.270833333333332 C 0.13194443782170612 30.006944437821705 0 29.69444445768992 0 29.333333333333332 L 0 20 C 0 19.638888875643413 0.13194443782170612 19.326388895511627 0.3958333333333333 19.0625 C 0.6597222288449605 18.798611104488373 0.9722222089767456 18.666666666666664 1.3333333333333333 18.666666666666664 L 10.666666666666666 18.666666666666664 C 11.027777791023254 18.666666666666664 11.340277771155039 18.798611104488373 11.604166666666666 19.0625 C 11.868055562178293 19.326388895511627 12 19.638888875643413 12 20 C 12 20.361111124356587 11.868055562178293 20.673611104488373 11.604166666666666 20.9375 L 8.75 23.791666666666664 C 9.736111084620157 24.708333333333332 10.854166666666666 25.416666666666664 12.104166666666666 25.916666666666664 C 13.354166666666666 26.416666666666664 14.652777830759684 26.666666666666664 16 26.666666666666664 C 17.861111164093018 26.666666666666664 19.597222169240315 26.215277751286823 21.208333333333332 25.3125 C 22.81944449742635 24.409722248713177 24.111111084620156 23.166666666666664 25.083333333333332 21.583333333333332 C 25.236111114422478 21.34722222884496 25.604166666666668 20.534722169240315 26.1875 19.145833333333332 C 26.29861111442248 18.826388895511627 26.506944437821705 18.666666666666664 26.8125 18.666666666666664 L 30.8125 18.666666666666664 C 30.993055562178295 18.666666666666664 31.149305552244186 18.73263888557752 31.28125 18.864583333333332 C 31.413194447755814 18.996527781089146 31.479166666666664 19.152777771155037 31.479166666666664 19.333333333333332 Z M 32 2.6666666666666665 L 32 12 C 32 12.361111124356588 31.86805556217829 12.673611104488373 31.604166666666664 12.9375 C 31.340277771155037 13.201388895511627 31.02777779102325 13.333333333333332 30.666666666666664 13.333333333333332 L 21.333333333333332 13.333333333333332 C 20.972222208976746 13.333333333333332 20.65972222884496 13.201388895511627 20.395833333333332 12.9375 C 20.131944437821705 12.673611104488373 20 12.361111124356588 20 12 C 20 11.638888875643412 20.131944437821705 11.326388895511627 20.395833333333332 11.0625 L 23.270833333333332 8.1875 C 21.215277830759682 6.284722169240316 18.791666666666668 5.333333333333333 16 5.333333333333333 C 14.138888835906982 5.333333333333333 12.402777830759684 5.784722248713176 10.791666666666666 6.6875 C 9.180555502573648 7.590277751286824 7.888888915379842 8.833333333333332 6.916666666666666 10.416666666666666 C 6.763888885577519 10.652777771155039 6.395833333333333 11.465277830759684 5.8125 12.854166666666666 C 5.701388885577519 13.173611104488373 5.493055562178294 13.333333333333332 5.1875 13.333333333333332 L 1.0416666666666665 13.333333333333332 C 0.8611111044883727 13.333333333333332 0.7048611144224802 13.26736111442248 0.5729166666666666 13.135416666666666 C 0.44097221891085303 13.003472218910852 0.375 12.84722222884496 0.375 12.666666666666666 L 0.375 12.520833333333332 C 1.2777777512868245 8.798611005147297 3.152777671813965 5.78125 6 3.46875 C 8.847222328186035 1.15625 12.180555661519369 0 16 0 C 18.027777830759685 0 19.999999999999996 0.38541666666666674 21.916666666666664 1.15625 C 23.833333333333332 1.9270833333333333 25.534722169240315 3.013888835906982 27.020833333333332 4.416666666666666 L 29.729166666666664 1.7291666666666665 C 29.99305556217829 1.4652777711550393 30.305555542310078 1.3333333333333333 30.666666666666664 1.3333333333333333 C 31.02777779102325 1.3333333333333333 31.340277771155037 1.4652777711550393 31.604166666666664 1.7291666666666665 C 31.86805556217829 1.9930555621782937 32 2.3055555423100786 32 2.6666666666666665 Z"
+        }
+      ],
+      "fillGeometry": [
+        {
+          "windingRule": "NONZERO",
+          "data": "M31.4792 19.3333 C31.4792 19.4028 31.4722 19.4514 31.4583 19.4792 C30.5694 23.2014 28.7083 26.2188 25.875 28.5312 C23.0417 30.8438 19.7222 32 15.9167 32 C13.8889 32 11.9271 31.6181 10.0312 30.8542 C8.13542 30.0903 6.44444 29 4.95833 27.5833 L2.27083 30.2708 C2.00694 30.5347 1.69444 30.6667 1.33333 30.6667 C0.972222 30.6667 0.659722 30.5347 0.395833 30.2708 C0.131944 30.0069 0 29.6944 0 29.3333 L0 20 C0 19.6389 0.131944 19.3264 0.395833 19.0625 C0.659722 18.7986 0.972222 18.6667 1.33333 18.6667 L10.6667 18.6667 C11.0278 18.6667 11.3403 18.7986 11.6042 19.0625 C11.8681 19.3264 12 19.6389 12 20 C12 20.3611 11.8681 20.6736 11.6042 20.9375 L8.75 23.7917 C9.73611 24.7083 10.8542 25.4167 12.1042 25.9167 C13.3542 26.4167 14.6528 26.6667 16 26.6667 C17.8611 26.6667 19.5972 26.2153 21.2083 25.3125 C22.8194 24.4097 24.1111 23.1667 25.0833 21.5833 C25.2361 21.3472 25.6042 20.5347 26.1875 19.1458 C26.2986 18.8264 26.5069 18.6667 26.8125 18.6667 L30.8125 18.6667 C30.9931 18.6667 31.1493 18.7326 31.2812 18.8646 C31.4132 18.9965 31.4792 19.1528 31.4792 19.3333 Z M32 2.66667 L32 12 C32 12.3611 31.8681 12.6736 31.6042 12.9375 C31.3403 13.2014 31.0278 13.3333 30.6667 13.3333 L21.3333 13.3333 C20.9722 13.3333 20.6597 13.2014 20.3958 12.9375 C20.1319 12.6736 20 12.3611 20 12 C20 11.6389 20.1319 11.3264 20.3958 11.0625 L23.2708 8.1875 C21.2153 6.28472 18.7917 5.33333 16 5.33333 C14.1389 5.33333 12.4028 5.78472 10.7917 6.6875 C9.18056 7.59028 7.88889 8.83333 6.91667 10.4167 C6.76389 10.6528 6.39583 11.4653 5.8125 12.8542 C5.70139 13.1736 5.49306 13.3333 5.1875 13.3333 L1.04167 13.3333 C0.861111 13.3333 0.704861 13.2674 0.572917 13.1354 C0.440972 13.0035 0.375 12.8472 0.375 12.6667 L0.375 12.5208 C1.27778 8.79861 3.15278 5.78125 6 3.46875 C8.84722 1.15625 12.1806 0 16 0 C18.0278 0 20 0.385417 21.9167 1.15625 C23.8333 1.92708 25.5347 3.01389 27.0208 4.41667 L29.7292 1.72917 C29.9931 1.46528 30.3056 1.33333 30.6667 1.33333 C31.0278 1.33333 31.3403 1.46528 31.6042 1.72917 C31.8681 1.99306 32 2.30556 32 2.66667 Z"
+        }
+      ],
+      "layout": {
+        "width": 32,
+        "height": 32,
+        "x": 197,
+        "y": 826,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            197
+          ],
+          [
+            0,
+            1,
+            826
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 32,
+          "height": 32
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "scale",
+          "vertical": "scale"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "gradient",
+            "sourceType": "GRADIENT_LINEAR",
+            "gradientType": "linear",
+            "css": "linear-gradient(#7642BE 0%, #E897DA 100%)",
+            "gradientStops": [
+              {
+                "color": "#7642BE",
+                "position": 0
+              },
+              {
+                "color": "#E897DA",
+                "position": 1
+              }
+            ],
+            "transform": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1,
+                0,
+                1
+              ]
+            ]
+          }
+        ],
+        "backgroundGradient": "linear-gradient(#7642BE 0%, #E897DA 100%)",
+        "backgroundGradientType": "linear",
+        "backgroundGradientStops": [
+          {
+            "color": "#7642BE",
+            "position": 0
+          },
+          {
+            "color": "#E897DA",
+            "position": 1
+          }
+        ],
+        "backgroundGradientTransform": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "22:584",
+      "name": "Vector",
+      "type": "VECTOR",
+      "vectorPaths": [
+        {
+          "windingRule": "EVENODD",
+          "data": "M 1.277688026249526 9.293375492095947 C 0.5144380581139434 9.293375492095947 -0.10368631511295673 8.656437462195754 0.014563675437979443 7.903937458992004 C 0.7536261364047643 3.3325000256299973 4.236624774659835 0 10.280812019222843 0 C 16.3276865687977 0 20.404624938964844 3.6550003588199615 20.404624938964844 8.640312910079956 C 20.404624938964844 12.252312861382961 18.61743767461048 14.78931175544858 15.59400039982305 16.63024926185608 C 12.637750555955911 18.401311706751585 11.79387430912248 19.63487482443452 11.79387430912248 22.032124876976013 L 11.79387430912248 22.11274915933609 C 11.79387430912248 22.46913383062929 11.652302084050255 22.810922919306904 11.400300100615912 23.062924921512604 C 11.148298117181568 23.314926923718303 10.806509694713334 23.45649915933609 10.450125049966841 23.45649915933609 L 8.380750255372325 23.45649915933609 C 8.026681641126997 23.456516863206048 7.686914864635278 23.31679004430771 7.435295609115785 23.06768697500229 C 7.183676353596293 22.81858390569687 7.04054104108364 22.48023790679872 7.037000355466802 22.126186966896057 L 7.0289371589314955 21.588687479496002 C 6.913374663615027 18.30725009739399 8.310876480565017 16.211000334471464 11.449876200610328 14.300187766551971 C 14.21800091752572 12.60168768838048 15.204311698610672 11.249875612556934 15.204311698610672 8.849938094615936 C 15.204311698610672 6.218875668942928 13.167187127157849 4.286562576889992 10.028187407112538 4.286562576889992 C 7.316500260320165 4.286562576889992 5.432563487899889 5.708250515162945 4.819813533222596 8.054438084363937 C 4.642438547396192 8.737063106149435 4.072687395158091 9.293375492095947 3.3685624623448445 9.293375492095947 L 1.277688026249526 9.293375492095947 Z M 9.396624595337007 32.25 C 11.068249414433488 32.25 12.339436953020089 30.976124580949545 12.339436953020089 29.320624589920044 C 12.339436953020089 27.659749668091536 11.068249414433488 26.385874569416046 9.396624595337007 26.385874569416046 C 7.767999699992016 26.385874569416046 6.475312599998348 27.65975110977888 6.475312599998348 29.317938566207886 C 6.475312599998348 30.97612602263689 7.767999699992016 32.25 9.396624595337007 32.25 Z"
+        }
+      ],
+      "fillGeometry": [
+        {
+          "windingRule": "EVENODD",
+          "data": "M1.27769 9.29338 C0.514438 9.29338 -0.103686 8.65644 0.0145637 7.90394 C0.753626 3.3325 4.23662 0 10.2808 0 C16.3277 0 20.4046 3.655 20.4046 8.64031 C20.4046 12.2523 18.6174 14.7893 15.594 16.6302 C12.6378 18.4013 11.7939 19.6349 11.7939 22.0321 L11.7939 22.1127 C11.7939 22.4691 11.6523 22.8109 11.4003 23.0629 C11.1483 23.3149 10.8065 23.4565 10.4501 23.4565 L8.38075 23.4565 C8.02668 23.4565 7.68691 23.3168 7.4353 23.0677 C7.18368 22.8186 7.04054 22.4802 7.037 22.1262 L7.02894 21.5887 C6.91337 18.3073 8.31088 16.211 11.4499 14.3002 C14.218 12.6017 15.2043 11.2499 15.2043 8.84994 C15.2043 6.21888 13.1672 4.28656 10.0282 4.28656 C7.3165 4.28656 5.43256 5.70825 4.81981 8.05444 C4.64244 8.73706 4.07269 9.29338 3.36856 9.29338 L1.27769 9.29338 Z M9.39662 32.25 C11.0682 32.25 12.3394 30.9761 12.3394 29.3206 C12.3394 27.6597 11.0682 26.3859 9.39662 26.3859 C7.768 26.3859 6.47531 27.6598 6.47531 29.3179 C6.47531 30.9761 7.768 32.25 9.39662 32.25 Z"
+        }
+      ],
+      "layout": {
+        "width": 20.4,
+        "height": 32.25,
+        "x": 277.75,
+        "y": 826,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            277.75
+          ],
+          [
+            0,
+            1,
+            826
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 20.4,
+          "height": 32.25
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "scale",
+          "vertical": "scale"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "gradient",
+            "sourceType": "GRADIENT_LINEAR",
+            "gradientType": "linear",
+            "css": "linear-gradient(#4269BE 0%, #97B0E4 100%)",
+            "gradientStops": [
+              {
+                "color": "#4269BE",
+                "position": 0
+              },
+              {
+                "color": "#97B0E4",
+                "position": 1
+              }
+            ],
+            "transform": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1,
+                0,
+                1
+              ]
+            ]
+          }
+        ],
+        "backgroundGradient": "linear-gradient(#4269BE 0%, #97B0E4 100%)",
+        "backgroundGradientType": "linear",
+        "backgroundGradientStops": [
+          {
+            "color": "#4269BE",
+            "position": 0
+          },
+          {
+            "color": "#97B0E4",
+            "position": 1
+          }
+        ],
+        "backgroundGradientTransform": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "22:585",
+      "name": "Vector",
+      "type": "VECTOR",
+      "vectorPaths": [
+        {
+          "windingRule": "EVENODD",
+          "data": "M 0.5967459011565757 4.340483714420165 C 0.240268982937538 4.340483714420165 -0.04842683212059958 4.043000937766195 0.006801984087539423 3.691544783671816 C 0.3519820947403798 1.5564486877619474 1.9787212661276947 0 4.801667000857022 0 C 7.625867844985539 0 9.530007362365723 1.7070729087779455 9.530007362365723 4.035469943681164 C 9.530007362365723 5.72245945340787 8.695299160760944 6.907368251353177 7.2831987386966865 7.76718062766607 C 5.9024782960853255 8.594357761079882 5.5083447665887455 9.170495099721364 5.5083447665887455 10.290134010394771 L 5.5083447665887455 10.327789691569858 C 5.5083447665887455 10.494239638968706 5.4422232695614525 10.653872699575528 5.324525406226852 10.771570578834297 C 5.206827542892251 10.889268458093065 5.047194803146392 10.955389964066399 4.880744878267721 10.955389964066399 L 3.9142406133292313 10.955389964066399 C 3.748872393593074 10.955398232683038 3.590183866303848 10.890138631108584 3.4726647565536544 10.773794702419613 C 3.355145646803461 10.657450773730641 3.288294107696989 10.499425812907129 3.2866404257451167 10.334065837941125 L 3.28287449902137 10.083025968353013 C 3.2289008810561497 8.550426157980874 3.8816059733717805 7.571369843613629 5.34767999002133 6.6789222244016555 C 6.6405363405330355 5.885635443455925 7.101194109712161 5.254269767436597 7.101194109712161 4.133375672378406 C 7.101194109712161 2.9045343735447013 6.149752354616298 2.0020449051755427 4.683678337966748 2.0020449051755427 C 3.417181230048094 2.0020449051755427 2.537286041329787 2.6660461981728645 2.2511003556417992 3.7618363062722437 C 2.168257131329591 4.080657254875433 1.902154093817895 4.340483714420165 1.57329160240687 4.340483714420165 L 0.5967459011565757 4.340483714420165 Z M 4.388706082214884 15.062406539916992 C 5.169440689234371 15.062406539916992 5.763150528935666 14.467441285872185 5.763150528935666 13.69423775434613 C 5.763150528935666 12.918523854050507 5.169440689234371 12.323558749637263 4.388706082214884 12.323558749637263 C 3.6280546470820965 12.323558749637263 3.024303408476883 12.918524527392549 3.024303408476883 13.692983243303388 C 3.024303408476883 14.467441959214227 3.6280546470820965 15.062406539916992 4.388706082214884 15.062406539916992 Z"
+        }
+      ],
+      "fillGeometry": [
+        {
+          "windingRule": "EVENODD",
+          "data": "M0.596746 4.34048 C0.240269 4.34048 -0.0484268 4.043 0.00680198 3.69154 C0.351982 1.55645 1.97872 0 4.80167 0 C7.62587 0 9.53001 1.70707 9.53001 4.03547 C9.53001 5.72246 8.6953 6.90737 7.2832 7.76718 C5.90248 8.59436 5.50834 9.1705 5.50834 10.2901 L5.50834 10.3278 C5.50834 10.4942 5.44222 10.6539 5.32453 10.7716 C5.20683 10.8893 5.04719 10.9554 4.88074 10.9554 L3.91424 10.9554 C3.74887 10.9554 3.59018 10.8901 3.47266 10.7738 C3.35515 10.6575 3.28829 10.4994 3.28664 10.3341 L3.28287 10.083 C3.2289 8.55043 3.88161 7.57137 5.34768 6.67892 C6.64054 5.88564 7.10119 5.25427 7.10119 4.13338 C7.10119 2.90453 6.14975 2.00204 4.68368 2.00204 C3.41718 2.00204 2.53729 2.66605 2.2511 3.76184 C2.16826 4.08066 1.90215 4.34048 1.57329 4.34048 L0.596746 4.34048 Z M4.38871 15.0624 C5.16944 15.0624 5.76315 14.4674 5.76315 13.6942 C5.76315 12.9185 5.16944 12.3236 4.38871 12.3236 C3.62805 12.3236 3.0243 12.9185 3.0243 13.693 C3.0243 14.4674 3.62805 15.0624 4.38871 15.0624 Z"
+        }
+      ],
+      "layout": {
+        "width": 9.53,
+        "height": 15.06,
+        "x": 299.02,
+        "y": 842.63,
+        "relativeTransform": [
+          [
+            0.88,
+            -0.47,
+            299.02
+          ],
+          [
+            0.47,
+            0.88,
+            842.63
+          ]
+        ],
+        "renderBounds": {
+          "x": 3.15,
+          "y": 1.53,
+          "width": 10.88,
+          "height": 14.01
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "rotation": -27.78,
+        "constraints": {
+          "horizontal": "scale",
+          "vertical": "scale"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "gradient",
+            "sourceType": "GRADIENT_LINEAR",
+            "gradientType": "linear",
+            "css": "linear-gradient(#4269BE 0%, #97B0E4 100%)",
+            "gradientStops": [
+              {
+                "color": "#4269BE",
+                "position": 0
+              },
+              {
+                "color": "#97B0E4",
+                "position": 1
+              }
+            ],
+            "transform": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1,
+                0,
+                1
+              ]
+            ]
+          }
+        ],
+        "backgroundGradient": "linear-gradient(#4269BE 0%, #97B0E4 100%)",
+        "backgroundGradientType": "linear",
+        "backgroundGradientStops": [
+          {
+            "color": "#4269BE",
+            "position": 0
+          },
+          {
+            "color": "#97B0E4",
+            "position": 1
+          }
+        ],
+        "backgroundGradientTransform": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "22:586",
+      "name": "Vector",
+      "type": "VECTOR",
+      "vectorPaths": [
+        {
+          "windingRule": "EVENODD",
+          "data": "M 0.5967459011565757 4.340483714420165 C 0.240268982937538 4.340483714420165 -0.04842683212059958 4.043000937766195 0.006801984087539423 3.691544783671816 C 0.3519820947403798 1.5564486877619474 1.9787212661276947 0 4.801667000857022 0 C 7.625867844985539 0 9.530007362365723 1.7070729087779455 9.530007362365723 4.035469943681164 C 9.530007362365723 5.72245945340787 8.695299160760944 6.907368251353177 7.2831987386966865 7.76718062766607 C 5.9024782960853255 8.594357761079882 5.5083447665887455 9.170495099721364 5.5083447665887455 10.290134010394771 L 5.5083447665887455 10.327789691569858 C 5.5083447665887455 10.494239638968706 5.4422232695614525 10.653872699575528 5.324525406226852 10.771570578834297 C 5.206827542892251 10.889268458093065 5.047194803146392 10.955389964066399 4.880744878267721 10.955389964066399 L 3.9142406133292313 10.955389964066399 C 3.748872393593074 10.955398232683038 3.590183866303848 10.890138631108584 3.4726647565536544 10.773794702419613 C 3.355145646803461 10.657450773730641 3.288294107696989 10.499425812907129 3.2866404257451167 10.334065837941125 L 3.28287449902137 10.083025968353013 C 3.2289008810561497 8.550426157980874 3.8816059733717805 7.571369843613629 5.34767999002133 6.6789222244016555 C 6.6405363405330355 5.885635443455925 7.101194109712161 5.254269767436597 7.101194109712161 4.133375672378406 C 7.101194109712161 2.9045343735447013 6.149752354616298 2.0020449051755427 4.683678337966748 2.0020449051755427 C 3.417181230048094 2.0020449051755427 2.537286041329787 2.6660461981728645 2.2511003556417992 3.7618363062722437 C 2.168257131329591 4.080657254875433 1.902154093817895 4.340483714420165 1.57329160240687 4.340483714420165 L 0.5967459011565757 4.340483714420165 Z M 4.388706082214884 15.062406539916992 C 5.169440689234371 15.062406539916992 5.763150528935666 14.467441285872185 5.763150528935666 13.69423775434613 C 5.763150528935666 12.918523854050507 5.169440689234371 12.323558749637263 4.388706082214884 12.323558749637263 C 3.6280546470820965 12.323558749637263 3.024303408476883 12.918524527392549 3.024303408476883 13.692983243303388 C 3.024303408476883 14.467441959214227 3.6280546470820965 15.062406539916992 4.388706082214884 15.062406539916992 Z"
+        }
+      ],
+      "fillGeometry": [
+        {
+          "windingRule": "EVENODD",
+          "data": "M0.596746 4.34048 C0.240269 4.34048 -0.0484268 4.043 0.00680198 3.69154 C0.351982 1.55645 1.97872 0 4.80167 0 C7.62587 0 9.53001 1.70707 9.53001 4.03547 C9.53001 5.72246 8.6953 6.90737 7.2832 7.76718 C5.90248 8.59436 5.50834 9.1705 5.50834 10.2901 L5.50834 10.3278 C5.50834 10.4942 5.44222 10.6539 5.32453 10.7716 C5.20683 10.8893 5.04719 10.9554 4.88074 10.9554 L3.91424 10.9554 C3.74887 10.9554 3.59018 10.8901 3.47266 10.7738 C3.35515 10.6575 3.28829 10.4994 3.28664 10.3341 L3.28287 10.083 C3.2289 8.55043 3.88161 7.57137 5.34768 6.67892 C6.64054 5.88564 7.10119 5.25427 7.10119 4.13338 C7.10119 2.90453 6.14975 2.00204 4.68368 2.00204 C3.41718 2.00204 2.53729 2.66605 2.2511 3.76184 C2.16826 4.08066 1.90215 4.34048 1.57329 4.34048 L0.596746 4.34048 Z M4.38871 15.0624 C5.16944 15.0624 5.76315 14.4674 5.76315 13.6942 C5.76315 12.9185 5.16944 12.3236 4.38871 12.3236 C3.62805 12.3236 3.0243 12.9185 3.0243 13.693 C3.0243 14.4674 3.62805 15.0624 4.38871 15.0624 Z"
+        }
+      ],
+      "layout": {
+        "width": 9.53,
+        "height": 15.06,
+        "x": 268,
+        "y": 847.09,
+        "relativeTransform": [
+          [
+            0.88,
+            0.47,
+            268
+          ],
+          [
+            -0.47,
+            0.88,
+            847.09
+          ]
+        ],
+        "renderBounds": {
+          "x": 1.48,
+          "y": 1.52,
+          "width": 10.19,
+          "height": 14.36
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "rotation": 27.94,
+        "constraints": {
+          "horizontal": "scale",
+          "vertical": "scale"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "gradient",
+            "sourceType": "GRADIENT_LINEAR",
+            "gradientType": "linear",
+            "css": "linear-gradient(#4269BE 0%, #97B0E4 100%)",
+            "gradientStops": [
+              {
+                "color": "#4269BE",
+                "position": 0
+              },
+              {
+                "color": "#97B0E4",
+                "position": 1
+              }
+            ],
+            "transform": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1,
+                0,
+                1
+              ]
+            ]
+          }
+        ],
+        "backgroundGradient": "linear-gradient(#4269BE 0%, #97B0E4 100%)",
+        "backgroundGradientType": "linear",
+        "backgroundGradientStops": [
+          {
+            "color": "#4269BE",
+            "position": 0
+          },
+          {
+            "color": "#97B0E4",
+            "position": 1
+          }
+        ],
+        "backgroundGradientTransform": [
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            -1,
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "id": "22:587",
+      "name": "Group",
+      "type": "GROUP",
+      "layout": {
+        "width": 29.56,
+        "height": 30,
+        "x": 352,
+        "y": 827,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            352
+          ],
+          [
+            0,
+            1,
+            827
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 29.56,
+          "height": 30
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through"
+      },
+      "children": [
+        {
+          "id": "22:588",
+          "name": "Union",
+          "type": "BOOLEAN_OPERATION",
+          "fillGeometry": [
+            {
+              "windingRule": "NONZERO",
+              "data": "M18.75 0 C19.2473 8.32667e-16 19.7245 0.197197 20.0762 0.548828 C20.4278 0.900459 20.625 1.37772 20.625 1.875 L20.625 9.375 C20.625 9.87228 20.4278 10.3495 20.0762 10.7012 C19.7245 11.0528 19.2473 11.25 18.75 11.25 C18.2527 11.25 17.7755 11.0528 17.4238 10.7012 C17.0722 10.3495 16.875 9.87228 16.875 9.375 L16.875 3.75 L3.75 3.75 L3.75 26.25 L16.875 26.25 L16.875 20.625 C16.875 20.1277 17.0722 19.6505 17.4238 19.2988 C17.7755 18.9472 18.2527 18.75 18.75 18.75 C19.2473 18.75 19.7245 18.9472 20.0762 19.2988 C20.4278 19.6505 20.625 20.1277 20.625 20.625 L20.625 28.125 C20.625 28.6223 20.4278 29.0995 20.0762 29.4512 C19.7245 29.8028 19.2473 30 18.75 30 L1.875 30 C1.37772 30 0.900459 29.8028 0.548828 29.4512 C0.197198 29.0995 8.32667e-16 28.6223 0 28.125 L0 1.875 C0 1.37772 0.197197 0.900459 0.548828 0.548828 C0.900459 0.197197 1.37772 8.32667e-16 1.875 0 L18.75 0 Z M23.9209 8.44629 C24.4158 8.49136 24.8731 8.73059 25.1914 9.1123 L28.8379 13.4893 C28.8535 13.5014 28.8705 13.5127 28.8857 13.5254 C29.0776 13.6854 29.2358 13.8826 29.3506 14.1045 C29.4653 14.3264 29.5351 14.5693 29.5547 14.8184 C29.5743 15.0675 29.5435 15.3184 29.4648 15.5557 C29.3862 15.7928 29.2612 16.0121 29.0967 16.2002 L25.1904 20.8877 C24.8721 21.2694 24.4149 21.5087 23.9199 21.5537 C23.4251 21.5986 22.9326 21.4458 22.5508 21.1279 C22.1687 20.8099 21.9282 20.3525 21.8828 19.8574 C21.8375 19.3624 21.9907 18.8695 22.3086 18.4873 L23.6523 16.875 L13.125 16.875 C12.6277 16.875 12.1505 16.6778 11.7988 16.3262 C11.4472 15.9745 11.25 15.4973 11.25 15 C11.25 14.5027 11.4472 14.0255 11.7988 13.6738 C12.1505 13.3222 12.6277 13.125 13.125 13.125 L23.6543 13.125 L22.3105 11.5127 C21.9925 11.1307 21.8398 10.6376 21.8848 10.1426 C21.9298 9.64764 22.1691 9.19035 22.5508 8.87207 C22.9327 8.55402 23.4259 8.40129 23.9209 8.44629 Z"
+            }
+          ],
+          "layout": {
+            "width": 29.56,
+            "height": 30,
+            "x": 352,
+            "y": 827,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                352
+              ],
+              [
+                0,
+                1,
+                827
+              ]
+            ],
+            "renderBounds": {
+              "x": 0,
+              "y": 0,
+              "width": 29.56,
+              "height": 30
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          },
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "gradient",
+                "sourceType": "GRADIENT_LINEAR",
+                "gradientType": "linear",
+                "css": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+                "gradientStops": [
+                  {
+                    "color": "#FF0004",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FAA8A9",
+                    "position": 1
+                  }
+                ],
+                "transform": [
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    -1.43,
+                    0,
+                    1
+                  ]
+                ]
+              }
+            ],
+            "backgroundGradient": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+            "backgroundGradientType": "linear",
+            "backgroundGradientStops": [
+              {
+                "color": "#FF0004",
+                "position": 0
+              },
+              {
+                "color": "#FAA8A9",
+                "position": 1
+              }
+            ],
+            "backgroundGradientTransform": [
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                -1.43,
+                0,
+                1
+              ]
+            ]
+          },
+          "children": [
+            {
+              "id": "22:589",
+              "name": "Vector",
+              "type": "VECTOR",
+              "vectorPaths": [
+                {
+                  "windingRule": "EVENODD",
+                  "data": "M 0.6742451631621406 0.4342446600875392 C 1.0562148389668011 0.11612296870999594 1.5488772150102916 -0.03729927562575551 2.043929579021797 0.007705480856926735 C 2.5389819430333027 0.05271023733960899 2.995901787918835 0.2924587908616668 3.314243457865016 0.6742451430563372 L 7.219868862239805 5.361744238360242 C 7.524116389722402 5.745191771981234 7.6663511804548765 6.232415535537977 7.616188049162 6.719326430593444 C 7.5660249178691235 7.206237325648911 7.327443494450081 7.654225875990858 6.951408345882023 7.967588490453186 C 6.575373197313966 8.280951104915514 6.091701613968616 8.4348399636824 5.603727040864506 8.396377146326362 C 5.115752467760395 8.357914328970324 4.66216733516411 8.130151169508796 4.339870133290739 7.761745044734757 L 0.43424467303659464 3.074245558275376 C 0.1161229721727507 2.692275893860945 -0.037299276738009576 2.1996116884898385 0.00770548108670204 1.7045593392406568 C 0.05271023891141366 1.2095069899914752 0.29245879958270693 0.75258632054086 0.6742451631621406 0.4342446600875392 Z"
+                }
+              ],
+              "fillGeometry": [
+                {
+                  "windingRule": "EVENODD",
+                  "data": "M0.674245 0.434245 C1.05621 0.116123 1.54888 -0.0372993 2.04393 0.00770548 C2.53898 0.0527102 2.9959 0.292459 3.31424 0.674245 L7.21987 5.36174 C7.52412 5.74519 7.66635 6.23242 7.61619 6.71933 C7.56602 7.20624 7.32744 7.65423 6.95141 7.96759 C6.57537 8.28095 6.0917 8.43484 5.60373 8.39638 C5.11575 8.35791 4.66217 8.13015 4.33987 7.76174 L0.434245 3.07425 C0.116123 2.69228 -0.0372993 2.19961 0.00770548 1.70456 C0.0527102 1.20951 0.292459 0.752586 0.674245 0.434245 Z"
+                }
+              ],
+              "layout": {
+                "width": 7.63,
+                "height": 8.4,
+                "x": 373.88,
+                "y": 835.44,
+                "relativeTransform": [
+                  [
+                    1,
+                    0,
+                    373.88
+                  ],
+                  [
+                    0,
+                    1,
+                    835.44
+                  ]
+                ],
+                "gridRowAnchorIndex": -1,
+                "gridColumnAnchorIndex": -1,
+                "gridRowSpan": 1,
+                "gridColumnSpan": 1,
+                "gridChildHorizontalAlign": "auto",
+                "gridChildVerticalAlign": "auto",
+                "layoutAlign": "inherit",
+                "constraints": {
+                  "horizontal": "scale",
+                  "vertical": "scale"
+                },
+                "mode": "none",
+                "sizing": {
+                  "horizontal": "fixed",
+                  "vertical": "fixed"
+                }
+              },
+              "style": {
+                "blendMode": "pass_through",
+                "fills": [
+                  {
+                    "type": "gradient",
+                    "sourceType": "GRADIENT_LINEAR",
+                    "gradientType": "linear",
+                    "css": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+                    "gradientStops": [
+                      {
+                        "color": "#FF0004",
+                        "position": 0
+                      },
+                      {
+                        "color": "#FAA8A9",
+                        "position": 1
+                      }
+                    ],
+                    "transform": [
+                      [
+                        0,
+                        1,
+                        0
+                      ],
+                      [
+                        -1,
+                        0,
+                        1
+                      ]
+                    ]
+                  }
+                ],
+                "backgroundGradient": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+                "backgroundGradientType": "linear",
+                "backgroundGradientStops": [
+                  {
+                    "color": "#FF0004",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FAA8A9",
+                    "position": 1
+                  }
+                ],
+                "backgroundGradientTransform": [
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    -1,
+                    0,
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "id": "22:590",
+              "name": "Vector",
+              "type": "VECTOR",
+              "vectorPaths": [
+                {
+                  "windingRule": "EVENODD",
+                  "data": "M 0.67535227455823 8.037069213690891 C 0.2932892671528574 7.718994381590568 0.0531828434753758 7.262210846448913 0.00782559345660912 6.767148781101438 C -0.03753165656215757 6.2720867157539635 0.1155722486902887 5.7792746046115 0.4334760635810382 5.3970693022967655 L 4.340977269730643 0.7095693224641254 C 4.496377764884873 0.5137158366625151 4.689375886543259 0.35091989151698444 4.908622091040791 0.23075748982521976 C 5.127868295538323 0.11059508813345507 5.368934158105584 0.03549404633453384 5.617633629261123 0.009872224486120958 C 5.866333100416662 -0.015749597362291923 6.117646020980597 0.008624335508212191 6.356786043550139 0.08156230676473758 C 6.595926066119681 0.15450027802126298 6.818061764030302 0.2745294912753804 7.01012922903137 0.4345857136575304 C 7.202196694032438 0.5946419360396804 7.360315468261625 0.7914932035667491 7.475181346048407 1.0135601548204034 C 7.590047223835189 1.2356271060740576 7.65934065672166 1.478423341477836 7.6789863110937535 1.727666098429413 C 7.698631965465847 1.97690885538099 7.6682320920876474 2.2275649967452504 7.589575769732437 2.464885642297618 C 7.510919447377226 2.7022062878499855 7.385595622914881 2.9213998668979504 7.220975886646632 3.1095706541369763 L 3.315350410684786 7.797070522210911 C 2.9970087531222207 8.178856869077247 2.540088926011048 8.418603628494658 2.0450365812572735 8.46360838434924 C 1.5499842365034986 8.50861314020382 1.0573219355041208 8.355190900628624 0.67535227455823 8.037069213690891 Z"
+                }
+              ],
+              "fillGeometry": [
+                {
+                  "windingRule": "EVENODD",
+                  "data": "M0.675352 8.03707 C0.293289 7.71899 0.0531828 7.26221 0.00782559 6.76715 C-0.0375317 6.27209 0.115572 5.77927 0.433476 5.39707 L4.34098 0.709569 C4.49638 0.513716 4.68938 0.35092 4.90862 0.230757 C5.12787 0.110595 5.36893 0.035494 5.61763 0.00987223 C5.86633 -0.0157496 6.11765 0.00862434 6.35679 0.0815623 C6.59593 0.1545 6.81806 0.274529 7.01013 0.434586 C7.2022 0.594642 7.36032 0.791493 7.47518 1.01356 C7.59005 1.23563 7.65934 1.47842 7.67899 1.72767 C7.69863 1.97691 7.66823 2.22757 7.58958 2.46489 C7.51092 2.70221 7.3856 2.9214 7.22098 3.10957 L3.31535 7.79707 C2.99701 8.17886 2.54009 8.4186 2.04504 8.46361 C1.54998 8.50861 1.05732 8.35519 0.675352 8.03707 Z"
+                }
+              ],
+              "layout": {
+                "width": 7.68,
+                "height": 8.47,
+                "x": 373.88,
+                "y": 840.09,
+                "relativeTransform": [
+                  [
+                    1,
+                    0,
+                    373.88
+                  ],
+                  [
+                    0,
+                    1,
+                    840.09
+                  ]
+                ],
+                "gridRowAnchorIndex": -1,
+                "gridColumnAnchorIndex": -1,
+                "gridRowSpan": 1,
+                "gridColumnSpan": 1,
+                "gridChildHorizontalAlign": "auto",
+                "gridChildVerticalAlign": "auto",
+                "layoutAlign": "inherit",
+                "constraints": {
+                  "horizontal": "scale",
+                  "vertical": "scale"
+                },
+                "mode": "none",
+                "sizing": {
+                  "horizontal": "fixed",
+                  "vertical": "fixed"
+                }
+              },
+              "style": {
+                "blendMode": "pass_through",
+                "fills": [
+                  {
+                    "type": "gradient",
+                    "sourceType": "GRADIENT_LINEAR",
+                    "gradientType": "linear",
+                    "css": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+                    "gradientStops": [
+                      {
+                        "color": "#FF0004",
+                        "position": 0
+                      },
+                      {
+                        "color": "#FAA8A9",
+                        "position": 1
+                      }
+                    ],
+                    "transform": [
+                      [
+                        0,
+                        1,
+                        0
+                      ],
+                      [
+                        -1,
+                        0,
+                        1
+                      ]
+                    ]
+                  }
+                ],
+                "backgroundGradient": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+                "backgroundGradientType": "linear",
+                "backgroundGradientStops": [
+                  {
+                    "color": "#FF0004",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FAA8A9",
+                    "position": 1
+                  }
+                ],
+                "backgroundGradientTransform": [
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    -1,
+                    0,
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "id": "22:591",
+              "name": "Vector",
+              "type": "VECTOR",
+              "vectorPaths": [
+                {
+                  "windingRule": "EVENODD",
+                  "data": "M 27.1875 15 C 27.1875 15.497280936688185 26.9899573456496 15.974194156005979 26.63832664489746 16.325824856758118 C 26.286695944145322 16.677455557510257 25.809780936688185 16.875 25.3125 16.875 L 13.125 16.875 C 12.627719063311815 16.875 12.150805843994021 16.677455557510257 11.799175143241882 16.325824856758118 C 11.447544442489743 15.974194156005979 11.25 15.497280936688185 11.25 15 C 11.25 14.502719063311815 11.447544442489743 14.025805843994021 11.799175143241882 13.674175143241882 C 12.150805843994021 13.322544442489743 12.627719063311815 13.125 13.125 13.125 L 25.3125 13.125 C 25.809780936688185 13.125 26.286695944145322 13.322544442489743 26.63832664489746 13.674175143241882 C 26.9899573456496 14.025805843994021 27.1875 14.502719063311815 27.1875 15 Z M 0 1.875 C 0 1.3777190633118153 0.19754399545490742 0.9008053969591856 0.5491746962070465 0.5491746962070465 C 0.9008053969591856 0.19754399545490742 1.3777190633118153 8.326672684688674e-16 1.875 0 L 18.75 0 C 19.247280936688185 8.326672684688674e-16 19.72419415600598 0.19754399545490742 20.075824856758118 0.5491746962070465 C 20.427455557510257 0.9008053969591856 20.625 1.3777190633118153 20.625 1.875 C 20.625 2.3722809366881847 20.427455557510257 2.8491941560059786 20.075824856758118 3.2008248567581177 C 19.72419415600598 3.5524555575102568 19.247280936688185 3.75 18.75 3.75 L 1.875 3.75 C 1.3777190633118153 3.75 0.9008053969591856 3.5524555575102568 0.5491746962070465 3.2008248567581177 C 0.19754399545490742 2.8491941560059786 8.326672684688674e-16 2.3722809366881847 0 1.875 Z M 0 28.125 C 0 27.627719063311815 0.19754399545490742 27.150804055854678 0.5491746962070465 26.79917335510254 C 0.9008053969591856 26.4475426543504 1.3777190633118153 26.25 1.875 26.25 L 18.75 26.25 C 19.247280936688185 26.25 19.72419415600598 26.4475426543504 20.075824856758118 26.79917335510254 C 20.427455557510257 27.150804055854678 20.625 27.627719063311815 20.625 28.125 C 20.625 28.622280936688185 20.427455557510257 29.099195944145322 20.075824856758118 29.45082664489746 C 19.72419415600598 29.8024573456496 19.247280936688185 30 18.75 30 L 1.875 30 C 1.3777190633118153 30 0.9008053969591856 29.8024573456496 0.5491746962070465 29.45082664489746 C 0.19754399545490742 29.099195944145322 8.326672684688674e-16 28.622280936688185 0 28.125 Z"
+                }
+              ],
+              "fillGeometry": [
+                {
+                  "windingRule": "EVENODD",
+                  "data": "M27.1875 15 C27.1875 15.4973 26.99 15.9742 26.6383 16.3258 C26.2867 16.6775 25.8098 16.875 25.3125 16.875 L13.125 16.875 C12.6277 16.875 12.1508 16.6775 11.7992 16.3258 C11.4475 15.9742 11.25 15.4973 11.25 15 C11.25 14.5027 11.4475 14.0258 11.7992 13.6742 C12.1508 13.3225 12.6277 13.125 13.125 13.125 L25.3125 13.125 C25.8098 13.125 26.2867 13.3225 26.6383 13.6742 C26.99 14.0258 27.1875 14.5027 27.1875 15 Z M0 1.875 C0 1.37772 0.197544 0.900805 0.549175 0.549175 C0.900805 0.197544 1.37772 8.32667e-16 1.875 0 L18.75 0 C19.2473 8.32667e-16 19.7242 0.197544 20.0758 0.549175 C20.4275 0.900805 20.625 1.37772 20.625 1.875 C20.625 2.37228 20.4275 2.84919 20.0758 3.20082 C19.7242 3.55246 19.2473 3.75 18.75 3.75 L1.875 3.75 C1.37772 3.75 0.900805 3.55246 0.549175 3.20082 C0.197544 2.84919 8.32667e-16 2.37228 0 1.875 Z M0 28.125 C0 27.6277 0.197544 27.1508 0.549175 26.7992 C0.900805 26.4475 1.37772 26.25 1.875 26.25 L18.75 26.25 C19.2473 26.25 19.7242 26.4475 20.0758 26.7992 C20.4275 27.1508 20.625 27.6277 20.625 28.125 C20.625 28.6223 20.4275 29.0992 20.0758 29.4508 C19.7242 29.8025 19.2473 30 18.75 30 L1.875 30 C1.37772 30 0.900805 29.8025 0.549175 29.4508 C0.197544 29.0992 8.32667e-16 28.6223 0 28.125 Z"
+                }
+              ],
+              "layout": {
+                "width": 27.19,
+                "height": 30,
+                "x": 352,
+                "y": 827,
+                "relativeTransform": [
+                  [
+                    1,
+                    0,
+                    352
+                  ],
+                  [
+                    0,
+                    1,
+                    827
+                  ]
+                ],
+                "gridRowAnchorIndex": -1,
+                "gridColumnAnchorIndex": -1,
+                "gridRowSpan": 1,
+                "gridColumnSpan": 1,
+                "gridChildHorizontalAlign": "auto",
+                "gridChildVerticalAlign": "auto",
+                "layoutAlign": "inherit",
+                "constraints": {
+                  "horizontal": "scale",
+                  "vertical": "scale"
+                },
+                "mode": "none",
+                "sizing": {
+                  "horizontal": "fixed",
+                  "vertical": "fixed"
+                }
+              },
+              "style": {
+                "blendMode": "pass_through",
+                "fills": [
+                  {
+                    "type": "gradient",
+                    "sourceType": "GRADIENT_LINEAR",
+                    "gradientType": "linear",
+                    "css": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+                    "gradientStops": [
+                      {
+                        "color": "#FF0004",
+                        "position": 0
+                      },
+                      {
+                        "color": "#FAA8A9",
+                        "position": 1
+                      }
+                    ],
+                    "transform": [
+                      [
+                        0,
+                        1,
+                        0
+                      ],
+                      [
+                        -1,
+                        0,
+                        1
+                      ]
+                    ]
+                  }
+                ],
+                "backgroundGradient": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+                "backgroundGradientType": "linear",
+                "backgroundGradientStops": [
+                  {
+                    "color": "#FF0004",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FAA8A9",
+                    "position": 1
+                  }
+                ],
+                "backgroundGradientTransform": [
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    -1,
+                    0,
+                    1
+                  ]
+                ]
+              }
+            },
+            {
+              "id": "22:592",
+              "name": "Vector",
+              "type": "VECTOR",
+              "vectorPaths": [
+                {
+                  "windingRule": "EVENODD",
+                  "data": "M 18.75 0 C 19.247280936688185 8.326672684688674e-16 19.72419415600598 0.19754399545490742 20.075824856758118 0.5491746962070465 C 20.427455557510257 0.9008053969591856 20.625 1.3777190633118153 20.625 1.875 L 20.625 9.375 C 20.625 9.872280936688185 20.427455557510257 10.349194156005979 20.075824856758118 10.700824856758118 C 19.72419415600598 11.052455557510257 19.247280936688185 11.25 18.75 11.25 C 18.252719063311815 11.25 17.77580584399402 11.052455557510257 17.424175143241882 10.700824856758118 C 17.072544442489743 10.349194156005979 16.875 9.872280936688185 16.875 9.375 L 16.875 1.875 C 16.875 1.3777190633118153 17.072544442489743 0.9008053969591856 17.424175143241882 0.5491746962070465 C 17.77580584399402 0.19754399545490742 18.252719063311815 8.326672684688674e-16 18.75 0 Z M 18.75 18.75 C 19.247280936688185 18.75 19.72419415600598 18.947544442489743 20.075824856758118 19.299175143241882 C 20.427455557510257 19.65080584399402 20.625 20.127719063311815 20.625 20.625 L 20.625 28.125 C 20.625 28.622280936688185 20.427455557510257 29.099195944145322 20.075824856758118 29.45082664489746 C 19.72419415600598 29.8024573456496 19.247280936688185 30 18.75 30 C 18.252719063311815 30 17.77580584399402 29.8024573456496 17.424175143241882 29.45082664489746 C 17.072544442489743 29.099195944145322 16.875 28.622280936688185 16.875 28.125 L 16.875 20.625 C 16.875 20.127719063311815 17.072544442489743 19.65080584399402 17.424175143241882 19.299175143241882 C 17.77580584399402 18.947544442489743 18.252719063311815 18.75 18.75 18.75 Z M 1.875 0 C 2.3722809366881847 8.326672684688674e-16 2.8491941560059786 0.19754399545490742 3.2008248567581177 0.5491746962070465 C 3.5524555575102568 0.9008053969591856 3.75 1.3777190633118153 3.75 1.875 L 3.75 28.125 C 3.75 28.622280936688185 3.5524555575102568 29.099195944145322 3.2008248567581177 29.45082664489746 C 2.8491941560059786 29.8024573456496 2.3722809366881847 30 1.875 30 C 1.3777190633118153 30 0.9008053969591856 29.8024573456496 0.5491746962070465 29.45082664489746 C 0.19754399545490742 29.099195944145322 8.326672684688674e-16 28.622280936688185 0 28.125 L 0 1.875 C 0 1.3777190633118153 0.19754399545490742 0.9008053969591856 0.5491746962070465 0.5491746962070465 C 0.9008053969591856 0.19754399545490742 1.3777190633118153 8.326672684688674e-16 1.875 0 Z"
+                }
+              ],
+              "fillGeometry": [
+                {
+                  "windingRule": "EVENODD",
+                  "data": "M18.75 0 C19.2473 8.32667e-16 19.7242 0.197544 20.0758 0.549175 C20.4275 0.900805 20.625 1.37772 20.625 1.875 L20.625 9.375 C20.625 9.87228 20.4275 10.3492 20.0758 10.7008 C19.7242 11.0525 19.2473 11.25 18.75 11.25 C18.2527 11.25 17.7758 11.0525 17.4242 10.7008 C17.0725 10.3492 16.875 9.87228 16.875 9.375 L16.875 1.875 C16.875 1.37772 17.0725 0.900805 17.4242 0.549175 C17.7758 0.197544 18.2527 8.32667e-16 18.75 0 Z M18.75 18.75 C19.2473 18.75 19.7242 18.9475 20.0758 19.2992 C20.4275 19.6508 20.625 20.1277 20.625 20.625 L20.625 28.125 C20.625 28.6223 20.4275 29.0992 20.0758 29.4508 C19.7242 29.8025 19.2473 30 18.75 30 C18.2527 30 17.7758 29.8025 17.4242 29.4508 C17.0725 29.0992 16.875 28.6223 16.875 28.125 L16.875 20.625 C16.875 20.1277 17.0725 19.6508 17.4242 19.2992 C17.7758 18.9475 18.2527 18.75 18.75 18.75 Z M1.875 0 C2.37228 8.32667e-16 2.84919 0.197544 3.20082 0.549175 C3.55246 0.900805 3.75 1.37772 3.75 1.875 L3.75 28.125 C3.75 28.6223 3.55246 29.0992 3.20082 29.4508 C2.84919 29.8025 2.37228 30 1.875 30 C1.37772 30 0.900805 29.8025 0.549175 29.4508 C0.197544 29.0992 8.32667e-16 28.6223 0 28.125 L0 1.875 C0 1.37772 0.197544 0.900805 0.549175 0.549175 C0.900805 0.197544 1.37772 8.32667e-16 1.875 0 Z"
+                }
+              ],
+              "layout": {
+                "width": 20.63,
+                "height": 30,
+                "x": 352,
+                "y": 827,
+                "relativeTransform": [
+                  [
+                    1,
+                    0,
+                    352
+                  ],
+                  [
+                    0,
+                    1,
+                    827
+                  ]
+                ],
+                "gridRowAnchorIndex": -1,
+                "gridColumnAnchorIndex": -1,
+                "gridRowSpan": 1,
+                "gridColumnSpan": 1,
+                "gridChildHorizontalAlign": "auto",
+                "gridChildVerticalAlign": "auto",
+                "layoutAlign": "inherit",
+                "constraints": {
+                  "horizontal": "scale",
+                  "vertical": "scale"
+                },
+                "mode": "none",
+                "sizing": {
+                  "horizontal": "fixed",
+                  "vertical": "fixed"
+                }
+              },
+              "style": {
+                "blendMode": "pass_through",
+                "fills": [
+                  {
+                    "type": "gradient",
+                    "sourceType": "GRADIENT_LINEAR",
+                    "gradientType": "linear",
+                    "css": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+                    "gradientStops": [
+                      {
+                        "color": "#FF0004",
+                        "position": 0
+                      },
+                      {
+                        "color": "#FAA8A9",
+                        "position": 1
+                      }
+                    ],
+                    "transform": [
+                      [
+                        0,
+                        1,
+                        0
+                      ],
+                      [
+                        -1,
+                        0,
+                        1
+                      ]
+                    ]
+                  }
+                ],
+                "backgroundGradient": "linear-gradient(#FF0004 0%, #FAA8A9 100%)",
+                "backgroundGradientType": "linear",
+                "backgroundGradientStops": [
+                  {
+                    "color": "#FF0004",
+                    "position": 0
+                  },
+                  {
+                    "color": "#FAA8A9",
+                    "position": 1
+                  }
+                ],
+                "backgroundGradientTransform": [
+                  [
+                    0,
+                    1,
+                    0
+                  ],
+                  [
+                    -1,
+                    0,
+                    1
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "22:593",
+      "name": "Rectangle 28",
+      "type": "RECTANGLE",
+      "layout": {
+        "width": 424,
+        "height": 916,
+        "y": 1,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            1
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 424,
+          "height": 916
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.7,
+            "color": "#427CBE"
+          }
+        ],
+        "backgroundColor": "#427CBE",
+        "backgroundOpacity": 0.7
+      }
+    },
+    {
+      "id": "22:594",
+      "name": "Group 10",
+      "type": "GROUP",
+      "layout": {
+        "width": 366,
+        "height": 148,
+        "x": 29,
+        "y": 212,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            29
+          ],
+          [
+            0,
+            1,
+            212
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 366,
+          "height": 148
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through"
+      },
+      "children": [
+        {
+          "id": "22:595",
+          "name": "Rectangle 4",
+          "type": "RECTANGLE",
+          "layout": {
+            "width": 366,
+            "height": 148,
+            "x": 29,
+            "y": 212,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                29
+              ],
+              [
+                0,
+                1,
+                212
+              ]
+            ],
+            "renderBounds": {
+              "x": 0,
+              "y": 0,
+              "width": 366,
+              "height": 148
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "min",
+              "vertical": "min"
+            },
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          },
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "solid",
+                "sourceType": "SOLID",
+                "color": "#FFFFFF"
+              }
+            ],
+            "backgroundColor": "#FFFFFF",
+            "borderRadius": 20
+          }
+        },
+        {
+          "id": "22:596",
+          "name": "Rectangle 9",
+          "type": "RECTANGLE",
+          "layout": {
+            "width": 338,
+            "height": 1.12,
+            "x": 43,
+            "y": 255.56,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                43
+              ],
+              [
+                0,
+                1,
+                255.56
+              ]
+            ],
+            "renderBounds": {
+              "x": 0,
+              "y": 0,
+              "width": 338,
+              "height": 1.12
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "min",
+              "vertical": "min"
+            },
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          },
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "solid",
+                "sourceType": "SOLID",
+                "color": "#427CBE"
+              }
+            ],
+            "backgroundColor": "#427CBE"
+          }
+        },
+        {
+          "id": "22:597",
+          "name": "Конец?",
+          "type": "TEXT",
+          "text": "Конец?",
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "solid",
+                "sourceType": "SOLID",
+                "color": "#000000"
+              }
+            ],
+            "color": "#000000",
+            "fontFamily": "El Messiri",
+            "fontStyleName": "Bold",
+            "fontSize": 24,
+            "fontWeight": 700,
+            "textAlignVertical": "top",
+            "textAutoResize": "none",
+            "textTruncation": "disabled",
+            "leadingTrim": "none"
+          },
+          "layout": {
+            "width": 330,
+            "height": 31.28,
+            "x": 43,
+            "y": 223.17,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                43
+              ],
+              [
+                0,
+                1,
+                223.17
+              ]
+            ],
+            "renderBounds": {
+              "x": 0.36,
+              "y": 8.68,
+              "width": 79.73,
+              "height": 20.16
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "min",
+              "vertical": "min"
+            },
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          }
+        },
+        {
+          "id": "22:598",
+          "name": "Уверены, что хотите прекратить?",
+          "type": "TEXT",
+          "text": "Уверены, что хотите прекратить?",
+          "style": {
+            "blendMode": "pass_through",
+            "fills": [
+              {
+                "type": "solid",
+                "sourceType": "SOLID",
+                "color": "#000000"
+              }
+            ],
+            "color": "#000000",
+            "textStyleName": "Bold Text",
+            "fontFamily": "Brygada 1918",
+            "fontStyleName": "Regular",
+            "fontSize": 20,
+            "fontWeight": 400,
+            "textAlignVertical": "top",
+            "textAutoResize": "none",
+            "textTruncation": "disabled",
+            "listSpacing": 20,
+            "leadingTrim": "none"
+          },
+          "layout": {
+            "width": 338,
+            "height": 33,
+            "x": 43,
+            "y": 266,
+            "relativeTransform": [
+              [
+                1,
+                0,
+                43
+              ],
+              [
+                0,
+                1,
+                266
+              ]
+            ],
+            "renderBounds": {
+              "x": 0.22,
+              "y": 4.42,
+              "width": 317.24,
+              "height": 18.58
+            },
+            "gridRowAnchorIndex": -1,
+            "gridColumnAnchorIndex": -1,
+            "gridRowSpan": 1,
+            "gridColumnSpan": 1,
+            "gridChildHorizontalAlign": "auto",
+            "gridChildVerticalAlign": "auto",
+            "layoutAlign": "inherit",
+            "constraints": {
+              "horizontal": "min",
+              "vertical": "min"
+            },
+            "mode": "none",
+            "sizing": {
+              "horizontal": "fixed",
+              "vertical": "fixed"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "22:601",
+      "name": "Нет",
+      "type": "TEXT",
+      "text": "Нет",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#5081C1"
+          }
+        ],
+        "color": "#5081C1",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Bold",
+        "fontSize": 20,
+        "fontWeight": 700,
+        "textAlign": "center",
+        "textAlignVertical": "center",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 163,
+        "height": 50,
+        "x": 215,
+        "y": 299,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            215
+          ],
+          [
+            0,
+            1,
+            299
+          ]
+        ],
+        "renderBounds": {
+          "x": 64.93,
+          "y": 16.8,
+          "width": 33.25,
+          "height": 13.4
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "22:602",
+      "name": "Да",
+      "type": "TEXT",
+      "text": "Да",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#5081C1"
+          }
+        ],
+        "color": "#5081C1",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Bold",
+        "fontSize": 20,
+        "fontWeight": 700,
+        "textAlign": "center",
+        "textAlignVertical": "center",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 163,
+        "height": 50,
+        "x": 43,
+        "y": 299,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            43
+          ],
+          [
+            0,
+            1,
+            299
+          ]
+        ],
+        "renderBounds": {
+          "x": 69.58,
+          "y": 16.8,
+          "width": 22.79,
+          "height": 16.88
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    }
+  ],
+  "prototype": {
+    "overflowDirection": "none",
+    "overlayPositionType": "center",
+    "overlayBackground": {
+      "type": "NONE"
+    },
+    "overlayBackgroundInteraction": "none"
+  }
+}

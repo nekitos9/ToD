@@ -1,0 +1,521 @@
+{
+  "id": "32:904",
+  "name": "Экран результатов (6)",
+  "type": "FRAME",
+  "layout": {
+    "width": 1440,
+    "height": 1024,
+    "x": 9266,
+    "y": 171,
+    "relativeTransform": [
+      [
+        1,
+        0,
+        9266
+      ],
+      [
+        0,
+        1,
+        171
+      ]
+    ],
+    "renderBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1024
+    },
+    "gridRowAnchorIndex": -1,
+    "gridColumnAnchorIndex": -1,
+    "gridRowSpan": 1,
+    "gridColumnSpan": 1,
+    "gridChildHorizontalAlign": "auto",
+    "gridChildVerticalAlign": "auto",
+    "layoutAlign": "inherit",
+    "constraints": {
+      "horizontal": "min",
+      "vertical": "min"
+    },
+    "overflow": "hidden",
+    "mode": "none",
+    "sizing": {
+      "horizontal": "fixed",
+      "vertical": "fixed"
+    }
+  },
+  "style": {
+    "blendMode": "pass_through",
+    "fills": [
+      {
+        "type": "solid",
+        "sourceType": "SOLID",
+        "color": "#427CBE"
+      }
+    ],
+    "backgroundColor": "#427CBE"
+  },
+  "children": [
+    {
+      "id": "32:905",
+      "name": "Ellipse 3",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -762,
+        "y": 158,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -762
+          ],
+          [
+            0,
+            1,
+            158
+          ]
+        ],
+        "renderBounds": {
+          "x": 762,
+          "y": 0,
+          "width": 250,
+          "height": 866
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.1,
+            "color": "#CAA6DE"
+          }
+        ],
+        "backgroundColor": "#CAA6DE",
+        "backgroundOpacity": 0.1
+      }
+    },
+    {
+      "id": "32:906",
+      "name": "Ellipse 4",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -209,
+        "y": 715,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -209
+          ],
+          [
+            0,
+            1,
+            715
+          ]
+        ],
+        "renderBounds": {
+          "x": 209,
+          "y": 0,
+          "width": 803,
+          "height": 309
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.1,
+            "color": "#CAA6DE"
+          }
+        ],
+        "backgroundColor": "#CAA6DE",
+        "backgroundOpacity": 0.1
+      }
+    },
+    {
+      "id": "32:907",
+      "name": "Результаты",
+      "type": "TEXT",
+      "text": "Результаты",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "textStyleName": "PC_H1",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Bold",
+        "fontSize": 45,
+        "fontWeight": 700,
+        "textAlignVertical": "top",
+        "textAutoResize": "width-and-height",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 236,
+        "height": 70,
+        "x": 100,
+        "y": 112,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            112
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.67,
+          "y": 16.3,
+          "width": 235.21,
+          "height": 38.7
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "center",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:908",
+      "name": "Весело и стыдно? Мне тоже.",
+      "type": "TEXT",
+      "text": "Весело и стыдно? Мне тоже.",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "textStyleName": "PC_UnderHeader",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 16,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "width-and-height",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 215,
+        "height": 19,
+        "x": 100,
+        "y": 172,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            172
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.8,
+          "y": 4.14,
+          "width": 212.69,
+          "height": 14.14
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "center",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:909",
+      "name": "Никита выполнил 23 действий и ответил 22 правды",
+      "type": "TEXT",
+      "text": "Никита выполнил 23 действий и ответил 22 правды",
+      "style": {
+        "blendMode": "pass_through",
+        "textStyleName": "PC_Text",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 25,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "height",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 400,
+        "height": 58,
+        "x": 100,
+        "y": 236,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            236
+          ]
+        ],
+        "renderBounds": {
+          "x": 1,
+          "y": 5.8,
+          "width": 369.03,
+          "height": 52.45
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "fidelityWarnings": [
+        {
+          "code": "unresolved-mixed-text-style",
+          "severity": "warning",
+          "message": "Text node reports mixed style values, but styled text ranges were not available."
+        }
+      ]
+    },
+    {
+      "id": "32:910",
+      "name": "Faustin выполнил 23 действий и ответил 22 правды",
+      "type": "TEXT",
+      "text": "Faustin выполнил 23 действий и ответил 22 правды",
+      "style": {
+        "blendMode": "pass_through",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 25,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "height",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 400,
+        "height": 58,
+        "x": 520,
+        "y": 236,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            520
+          ],
+          [
+            0,
+            1,
+            236
+          ]
+        ],
+        "renderBounds": {
+          "x": 1,
+          "y": 5.8,
+          "width": 364.27,
+          "height": 52.45
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "fidelityWarnings": [
+        {
+          "code": "unresolved-mixed-text-style",
+          "severity": "warning",
+          "message": "Text node reports mixed style values, but styled text ranges were not available."
+        }
+      ]
+    },
+    {
+      "id": "32:911",
+      "name": "polyanka~ выполнил 23 действий и ответил 22 правды, а также пропустил 2 раунда и отказался от 1 правды и 1 действия",
+      "type": "TEXT",
+      "text": "polyanka~ выполнил 23 действий и ответил 22 правды, а также пропустил 2 раунда и отказался от 1 правды и 1 действия",
+      "style": {
+        "blendMode": "pass_through",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 25,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "height",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 400,
+        "height": 116,
+        "x": 940,
+        "y": 236,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            940
+          ],
+          [
+            0,
+            1,
+            236
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.7,
+          "y": 4.63,
+          "width": 396.7,
+          "height": 111.63
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "fidelityWarnings": [
+        {
+          "code": "unresolved-mixed-text-style",
+          "severity": "warning",
+          "message": "Text node reports mixed style values, but styled text ranges were not available."
+        }
+      ]
+    }
+  ],
+  "prototype": {
+    "overflowDirection": "none",
+    "overlayPositionType": "center",
+    "overlayBackground": {
+      "type": "NONE"
+    },
+    "overlayBackgroundInteraction": "none"
+  }
+}

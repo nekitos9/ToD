@@ -1,0 +1,581 @@
+{
+  "id": "32:1039",
+  "name": "Первый экран (1)",
+  "type": "FRAME",
+  "layout": {
+    "width": 1440,
+    "height": 1024,
+    "x": 240,
+    "y": 174,
+    "relativeTransform": [
+      [
+        1,
+        0,
+        240
+      ],
+      [
+        0,
+        1,
+        174
+      ]
+    ],
+    "renderBounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 1024
+    },
+    "gridRowAnchorIndex": -1,
+    "gridColumnAnchorIndex": -1,
+    "gridRowSpan": 1,
+    "gridColumnSpan": 1,
+    "gridChildHorizontalAlign": "auto",
+    "gridChildVerticalAlign": "auto",
+    "layoutAlign": "inherit",
+    "constraints": {
+      "horizontal": "min",
+      "vertical": "min"
+    },
+    "overflow": "hidden",
+    "mode": "none",
+    "sizing": {
+      "horizontal": "fixed",
+      "vertical": "fixed"
+    }
+  },
+  "style": {
+    "blendMode": "pass_through",
+    "fills": [
+      {
+        "type": "solid",
+        "sourceType": "SOLID",
+        "color": "#E5E5E5"
+      }
+    ],
+    "backgroundColor": "#E5E5E5"
+  },
+  "children": [
+    {
+      "id": "32:1040",
+      "name": "Ellipse 3",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -762,
+        "y": 158,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -762
+          ],
+          [
+            0,
+            1,
+            158
+          ]
+        ],
+        "renderBounds": {
+          "x": 762,
+          "y": 0,
+          "width": 250,
+          "height": 866
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.5,
+            "color": "#CFCFCF"
+          }
+        ],
+        "backgroundColor": "#CFCFCF",
+        "backgroundOpacity": 0.5
+      }
+    },
+    {
+      "id": "32:1041",
+      "name": "Ellipse 4",
+      "type": "ELLIPSE",
+      "arcData": {
+        "startingAngle": 0,
+        "endingAngle": 6.2831854820251465,
+        "innerRadius": 0
+      },
+      "layout": {
+        "width": 1012,
+        "height": 1012,
+        "x": -209,
+        "y": 715,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            -209
+          ],
+          [
+            0,
+            1,
+            715
+          ]
+        ],
+        "renderBounds": {
+          "x": 209,
+          "y": 0,
+          "width": 803,
+          "height": 309
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "opacity": 0.5,
+            "color": "#CFCFCF"
+          }
+        ],
+        "backgroundColor": "#CFCFCF",
+        "backgroundOpacity": 0.5
+      }
+    },
+    {
+      "id": "32:1046",
+      "name": "Правда или Действие",
+      "type": "TEXT",
+      "text": "Правда или Действие",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#212121"
+          }
+        ],
+        "color": "#212121",
+        "textStyleName": "PC_H1",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Bold",
+        "fontSize": 45,
+        "fontWeight": 700,
+        "textAlignVertical": "top",
+        "textAutoResize": "width-and-height",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 445,
+        "height": 70,
+        "x": 100,
+        "y": 112,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            112
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.67,
+          "y": 16.3,
+          "width": 442.49,
+          "height": 38.25
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:1047",
+      "name": "Привет. Я nekitos9 и меня заебали все приложение правды или действия. И я написал нормальное. И бесплатное",
+      "type": "TEXT",
+      "text": "Привет. Я nekitos9 и меня заебали все приложение правды или действия. И я написал нормальное. И бесплатное",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#000000"
+          }
+        ],
+        "color": "#000000",
+        "textStyleName": "PC_Text",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 25,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "listSpacing": 20,
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 820,
+        "height": 93,
+        "x": 100,
+        "y": 210,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            210
+          ]
+        ],
+        "renderBounds": {
+          "x": 0.7,
+          "y": 4.25,
+          "width": 758.73,
+          "height": 54
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:1048",
+      "name": "Хотите предложить вопрос или действие? Напишите его на nekitos9@yandex.ru",
+      "type": "TEXT",
+      "text": "Хотите предложить вопрос или действие? Напишите его на nekitos9@yandex.ru",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#000000"
+          }
+        ],
+        "color": "#000000",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Regular",
+        "fontSize": 18,
+        "fontWeight": 400,
+        "textAlignVertical": "top",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 715,
+        "height": 39,
+        "x": 100,
+        "y": 288,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            288
+          ]
+        ],
+        "renderBounds": {
+          "x": -0.16,
+          "y": 5.76,
+          "width": 636.69,
+          "height": 15.84
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:1049",
+      "name": "Rectangle 3",
+      "type": "RECTANGLE",
+      "layout": {
+        "width": 400,
+        "height": 80,
+        "x": 100,
+        "y": 355,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            355
+          ]
+        ],
+        "renderBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 400,
+          "height": 80
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      },
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#CF25E9"
+          }
+        ],
+        "backgroundColor": "#CF25E9",
+        "borderRadius": 43.5
+      }
+    },
+    {
+      "id": "32:1050",
+      "name": "Начать игру",
+      "type": "TEXT",
+      "text": "Начать игру",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#FFFFFF"
+          }
+        ],
+        "color": "#FFFFFF",
+        "fontFamily": "El Messiri",
+        "fontStyleName": "Bold",
+        "fontSize": 32,
+        "fontWeight": 700,
+        "textAlign": "center",
+        "textAlignVertical": "center",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 400,
+        "height": 80,
+        "x": 100,
+        "y": 355,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            355
+          ]
+        ],
+        "renderBounds": {
+          "x": 111.56,
+          "y": 26.88,
+          "width": 176.83,
+          "height": 27.52
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    },
+    {
+      "id": "32:1051",
+      "name": "разработчик не несёт никакой ответственности  за действия пользователей во время игры",
+      "type": "TEXT",
+      "text": "разработчик не несёт никакой ответственности  за действия пользователей во время игры",
+      "style": {
+        "blendMode": "pass_through",
+        "fills": [
+          {
+            "type": "solid",
+            "sourceType": "SOLID",
+            "color": "#696969"
+          }
+        ],
+        "color": "#696969",
+        "textStyleName": "Under_H1",
+        "fontFamily": "Brygada 1918",
+        "fontStyleName": "Regular",
+        "fontSize": 13,
+        "fontWeight": 400,
+        "textAlign": "center",
+        "textAlignVertical": "top",
+        "textAutoResize": "none",
+        "textTruncation": "disabled",
+        "leadingTrim": "none"
+      },
+      "layout": {
+        "width": 400,
+        "height": 30,
+        "x": 100,
+        "y": 439,
+        "relativeTransform": [
+          [
+            1,
+            0,
+            100
+          ],
+          [
+            0,
+            1,
+            439
+          ]
+        ],
+        "renderBounds": {
+          "x": 48.91,
+          "y": 2.25,
+          "width": 299.03,
+          "height": 28
+        },
+        "gridRowAnchorIndex": -1,
+        "gridColumnAnchorIndex": -1,
+        "gridRowSpan": 1,
+        "gridColumnSpan": 1,
+        "gridChildHorizontalAlign": "auto",
+        "gridChildVerticalAlign": "auto",
+        "layoutAlign": "inherit",
+        "constraints": {
+          "horizontal": "min",
+          "vertical": "min"
+        },
+        "mode": "none",
+        "sizing": {
+          "horizontal": "fixed",
+          "vertical": "fixed"
+        }
+      }
+    }
+  ],
+  "prototype": {
+    "overflowDirection": "none",
+    "overlayPositionType": "center",
+    "overlayBackground": {
+      "type": "NONE"
+    },
+    "overlayBackgroundInteraction": "none"
+  }
+}
