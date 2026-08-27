@@ -16,7 +16,7 @@
   position: relative;
   width: 100%;
   min-height: 100dvh;
-  padding: 120px var(--players-gutter) 180px;
+  padding: calc(var(--safe-area-top) + 32px) var(--players-gutter) 180px;
 }
 
 .players h1 {
@@ -46,7 +46,7 @@
 
 .players__help {
   position: absolute;
-  top: 135px;
+  top: calc(var(--safe-area-top) + 47px);
   right: var(--players-gutter);
   width: 50px;
   height: 50px;
@@ -121,8 +121,8 @@
 
 .player-card__options {
   display: grid;
-  grid-template-columns: minmax(0, 1.18fr) minmax(0, 1fr);
-  gap: 7px;
+  grid-template-columns: minmax(0, 1.38fr) minmax(0, 1fr);
+  gap: 6px;
   margin-top: 12px;
 }
 
@@ -135,12 +135,12 @@
   background: #eee;
   color: #000;
   font-family: var(--font-body);
-  font-size: 19px;
+  font-size: clamp(16px, 4.25vw, 18px);
   line-height: 29px;
 }
 
 .player-card__boundary {
-  padding: 0 30px 0 15px;
+  padding: 0 26px 0 11px;
   outline: 0;
   cursor: pointer;
 }
@@ -157,23 +157,23 @@
 
 .relationship-toggle {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 20px;
-  padding: 0 5px 0 11px;
+  grid-template-columns: minmax(0, 1fr) 18px;
+  padding: 0 4px 0 8px;
   align-items: center;
   cursor: pointer;
 }
 
 .relationship-toggle input {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   opacity: 0;
 }
 
 .relationship-toggle__control {
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: #fff;
 }
@@ -234,9 +234,9 @@
 
 .game-mode {
   display: grid;
-  grid-template-columns: auto 65px auto;
-  gap: 30px;
-  width: fit-content;
+  grid-template-columns: max-content clamp(52px, 15vw, 60px) minmax(0, max-content);
+  gap: clamp(8px, 3.5vw, 16px);
+  width: 100%;
   margin-top: 48px;
   padding: 0;
   align-items: center;
@@ -244,13 +244,13 @@
   background: transparent;
   color: #fff;
   font-family: var(--font-body);
-  font-size: 20px;
+  font-size: clamp(16px, 4.7vw, 20px);
   cursor: pointer;
 }
 
 .game-mode__track {
   position: relative;
-  width: 65px;
+  width: 100%;
   height: 23px;
   border-radius: 11.5px;
   background: #fff;
@@ -268,7 +268,7 @@
 }
 
 .game-mode[aria-checked='true'] .game-mode__track span {
-  transform: translateX(42px);
+  transform: translateX(calc(clamp(52px, 15vw, 60px) - 23px));
 }
 
 .game-mode:focus-visible {
@@ -377,12 +377,11 @@
   .players { padding-inline: 20px; }
   .players__help { right: 20px; }
   .player-card { padding-inline: 10px; }
-  .player-card__options { grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: 5px; }
-  .player-card__boundary, .relationship-toggle { font-size: 16px; }
-  .relationship-toggle { padding-left: 8px; }
-  .game-mode { grid-template-columns: auto 56px auto; gap: 10px; font-size: 18px; }
-  .game-mode__track { width: 56px; }
-  .game-mode[aria-checked='true'] .game-mode__track span { transform: translateX(33px); }
+  .player-card__options { grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr); gap: 5px; }
+  .player-card__boundary, .relationship-toggle { font-size: 15px; }
+  .relationship-toggle { padding-left: 6px; }
+  .game-mode { grid-template-columns: max-content 52px minmax(0, max-content); gap: 8px; font-size: 16px; }
+  .game-mode[aria-checked='true'] .game-mode__track span { transform: translateX(29px); }
   .players-help { width: calc(100% - 40px); }
   .players-help__body { font-size: 18px; line-height: 21px; }
 }
@@ -405,6 +404,8 @@
   .relationship-toggle input, .relationship-toggle__control { width: 21.86px; height: 20px; }
   .players__actions { gap: 16px; margin-top: 24px; }
   .game-mode { gap: 30px; margin-top: 20px; font-size: 25px; }
+  .game-mode__track { width: 65px; }
+  .game-mode[aria-checked='true'] .game-mode__track span { transform: translateX(42px); }
   .players-help { width: min(1035px, calc(100% - 200px)); }
   .players-help__surface { max-height: 420px; padding: 11px 40px 30px; }
   .players-help__close { top: 129px; right: 100px; width: 57px; height: 57px; }

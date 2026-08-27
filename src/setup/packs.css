@@ -22,7 +22,7 @@
   --packs-gutter: 29px;
   width: 100%;
   min-height: 100dvh;
-  padding: 120px var(--packs-gutter) 180px;
+  padding: calc(var(--safe-area-top) + 32px) var(--packs-gutter) 180px;
 }
 
 .packs h1 {
@@ -108,10 +108,11 @@
 }
 
 .pack-card__type {
-  display: grid;
+  display: flex;
   width: 27px;
   height: 27px;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   color: #fff;
   font-family: var(--font-display);
@@ -125,6 +126,7 @@
 
 .pack-card__description {
   display: block;
+  margin-top: 7px;
   font-size: 19px;
   line-height: 22px;
 }

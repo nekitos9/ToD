@@ -19,7 +19,7 @@
 .results {
   width: min(1240px, calc(100% - 58px));
   margin-inline: auto;
-  padding-top: 100px;
+  padding-top: calc(var(--safe-area-top) + 32px);
 }
 
 .results h1 {
@@ -67,7 +67,7 @@
 @keyframes results-enter { from { opacity: 0; } to { opacity: 1; } }
 
 @media (max-width: 899px) {
-  .results { padding-top: 104px; }
+  .results { padding-top: calc(var(--safe-area-top) + 32px); }
   .results h1 { font-size: 37.13px; }
   .results__list { grid-template-columns: 1fr; gap: 15px; margin-top: 15px; }
   .results__player { font-size: 20px; line-height: 1.05; }

@@ -146,28 +146,29 @@
 @media (max-width: 899px) {
   .game-shell {
     width: calc(100% - 58px);
-    padding: clamp(48px, 7dvh, 64px) 0 36px;
-    grid-template: auto minmax(563px, calc(100dvh - 267px)) 64px / minmax(0, 1fr);
-    gap: 16px;
+    min-height: 100dvh;
+    padding: calc(var(--safe-area-top) + clamp(20px, 3.5dvh, 32px)) 0 calc(var(--safe-area-bottom) + 20px);
+    grid-template: auto minmax(330px, 1fr) 56px / minmax(0, 1fr);
+    gap: 12px;
   }
-  .game-header h1 { font-size: 37.13px; white-space: nowrap; }
-  .game-header p { margin-top: 6px; }
-  .game-card h2 { padding-top: 8px; font-size: 38px; line-height: 44px; }
-  .game-card__type { font-size: 19px; }
-  .game-card__text { padding: 20px 21px; font-size: 25px; }
-  .game-card__pack { font-size: 20px; }
+  .game-header h1 { font-size: clamp(28px, 8.2vw, 34px); line-height: 1.06; }
+  .game-header p { margin-top: 4px; }
+  .game-card h2 { padding: 6px 18px 0; font-size: clamp(30px, 9vw, 36px); line-height: 1.12; }
+  .game-card__type { margin-top: 0; font-size: clamp(17px, 4.8vw, 19px); }
+  .game-card__text { padding: clamp(12px, 2.5dvh, 20px) 18px; font-size: clamp(20px, 5.8vw, 24px); }
+  .game-card__pack { padding: 6px 18px 10px; font-size: clamp(17px, 4.8vw, 20px); }
   .game-actions { display: flex; justify-content: space-between; gap: 8px; }
-  .game-actions .game-action { width: 64px; height: 64px; flex: 0 0 64px; padding: 0; justify-content: center; }
+  .game-actions .game-action { width: 56px; height: 56px; flex: 0 0 56px; padding: 0; justify-content: center; }
   .game-actions .game-action::after { content: none; }
 }
 
 @media (max-width: 374px), (max-height: 700px) and (max-width: 899px) {
-  .game-shell { width: calc(100% - 36px); padding: 24px 0; grid-template-rows: auto minmax(260px, 1fr) 56px; }
-  .game-header h1 { font-size: 30px; }
+  .game-shell { width: calc(100% - 36px); padding: calc(var(--safe-area-top) + 14px) 0 calc(var(--safe-area-bottom) + 14px); grid-template-rows: auto minmax(260px, 1fr) 48px; gap: 8px; }
+  .game-header h1 { font-size: clamp(26px, 7.8vw, 30px); }
   .game-card h2 { font-size: 30px; line-height: 36px; }
   .game-card__text { font-size: 20px; }
   .game-actions { gap: 5px; }
-  .game-actions .game-action { width: 52px; height: 52px; flex-basis: 52px; }
+  .game-actions .game-action { width: 48px; height: 48px; flex-basis: 48px; }
 }
 
 @media (min-width: 900px) and (max-height: 820px) {

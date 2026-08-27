@@ -31,9 +31,32 @@
 .rule-checkbox__control svg { width: 14px; height: 14px; }
 .rule-checkbox input:focus-visible + .rule-checkbox__control { outline: var(--focus-width) solid var(--color-focus); outline-offset: var(--focus-offset); }
 
+@media (max-width: 767px) {
+  .welcome {
+    display: flex;
+    min-height: 100dvh;
+    padding: calc(var(--safe-area-top) + 32px) 29px 28px;
+    flex-direction: column;
+  }
+  .welcome h1,
+  .welcome__greeting,
+  .welcome__contact,
+  .welcome__start,
+  .welcome__disclaimer {
+    position: static;
+    width: 100%;
+  }
+  .welcome h1 { font-size: clamp(30px, 9vw, 37.13px); line-height: 1.15; }
+  .welcome__greeting { margin: 20px 0 0; }
+  .welcome__contact { margin: clamp(28px, 7dvh, 64px) 0 0; }
+  .welcome__start { margin-top: 28px; }
+  .welcome__disclaimer { margin: 10px 0 0; }
+  .rules { padding-top: calc(var(--safe-area-top) + 32px); }
+}
+
 @media (max-width: 374px) {
   .welcome, .rules { padding-inline: 20px; }
-  .welcome h1, .welcome__greeting, .welcome__contact, .welcome__start, .welcome__disclaimer { left: 20px; width: calc(100% - 40px); }
+  .welcome h1, .welcome__greeting, .welcome__contact, .welcome__start, .welcome__disclaimer { width: 100%; }
   .welcome h1 { font-size: 28px; }
   .rules__list, .rule-checkbox { font-size: 18px; line-height: 21px; }
 }

@@ -2,7 +2,13 @@ import { expect, test, type Page } from '@playwright/test'
 
 const viewports = [
   { width: 320, height: 480 },
+  { width: 320, height: 568 },
+  { width: 360, height: 740 },
+  { width: 360, height: 780 },
+  { width: 384, height: 824 },
+  { width: 412, height: 915 },
   { width: 424, height: 917 },
+  { width: 740, height: 360 },
   { width: 768, height: 1024 },
   { width: 900, height: 700 },
   { width: 1024, height: 768 },
@@ -30,6 +36,58 @@ for (const viewport of viewports) {
     await expect(page.getByRole('heading', { name: 'Паки вопросов' })).toBeVisible()
     await assertNoHorizontalOverflow(page)
     await assertPackCardsDoNotOverlap(page)
+  })
+}
+
+test('mobile setup typography and player controls stay inside their available boxes', async ({ page }) => {
+  await page.setViewportSize({ width: 412, height: 915 })
+  await page.goto('/')
+  await expectElementsDoNotOverlap(page, '.welcome h1', '.welcome__greeting')
+  await page.getByRole('button', { name: 'Начать' }).click()
+  await page.getByRole('button', { name: 'Далее' }).click()
+
+  const boundaries = page.getByRole('combobox', { name: 'Грань игрока' })
+  await boundaries.first().selectOption('full')
+  await expect(boundaries.first()).toHaveValue('full')
+  expect(await page.locator('.player-card').evaluateAll((cards) => cards.every((card) => {
+    const cardRect = card.getBoundingClientRect()
+    return [...card.querySelectorAll<HTMLElement>('.player-card__boundary, .relationship-toggle')].every((control) => {
+      const rect = control.getBoundingClientRect()
+      return rect.left >= cardRect.left && rect.right <= cardRect.right && control.scrollWidth <= control.clientWidth
+    })
+  }))).toBe(true)
+  expect(await page.getByRole('switch').evaluate((mode) => {
+    const rect = mode.getBoundingClientRect()
+    return rect.left >= 0 && rect.right <= document.documentElement.clientWidth && mode.scrollWidth <= mode.clientWidth
+  })).toBe(true)
+})
+
+test('mobile pack badges are centered and descriptions have divider spacing', async ({ page }) => {
+  await page.setViewportSize({ width: 412, height: 915 })
+  await openPacks(page)
+  const badge = page.locator('.pack-card__type').first()
+  await expect(badge).toHaveCSS('align-items', 'center')
+  await expect(badge).toHaveCSS('justify-content', 'center')
+  expect(await page.locator('.pack-card__description').first().evaluate((description) =>
+    Number.parseFloat(getComputedStyle(description).marginTop),
+  )).toBeGreaterThan(0)
+})
+
+for (const viewport of [{ width: 360, height: 740 }, { width: 740, height: 360 }]) {
+  test(`game actions remain reachable at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+    await page.setViewportSize(viewport.height < 500 ? { width: 360, height: 740 } : viewport)
+    await startGame(page)
+    await page.setViewportSize(viewport)
+    await assertNoHorizontalOverflow(page)
+    await expectElementsDoNotOverlap(page, '.game-header h1', '.game-header p')
+    const exit = page.getByRole('button', { name: 'Выход' })
+    await exit.scrollIntoViewIfNeeded()
+    await expect(exit).toBeVisible()
+    expect(await exit.evaluate((element) => {
+      const rect = element.getBoundingClientRect()
+      return rect.left >= 0 && rect.right <= innerWidth && rect.top >= 0 && rect.bottom <= innerHeight
+    })).toBe(true)
+    expect(await page.locator('.game-screen').evaluate((screen) => screen.scrollHeight >= screen.clientHeight)).toBe(true)
   })
 }
 
@@ -607,6 +665,14 @@ async function assertNoHorizontalOverflow(page: Page) {
   }))
   expect(dimensions.body).toBeLessThanOrEqual(dimensions.viewport)
   expect(dimensions.document).toBeLessThanOrEqual(dimensions.viewport)
+}
+
+async function expectElementsDoNotOverlap(page: Page, firstSelector: string, secondSelector: string) {
+  const boxes = await page.locator(`${firstSelector}, ${secondSelector}`).evaluateAll((elements) =>
+    elements.map((element) => element.getBoundingClientRect()).map(({ top, bottom }) => ({ top, bottom })),
+  )
+  expect(boxes).toHaveLength(2)
+  expect(boxes[0].bottom).toBeLessThanOrEqual(boxes[1].top)
 }
 
 async function assertPlayerCardsDoNotOverlap(page: Page) {
