@@ -11,6 +11,7 @@ interface DialogProps {
 
 export function Dialog({ actions, children, onClose, open, title }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const openerRef = useRef<HTMLElement | null>(null)
   const titleId = useId()
 
   useEffect(() => {
@@ -18,11 +19,15 @@ export function Dialog({ actions, children, onClose, open, title }: DialogProps)
     if (!dialog) return
 
     if (open && !dialog.open) {
+      openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
       if (typeof dialog.showModal === 'function') dialog.showModal()
       else dialog.setAttribute('open', '')
+      dialog.querySelector<HTMLElement>('button:not(:disabled), [tabindex]:not([tabindex="-1"])')?.focus()
     } else if (!open && dialog.open) {
       if (typeof dialog.close === 'function') dialog.close()
       else dialog.removeAttribute('open')
+      if (openerRef.current?.isConnected) openerRef.current.focus()
+      openerRef.current = null
     }
   }, [open])
 

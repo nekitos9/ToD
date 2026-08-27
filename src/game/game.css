@@ -95,14 +95,40 @@
 
 .game-card--leave-truth { z-index: 2; animation: game-card-left 320ms cubic-bezier(.4, 0, .2, 1) both; }
 .game-card--leave-dare { z-index: 2; animation: game-card-right 320ms cubic-bezier(.4, 0, .2, 1) both; }
+.game-card--skip { z-index: 2; animation: game-card-up 320ms cubic-bezier(.4, 0, .2, 1) both; }
 .game-card--deal { z-index: 2; animation: game-card-deal 320ms cubic-bezier(.2, .75, .25, 1) both; }
 .game-card--reveal { animation: game-card-reveal 260ms ease-in both; }
 .game-card--choice-exit { z-index: 2; pointer-events: none; animation: game-card-choice-exit 260ms ease-out both; }
 @keyframes game-card-left { to { opacity: 0; transform: translateX(-48%) rotate(-2deg); } }
 @keyframes game-card-right { to { opacity: 0; transform: translateX(48%) rotate(2deg); } }
+@keyframes game-card-up { to { opacity: 0; transform: translateY(-48%); } }
 @keyframes game-card-deal { from { opacity: 0; transform: translateY(45%); } to { opacity: 1; transform: translateY(0); } }
 @keyframes game-card-reveal { from { opacity: 0; } to { opacity: 1; } }
 @keyframes game-card-choice-exit { from { opacity: 1; } to { opacity: 0; } }
+
+.game-notice {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  left: 20px;
+  z-index: 40;
+  width: min(520px, calc(100% - 40px));
+  margin-inline: auto;
+  padding: 14px 18px;
+  border: 1px solid rgb(190 66 68 / 45%);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+  color: #000;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  animation: game-notice-in 160ms ease-out both;
+}
+
+.game-notice[data-state='closing'] { animation: game-notice-out 160ms ease-in both; }
+@keyframes game-notice-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes game-notice-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(8px); } }
 
 @media (max-width: 899px) {
   .game-shell {
@@ -145,7 +171,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .game-screen { transition-duration: 20ms; }
-  .game-card--leave-truth, .game-card--leave-dare, .game-card--deal,
+  .game-card--leave-truth, .game-card--leave-dare, .game-card--skip, .game-card--deal,
   .game-card--reveal, .game-card--choice-exit { animation: game-card-fade 20ms linear both; }
+  .game-notice { animation: none; }
   @keyframes game-card-fade { to { opacity: 0; } }
 }

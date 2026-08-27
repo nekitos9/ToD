@@ -11,14 +11,23 @@ import type { CardType } from '../data/game-data'
 import {
   canChooseType,
   completePackCard,
+  completeSelectedTableTurn,
   completeTableTurn,
+  completeUnavailableTurn,
   drawCard,
   getCurrentPlayer,
+  isPackBaseExhausted,
+  isReplacementAllowed,
   recordTypeChoice,
+  replaceCurrentCard,
+  skipCurrentTurn,
+  switchGameToManual,
   type ActiveGameState,
   type CurrentTurn,
+  type SkipReason,
 } from './game-state'
 import './game.css'
+import { getSkipNotice } from './skip-notice'
 
 interface GameScreenProps {
   readonly game: ActiveGameState
@@ -29,21 +38,29 @@ interface GameScreenProps {
 type ExitStage = 'closed' | 'first' | 'second'
 type CardTransition =
   | { readonly kind: 'leaving'; readonly game: ActiveGameState; readonly manualType: CardType | null; readonly type: CardType }
+  | { readonly kind: 'skipping'; readonly game: ActiveGameState; readonly manualType: CardType | null }
   | { readonly kind: 'dealing'; readonly game: ActiveGameState; readonly manualType: CardType | null }
   | { readonly kind: 'revealing'; readonly game: ActiveGameState; readonly manualType: CardType | null }
 
 const playerPalette = ['#BE4244', '#7642BE', '#008F5B', '#CF25E9', '#AF6B00', '#4269BE']
+type NoticeState = 'hidden' | 'visible' | 'closing'
 
 export function GameScreen({ game, onExit, onGameChange }: GameScreenProps) {
   const [manualType, setManualType] = useState<CardType | null>(null)
   const [exitStage, setExitStage] = useState<ExitStage>('closed')
+  const [skipDialogOpen, setSkipDialogOpen] = useState(false)
+  const [replacementDialogOpen, setReplacementDialogOpen] = useState(false)
+  const [exhaustedDialogOpen, setExhaustedDialogOpen] = useState(false)
   const [cardTransition, setCardTransition] = useState<CardTransition | null>(null)
+  const [notice, setNotice] = useState<{ readonly message: string; readonly state: NoticeState }>({ message: '', state: 'hidden' })
   const transitionTimer = useRef<number | undefined>(undefined)
+  const noticeClosingTimer = useRef<number | undefined>(undefined)
+  const noticeRemovalTimer = useRef<number | undefined>(undefined)
   const firstControlRef = useRef<HTMLButtonElement>(null)
   const turn = game.currentTurn
   const card = turn ? gameData.cards.find((item) => item.id === turn.cardId) : undefined
   const pack = card ? gameData.packs.find((item) => item.id === card.packId) : undefined
-  const selectedType = turn?.type ?? manualType
+  const selectedType = turn?.type ?? manualType ?? game.selectedType
   const colors = useMemo(
     () => new Map(game.players.map((item, index) => [item.id, playerPalette[index % playerPalette.length]])),
     [game.players],
@@ -53,7 +70,11 @@ export function GameScreen({ game, onExit, onGameChange }: GameScreenProps) {
     firstControlRef.current?.focus()
   }, [game.currentPlayerIndex])
 
-  useEffect(() => () => window.clearTimeout(transitionTimer.current), [])
+  useEffect(() => () => {
+    window.clearTimeout(transitionTimer.current)
+    window.clearTimeout(noticeClosingTimer.current)
+    window.clearTimeout(noticeRemovalTimer.current)
+  }, [])
 
   function chooseType(type: CardType) {
     setCardTransition({ kind: 'revealing', game, manualType })
@@ -65,6 +86,7 @@ export function GameScreen({ game, onExit, onGameChange }: GameScreenProps) {
     const chosen = recordTypeChoice(game, type)
     const result = drawCard(chosen, type, gameData)
     onGameChange(result.state)
+    if (result.card === null && isPackBaseExhausted(result.state)) setExhaustedDialogOpen(true)
   }
 
   function scheduleTransitionEnd() {
@@ -85,17 +107,59 @@ export function GameScreen({ game, onExit, onGameChange }: GameScreenProps) {
 
   function finishTurn() {
     if (!selectedType) return
-    const next = turn ? completePackCard(game) : completeTableTurn(game, selectedType)
+    const next = turn
+      ? completePackCard(game)
+      : game.selectedType !== null
+        ? game.mode === 'manual' ? completeSelectedTableTurn(game) : completeUnavailableTurn(game)
+        : completeTableTurn(game, selectedType)
+    transitionToNextPlayer(next, selectedType, 'complete')
+  }
+
+  function transitionToNextPlayer(next: ActiveGameState, type: CardType, transition: 'complete' | 'skip') {
     const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-    setCardTransition({ kind: 'leaving', game, manualType, type: selectedType })
+    setCardTransition(transition === 'skip'
+      ? { kind: 'skipping', game, manualType }
+      : { kind: 'leaving', game, manualType, type })
     setManualType(null)
     onGameChange(next)
     window.clearTimeout(transitionTimer.current)
     transitionTimer.current = window.setTimeout(() => setCardTransition(null), reduced ? 20 : 320)
   }
 
-  const choosing = !turn && manualType === null
-  const noCard = game.selectedType !== null && turn === null
+  function skip(reason: SkipReason) {
+    if (!selectedType) return
+    const skipState = game.selectedType === null && manualType !== null
+      ? recordTypeChoice(game, manualType)
+      : game
+    const next = skipCurrentTurn(skipState, reason)
+    const actor = getCurrentPlayer(skipState)
+    const enabled = reason === 'absence' ? skipState.removeAfterAbsence : skipState.removeAfterRefusal
+    const previousCount = reason === 'absence' ? actor.absenceSkips : actor.refusalSkips
+    const noticeMessage = getSkipNotice(actor, reason, enabled, previousCount + 1)
+    if (noticeMessage) showNotice(noticeMessage)
+    setSkipDialogOpen(false)
+    transitionToNextPlayer(next, selectedType, 'skip')
+  }
+
+  function showNotice(message: string) {
+    window.clearTimeout(noticeClosingTimer.current)
+    window.clearTimeout(noticeRemovalTimer.current)
+    setNotice({ message, state: 'visible' })
+    noticeClosingTimer.current = window.setTimeout(() => setNotice((current) => ({ ...current, state: 'closing' })), 3840)
+    noticeRemovalTimer.current = window.setTimeout(() => setNotice({ message: '', state: 'hidden' }), 4000)
+  }
+
+  function replaceCard() {
+    if (!turn) return
+    const result = replaceCurrentCard(game, gameData)
+    setReplacementDialogOpen(false)
+    setCardTransition({ kind: 'dealing', game, manualType })
+    onGameChange(result.state)
+    scheduleTransitionEnd()
+  }
+
+  const choosing = !turn && manualType === null && game.selectedType === null
+  const replacementAllowed = Boolean(card && isReplacementAllowed(card))
 
   return (
     <FocusRegion>
@@ -132,6 +196,15 @@ export function GameScreen({ game, onExit, onGameChange }: GameScreenProps) {
                 ariaHidden
               />
             )}
+            {cardTransition?.kind === 'skipping' && (
+              <GameCard
+                game={cardTransition.game}
+                manualType={cardTransition.manualType}
+                colors={colors}
+                className="game-card--skip"
+                ariaHidden
+              />
+            )}
             {cardTransition?.kind === 'revealing' && (
               <GameCard
                 game={cardTransition.game}
@@ -144,9 +217,9 @@ export function GameScreen({ game, onExit, onGameChange }: GameScreenProps) {
           </div>
 
           <div className="game-actions">
-            <GameAction ref={choosing ? undefined : firstControlRef} disabled={choosing || noCard} label="Готово" name="complete" onClick={finishTurn} />
-            <GameAction disabled label="Пропуск" name="skip" />
-            <GameAction disabled label="Перезадать" name="reroll" />
+            <GameAction ref={choosing ? undefined : firstControlRef} disabled={choosing} label="Готово" name="complete" onClick={finishTurn} />
+            <GameAction disabled={choosing} label="Пропуск" name="skip" onClick={() => setSkipDialogOpen(true)} />
+            <GameAction disabled={!replacementAllowed} label="Перезадать" name="reroll" onClick={() => setReplacementDialogOpen(true)} />
             <GameAction disabled={game.mode !== 'manual' || manualType === null || turn !== null} label="Выдать" name="change-question" onClick={issueQuestion} />
             <IconButton className="game-action game-action--exit" icon={<ExitIcon />} label="Выход" onClick={() => setExitStage('first')} tone="danger" />
           </div>
@@ -165,6 +238,33 @@ export function GameScreen({ game, onExit, onGameChange }: GameScreenProps) {
         open={exitStage === 'second'}
         title="Точно конец?"
       ><p>Вы точно уверены?</p></Dialog>
+      <Dialog
+        actions={<><Button onClick={() => skip('refusal')}>Он так захотел</Button><Button onClick={() => skip('absence')}>Нет за столом</Button></>}
+        onClose={() => setSkipDialogOpen(false)}
+        open={skipDialogOpen}
+        title="Пропуск?"
+      ><p>Почему игрок пропускает ход?</p></Dialog>
+      <Dialog
+        actions={<><Button onClick={() => setReplacementDialogOpen(false)}>Нет</Button><Button onClick={replaceCard}>Да</Button></>}
+        onClose={() => setReplacementDialogOpen(false)}
+        open={replacementDialogOpen}
+        title="Замена"
+      ><p>Меняю вопрос?</p></Dialog>
+      <Dialog
+        actions={<Button onClick={() => { setExhaustedDialogOpen(false); onGameChange(switchGameToManual(game)) }}>Продолжить</Button>}
+        onClose={() => { setExhaustedDialogOpen(false); onGameChange(switchGameToManual(game)) }}
+        open={exhaustedDialogOpen}
+        title="Упс.."
+      ><p>База вопросов подошла к концу. Дальше игра переходит в ручной режим.</p></Dialog>
+      <Dialog
+        actions={<Button onClick={onExit}>Начать заново</Button>}
+        onClose={onExit}
+        open={game.players.length === 1}
+        title="Конец игры"
+      ><p>Кажется, у тебя кончились друзья. Начнем заново?</p></Dialog>
+      {notice.state !== 'hidden' && (
+        <div className="game-notice" data-state={notice.state} role="status">{notice.message}</div>
+      )}
     </FocusRegion>
   )
 }
@@ -182,9 +282,9 @@ function GameCard({ ariaHidden = false, className, colors, firstControlRef, game
   const turn = game.currentTurn
   const card = turn ? gameData.cards.find((item) => item.id === turn.cardId) : undefined
   const pack = card ? gameData.packs.find((item) => item.id === card.packId) : undefined
-  const selectedType = turn?.type ?? manualType
-  const choosing = !turn && manualType === null
-  const noCard = game.selectedType !== null && turn === null
+  const selectedType = turn?.type ?? manualType ?? game.selectedType
+  const choosing = !turn && manualType === null && game.selectedType === null
+  const noCard = game.mode === 'automatic' && game.selectedType !== null && turn === null
 
   return (
     <section className={`game-card${className ? ` ${className}` : ''}`} aria-hidden={ariaHidden || undefined}>

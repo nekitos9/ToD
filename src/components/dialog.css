@@ -12,7 +12,7 @@
 }
 
 .dialog__surface {
-  height: 148px;
+  min-height: 148px;
   padding: 11.17px 15.3px 11px;
   border-radius: 20px;
   background: var(--color-surface);
@@ -31,7 +31,7 @@
 }
 
 .dialog__body {
-  height: 43.44px;
+  min-height: 43.44px;
   padding-top: 10.44px;
   font-size: 20px;
   line-height: 33px;
@@ -66,6 +66,7 @@
   border-bottom-color: var(--color-divider);
 }
 
+.dialog__actions button:focus,
 .dialog__actions button:focus-visible {
   border-bottom-color: var(--color-focus);
   outline: var(--focus-width) solid var(--color-focus);

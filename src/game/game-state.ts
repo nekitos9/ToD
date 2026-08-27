@@ -15,6 +15,15 @@ export interface ActiveGamePlayer {
   readonly answeredTruths: number
   readonly completedDares: number
   readonly truthCount: TruthCount
+  readonly absenceSkips: number
+  readonly refusalSkips: number
+}
+
+export type SkipReason = 'absence' | 'refusal'
+
+export interface CooldownEntry {
+  readonly cardId: string
+  readonly turnsRemaining: number
 }
 
 export interface CurrentTurn {
@@ -28,6 +37,7 @@ export interface CurrentTurn {
 export interface ActiveGameState {
   readonly currentPlayerIndex: number
   readonly currentTurn: CurrentTurn | null
+  readonly cooldown: readonly CooldownEntry[]
   readonly mode: GameMode
   readonly players: readonly ActiveGamePlayer[]
   readonly queue: readonly string[]
@@ -64,13 +74,16 @@ export function createGame(
       return {
         ...player,
         activityPoints: 0,
+        absenceSkips: 0,
         answeredTruths: 0,
         boundary: player.boundary,
         completedDares: 0,
+        refusalSkips: 0,
         truthCount: 0,
       }
     }),
     queue,
+    cooldown: [],
     removeAfterAbsence: setup.removeAfterAbsence,
     removeAfterRefusal: setup.removeAfterRefusal,
     selectedType: null,
@@ -120,9 +133,10 @@ export function drawCard(
   if (state.currentTurn !== null || state.selectedType !== type) return { card: null, state }
   const cardsById = new Map(data.cards.map((card) => [card.id, card]))
   const usedIds = new Set(state.usedCardIds)
+  const cooldownIds = new Set(state.cooldown.map((entry) => entry.cardId))
   const matchIndex = state.queue.findIndex((id) => {
     const card = cardsById.get(id)
-    return card !== undefined && !usedIds.has(id) && card.type === type && isCardPlayableForTurn(card, state, data.boundaries)
+    return card !== undefined && !usedIds.has(id) && !cooldownIds.has(id) && card.type === type && isCardPlayableForTurn(card, state, data.boundaries)
   })
   if (matchIndex < 0) return { card: null, state }
 
@@ -166,7 +180,7 @@ export function completePackCard(state: ActiveGameState): ActiveGameState {
       return player
     }),
   }
-  return advanceTurn({
+  return finishTurn({
     ...withResult,
     currentTurn: null,
     selectedType: null,
@@ -178,7 +192,104 @@ export function completeTableTurn(state: ActiveGameState, type: CardType): Activ
   if (state.mode !== 'manual') throw new Error('Вопрос от стола доступен только в ручном режиме')
   if (state.currentTurn !== null) throw new Error('Нельзя завершить вопрос от стола при активной карточке')
   const withChoice = recordTypeChoice(state, type)
-  return advanceTurn({ ...withChoice, selectedType: null })
+  return finishTurn({ ...withChoice, selectedType: null })
+}
+
+export function completeSelectedTableTurn(state: ActiveGameState): ActiveGameState {
+  if (state.mode !== 'manual' || state.currentTurn !== null || state.selectedType === null) {
+    throw new Error('Нет выбранного вопроса от стола')
+  }
+  return finishTurn({ ...state, selectedType: null })
+}
+
+export function completeUnavailableTurn(state: ActiveGameState): ActiveGameState {
+  if (state.mode !== 'automatic' || state.currentTurn !== null || state.selectedType === null) {
+    throw new Error('Нет хода без совместимой карточки')
+  }
+  return finishTurn({ ...state, selectedType: null })
+}
+
+export function skipCurrentTurn(state: ActiveGameState, reason: SkipReason): ActiveGameState {
+  if (state.selectedType === null) throw new Error('Нет активного хода для пропуска')
+  const actor = getCurrentPlayer(state)
+  const enabled = reason === 'absence' ? state.removeAfterAbsence : state.removeAfterRefusal
+  const field = reason === 'absence' ? 'absenceSkips' : 'refusalSkips'
+  const count = enabled ? actor[field] + 1 : actor[field]
+  const shouldRemove = enabled && count >= 3
+  const cardId = state.currentTurn?.cardId
+  const withoutTurn: ActiveGameState = {
+    ...state,
+    currentTurn: null,
+    selectedType: null,
+    players: state.players.map((player) => player.id === actor.id ? { ...player, [field]: count } : player),
+  }
+  const progressed = tickCooldown(withoutTurn)
+  const withCooldown = cardId ? putOnCooldown(progressed, cardId, state.players.length) : progressed
+  return shouldRemove ? removeCurrentPlayer(withCooldown) : advanceTurn(withCooldown)
+}
+
+export function replaceCurrentCard(
+  state: ActiveGameState,
+  data: Pick<GameData, 'boundaries' | 'cards'>,
+  random: RandomSource = mathRandomSource,
+): CardDrawResult {
+  const turn = state.currentTurn
+  if (turn === null) throw new Error('Нет карточки для замены')
+  const card = data.cards.find((item) => item.id === turn.cardId)
+  if (!card || !isReplacementAllowed(card)) throw new Error('Эту карточку нельзя заменить')
+  const withoutCard = putOnCooldown({ ...state, currentTurn: null }, turn.cardId, state.players.length)
+  return drawCard(withoutCard, turn.type, data, random)
+}
+
+export function isReplacementAllowed(card: GameCard): boolean {
+  return card.pack === 'Другие люди' || card.pack === 'Безграничная улица'
+}
+
+export function isPackBaseExhausted(state: ActiveGameState): boolean {
+  const used = new Set(state.usedCardIds)
+  return state.currentTurn === null &&
+    state.cooldown.every((entry) => used.has(entry.cardId)) &&
+    state.queue.every((id) => used.has(id))
+}
+
+export function switchGameToManual(state: ActiveGameState): ActiveGameState {
+  return { ...state, mode: 'manual' }
+}
+
+function finishTurn(state: ActiveGameState): ActiveGameState {
+  return advanceTurn(tickCooldown(state))
+}
+
+function tickCooldown(state: ActiveGameState): ActiveGameState {
+  if (state.cooldown.length === 0) return state
+  const queue = [...state.queue]
+  const used = new Set(state.usedCardIds)
+  const currentId = state.currentTurn?.cardId
+  const cooldown: CooldownEntry[] = []
+  for (const entry of state.cooldown) {
+    const remaining = entry.turnsRemaining - 1
+    if (remaining <= 0) {
+      if (!used.has(entry.cardId) && entry.cardId !== currentId && !queue.includes(entry.cardId)) queue.push(entry.cardId)
+    } else {
+      cooldown.push({ ...entry, turnsRemaining: remaining })
+    }
+  }
+  return { ...state, cooldown, queue }
+}
+
+function putOnCooldown(state: ActiveGameState, cardId: string, turnsRemaining: number): ActiveGameState {
+  if (state.usedCardIds.includes(cardId)) throw new Error('Использованная карточка не может попасть в cooldown')
+  return {
+    ...state,
+    cooldown: [...state.cooldown.filter((entry) => entry.cardId !== cardId), { cardId, turnsRemaining }],
+    queue: state.queue.filter((id) => id !== cardId),
+  }
+}
+
+function removeCurrentPlayer(state: ActiveGameState): ActiveGameState {
+  const index = state.currentPlayerIndex
+  const players = state.players.filter((_, playerIndex) => playerIndex !== index)
+  return { ...state, players, currentPlayerIndex: players.length === 0 ? 0 : index % players.length }
 }
 
 export function isCardPlayableForTurn(

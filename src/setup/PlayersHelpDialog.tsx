@@ -8,13 +8,18 @@ interface PlayersHelpDialogProps {
 
 export function PlayersHelpDialog({ onClose, open }: PlayersHelpDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const openerRef = useRef<HTMLElement | null>(null)
   const titleId = useId()
 
   useEffect(() => {
     const dialog = dialogRef.current
     if (!dialog) return
     if (open) {
-      if (!dialog.open) dialog.showModal()
+      if (!dialog.open) {
+        openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+        dialog.showModal()
+        dialog.querySelector<HTMLElement>('button:not(:disabled)')?.focus()
+      }
       dialog.dataset.state = 'open'
       return
     }
@@ -23,11 +28,16 @@ export function PlayersHelpDialog({ onClose, open }: PlayersHelpDialogProps) {
     const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     if (reducedMotion) {
       dialog.close()
+      if (openerRef.current?.isConnected) openerRef.current.focus()
       return
     }
 
     dialog.dataset.state = 'closing'
-    const timeout = window.setTimeout(() => dialog.close(), 180)
+    const timeout = window.setTimeout(() => {
+      dialog.close()
+      if (openerRef.current?.isConnected) openerRef.current.focus()
+      openerRef.current = null
+    }, 180)
     return () => window.clearTimeout(timeout)
   }, [open])
 

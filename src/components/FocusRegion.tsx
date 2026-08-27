@@ -74,7 +74,13 @@ export function FocusRegion({ children }: PropsWithChildren) {
 
     const focusables = getFocusableElements(event.currentTarget)
     const currentIndex = focusables.indexOf(event.target)
-    if (currentIndex < 0) return
+    if (currentIndex < 0) {
+      const first = focusables[0]
+      if (!first) return
+      event.preventDefault()
+      focusAndReveal(first)
+      return
+    }
 
     const next = findDirectionalTarget(focusables, currentIndex, direction)
     if (!next) return
@@ -128,8 +134,9 @@ function findBottomNavigationTarget(
 }
 
 function getFocusableElements(region: HTMLElement): HTMLElement[] {
-  return [...region.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)]
-    .filter((element) => !element.closest('[inert], dialog:not([open])'))
+  const scope = region.querySelector<HTMLElement>('dialog[open]') ?? region
+  return [...scope.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)]
+    .filter((element) => element.tabIndex >= 0 && !element.closest('[inert], dialog:not([open])'))
 }
 
 function directionFromKey(key: string): Direction | undefined {

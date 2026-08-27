@@ -1,9 +1,29 @@
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import { gameData } from '../generated/game-data'
+import { getSkipNotice } from '../game/skip-notice'
 import { App } from './App'
 
 describe('App', () => {
+  it('formats both skip warnings and removal notices independently', () => {
+    const player = {
+      absenceSkips: 1,
+      activityPoints: 0,
+      answeredTruths: 0,
+      boundary: 'full' as const,
+      completedDares: 0,
+      id: 'player',
+      inRelationship: false,
+      name: 'Катя',
+      refusalSkips: 1,
+      truthCount: 0 as const,
+    }
+    expect(getSkipNotice(player, 'absence', true, 2)).toBe('Если игрока не будет за столом ещё раз — он выйдет из игры.')
+    expect(getSkipNotice(player, 'refusal', true, 2)).toBe('Если игрок снова откажется — он больше не будет играть.')
+    expect(getSkipNotice(player, 'absence', true, 3)).toContain('слишком долго отсутствует за столом')
+    expect(getSkipNotice(player, 'refusal', true, 3)).toContain('ничего не хочет делать')
+    expect(getSkipNotice(player, 'absence', false, 3)).toBeNull()
+  })
   it('moves from Welcome to Rules and back', () => {
     render(<App />)
 
@@ -261,6 +281,50 @@ describe('App', () => {
     expect(stage?.querySelector('.game-card--choice-exit')).toHaveAttribute('aria-hidden', 'true')
   })
 
+  it('opens the skip reason dialog and advances after a voluntary refusal', async () => {
+    render(<App />)
+    startGame()
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Пропуск' }))
+    const dialog = screen.getByRole('dialog', { name: 'Пропуск?' })
+    expect(within(dialog).getByText('Почему игрок пропускает ход?')).toBeInTheDocument()
+    fireEvent.click(within(dialog).getByRole('button', { name: 'Он так захотел' }))
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Игрок 2' })).toBeInTheDocument())
+  })
+
+  it('warns before the next counted refusal and reports player removal', () => {
+    vi.useFakeTimers()
+    try {
+      render(<App />)
+      startGame({ removeAfterRefusal: true })
+      skipDare('Он так захотел')
+      completeDare()
+      skipDare('Он так захотел')
+      expect(screen.getByRole('status')).toHaveTextContent('Если игрок снова откажется — он больше не будет играть.')
+      completeDare()
+      skipDare('Он так захотел')
+      expect(screen.getByRole('status')).toHaveTextContent('Игрок «Игрок 1» удалён из игры, потому что ничего не хочет делать.')
+      expect(screen.getByText('Кажется, у тебя кончились друзья. Начнем заново?')).toBeInTheDocument()
+    } finally {
+      vi.useRealTimers()
+    }
+  }, 15_000)
+
+  it('enables replacement for an allowed generated pack and keeps it disabled for an ordinary pack', () => {
+    const first = render(<App />)
+    startGame({ pack: 'Обычный' })
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+    expect(screen.getByRole('button', { name: 'Перезадать' })).toBeDisabled()
+    first.unmount()
+
+    render(<App />)
+    startGame({ pack: 'Другие люди' })
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+    expect(screen.getByRole('button', { name: 'Перезадать' })).toBeEnabled()
+    fireEvent.click(screen.getByRole('button', { name: 'Перезадать' }))
+    expect(screen.getByRole('dialog', { name: 'Замена' })).toBeVisible()
+  })
+
   it('completes a table-generated manual turn and can request a pack card', async () => {
     render(<App />)
     startGame({ manual: true })
@@ -371,8 +435,10 @@ function openPacks() {
   fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
 }
 
-function startGame({ manual = false, pack = 'Обычный' } = {}) {
-  openPlayers()
+function startGame({ manual = false, pack = 'Обычный', removeAfterRefusal = false } = {}) {
+  fireEvent.click(screen.getByRole('button', { name: 'Начать' }))
+  if (removeAfterRefusal) fireEvent.click(screen.getByRole('checkbox', { name: /От заданий нельзя отказываться/ }))
+  fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
   const names = screen.getAllByRole('textbox', { name: 'Имя игрока' })
   const boundaries = screen.getAllByRole('combobox', { name: 'Грань игрока' })
   names.forEach((name, index) => fireEvent.change(name, { target: { value: `Игрок ${index + 1}` } }))
@@ -381,6 +447,19 @@ function startGame({ manual = false, pack = 'Обычный' } = {}) {
   fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
   fireEvent.click(screen.getByRole('checkbox', { name: pack }))
   fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
+}
+
+function skipDare(reason: 'Он так захотел' | 'Нет за столом') {
+  fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Пропуск' }))
+  fireEvent.click(within(screen.getByRole('dialog', { name: 'Пропуск?' })).getByRole('button', { name: reason }))
+  act(() => vi.advanceTimersByTime(320))
+}
+
+function completeDare() {
+  fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+  fireEvent.click(screen.getByRole('button', { name: 'Готово' }))
+  act(() => vi.advanceTimersByTime(320))
 }
 
 function completeManualTurn(type: 'Правда' | 'Действие') {

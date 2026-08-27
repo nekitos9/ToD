@@ -222,6 +222,11 @@
   outline-offset: var(--focus-offset);
 }
 
+.players-help button:focus {
+  outline: var(--focus-width) solid var(--color-focus);
+  outline-offset: var(--focus-offset);
+}
+
 .round-action:disabled {
   opacity: 0.28;
   cursor: default;

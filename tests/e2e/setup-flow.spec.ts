@@ -129,6 +129,30 @@ test('keeps the player help close button clear of the dialog on a low wide viewp
   expect(overlaps).toBe(false)
 })
 
+test('keeps focus trapped and restores it for setup and game dialogs', async ({ page }) => {
+  await openPlayers(page)
+  const help = page.getByRole('button', { name: 'Открыть справку о настройках игроков' })
+  await help.focus()
+  await page.keyboard.press('Enter')
+  const helpDialog = page.getByRole('dialog', { name: 'Грани и «Отношения»' })
+  await expect(helpDialog.getByRole('button', { name: 'Закрыть справку' })).toBeFocused()
+  await page.keyboard.press('Escape')
+  await expect(help).toBeFocused()
+
+  await completePlayers(page)
+  await page.getByRole('checkbox', { name: 'Обычный' }).check({ force: true })
+  await page.getByRole('button', { name: 'Далее' }).click()
+  const exit = page.getByRole('button', { name: 'Выход' })
+  await exit.focus()
+  await page.keyboard.press('Enter')
+  const exitDialog = page.getByRole('dialog', { name: 'Конец?' })
+  await expect(exitDialog.getByRole('button', { name: 'Да' })).toBeFocused()
+  await page.keyboard.press('ArrowRight')
+  await expect(exitDialog.getByRole('button', { name: 'Нет' })).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(exit).toBeFocused()
+})
+
 test('enters Packs and selects a pack without mouse or Tab', async ({ page }) => {
   await page.goto('/')
   await page.keyboard.press('ArrowDown')
@@ -270,6 +294,49 @@ test('completes an automatic game turn using only the keyboard on the game scree
   await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
 })
 
+test('skips a generated card with a keyboard-only reason dialog flow', async ({ page }) => {
+  await startGame(page)
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('Enter')
+  await page.waitForTimeout(280)
+  await page.keyboard.press('ArrowDown')
+  await expect(page.getByRole('button', { name: 'Готово' })).toBeFocused()
+  await page.keyboard.press('ArrowDown')
+  await expect(page.getByRole('button', { name: 'Пропуск' })).toBeFocused()
+  await page.keyboard.press('Enter')
+  const dialog = page.getByRole('dialog', { name: 'Пропуск?' })
+  await expect(dialog).toBeVisible()
+  await expect(dialog.getByRole('button', { name: 'Он так захотел' })).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.locator('.game-card--skip')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
+})
+
+test('replaces an allowed generated card using only the keyboard on the game screen', async ({ page }) => {
+  await startGame(page, 'Другие люди')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('Enter')
+  await page.waitForTimeout(280)
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('ArrowDown')
+  await page.keyboard.press('ArrowDown')
+  const replacement = page.getByRole('button', { name: 'Перезадать' })
+  await expect(replacement).toBeEnabled()
+  await expect(replacement).toBeFocused()
+  const activeCopy = page.locator('.game-card:not([aria-hidden]) .game-card__copy')
+  const textBefore = await activeCopy.textContent()
+  await page.keyboard.press('Enter')
+  const dialog = page.getByRole('dialog', { name: 'Замена' })
+  await expect(dialog).toBeVisible()
+  await expect(dialog.getByRole('button', { name: 'Нет' })).toBeFocused()
+  await page.keyboard.press('ArrowRight')
+  await expect(dialog.getByRole('button', { name: 'Да' })).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(dialog).not.toBeVisible()
+  await expect.poll(() => activeCopy.textContent()).not.toBe(textBefore)
+  await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
+})
+
 test('uses reduced motion for game-card completion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await startGame(page)
@@ -397,9 +464,9 @@ async function openPacks(page: Page) {
   await expect(page.getByRole('heading', { name: 'Паки вопросов' })).toBeVisible()
 }
 
-async function startGame(page: Page) {
+async function startGame(page: Page, pack = 'Обычный') {
   await openPacks(page)
-  await page.getByRole('checkbox', { name: 'Обычный' }).check({ force: true })
+  await page.getByRole('checkbox', { name: pack }).check({ force: true })
   await page.getByRole('button', { name: 'Далее' }).click()
   await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
 }
