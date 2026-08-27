@@ -337,6 +337,40 @@ test('replaces an allowed generated card using only the keyboard on the game scr
   await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
 })
 
+test('navigates Results and reuses players using only arrows and Enter', async ({ page }) => {
+  await startGame(page)
+  await finishGame(page)
+  await expect(page.getByRole('heading', { name: 'Результаты' })).toBeVisible()
+  await page.keyboard.press('ArrowDown')
+  await expect(page.getByRole('button', { name: 'С нуля' })).toBeFocused()
+  await page.keyboard.press('ArrowRight')
+  await expect(page.getByRole('button', { name: 'С теми же игроками' })).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.getByRole('heading', { name: 'Игроки' })).toBeVisible()
+  await expect(page.getByRole('textbox', { name: 'Имя игрока' }).first()).toHaveValue('Игрок 1')
+})
+
+test('scrolls Results for twenty players without hiding the final participant', async ({ page }) => {
+  test.setTimeout(90_000)
+  await page.setViewportSize({ width: 424, height: 917 })
+  await openPlayers(page)
+  const add = page.getByRole('button', { name: 'Добавить игрока' })
+  for (let index = 2; index < 20; index += 1) await add.click()
+  await completePlayers(page)
+  await page.getByRole('checkbox', { name: 'Обычный' }).check({ force: true })
+  await page.getByRole('button', { name: 'Далее' }).click()
+  await finishGame(page)
+  await expect(page.locator('.results__player')).toHaveCount(20)
+  await assertNoHorizontalOverflow(page)
+  const scroll = page.locator('.results-screen__scroll')
+  await scroll.evaluate((element) => element.scrollTo({ top: element.scrollHeight }))
+  await expect.poll(async () => {
+    const lastBottom = await page.locator('.results__player').last().evaluate((element) => element.getBoundingClientRect().bottom)
+    const navigationTop = await page.locator('.bottom-navigation').evaluate((element) => element.getBoundingClientRect().top)
+    return lastBottom <= navigationTop - 12
+  }).toBe(true)
+})
+
 test('uses reduced motion for game-card completion', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await startGame(page)
@@ -386,6 +420,30 @@ for (const viewport of [
       const rect = element.getBoundingClientRect()
       return rect.left >= 0 && rect.right <= innerWidth && rect.top >= 0 && rect.bottom <= innerHeight
     })).toBe(true)
+  })
+}
+
+for (const viewport of [
+  { width: 320, height: 480 },
+  { width: 424, height: 917 },
+  { width: 768, height: 1024 },
+  { width: 1024, height: 768 },
+  { width: 1280, height: 800 },
+  { width: 1440, height: 1024 },
+  { width: 1920, height: 1080 },
+  { width: 2560, height: 1440 },
+]) {
+  test(`Results has no overflow or navigation overlap at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    await startGame(page)
+    await finishGame(page)
+    await assertNoHorizontalOverflow(page)
+    expect(await page.locator('.results-screen .bottom-navigation .button').evaluateAll((buttons) =>
+      buttons.every((button) => button.scrollHeight <= button.clientHeight && button.scrollWidth <= button.clientWidth),
+    )).toBe(true)
+    const lastResult = page.locator('.results__player').last()
+    const navigation = page.locator('.bottom-navigation')
+    expect(await lastResult.evaluate((element, navigationTop) => element.getBoundingClientRect().bottom <= navigationTop, await navigation.evaluate((element) => element.getBoundingClientRect().top))).toBe(true)
   })
 }
 
@@ -469,6 +527,12 @@ async function startGame(page: Page, pack = 'Обычный') {
   await page.getByRole('checkbox', { name: pack }).check({ force: true })
   await page.getByRole('button', { name: 'Далее' }).click()
   await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
+}
+
+async function finishGame(page: Page) {
+  await page.getByRole('button', { name: 'Выход' }).click()
+  await page.getByRole('dialog', { name: 'Конец?' }).getByRole('button', { name: 'Да' }).click()
+  await page.getByRole('dialog', { name: 'Точно конец?' }).getByRole('button', { name: 'Да' }).click()
 }
 
 async function chooseFirstSelectOption(page: Page) {

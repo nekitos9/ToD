@@ -12,6 +12,12 @@
 .game-screen--spicy { --game-background: #9242be; }
 .game-screen--hot { --game-background: #be4244; }
 .game-screen--underworld { --game-background: #111; }
+.game-screen--enter { animation: game-screen-enter 680ms cubic-bezier(.22, 1, .36, 1) both; }
+
+@keyframes game-screen-enter {
+  from { opacity: 0; transform: translateX(clamp(72px, 18vw, 240px)); }
+  to { opacity: 1; transform: translateX(0); }
+}
 
 .game-shell {
   position: relative;
@@ -171,6 +177,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .game-screen { transition-duration: 20ms; }
+  .game-screen--enter { animation: none; }
   .game-card--leave-truth, .game-card--leave-dare, .game-card--skip, .game-card--deal,
   .game-card--reveal, .game-card--choice-exit { animation: game-card-fade 20ms linear both; }
   .game-notice { animation: none; }

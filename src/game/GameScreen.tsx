@@ -30,6 +30,7 @@ import './game.css'
 import { getSkipNotice } from './skip-notice'
 
 interface GameScreenProps {
+  readonly animateEntrance?: boolean
   readonly game: ActiveGameState
   readonly onExit: () => void
   readonly onGameChange: (game: ActiveGameState) => void
@@ -45,7 +46,7 @@ type CardTransition =
 const playerPalette = ['#BE4244', '#7642BE', '#008F5B', '#CF25E9', '#AF6B00', '#4269BE']
 type NoticeState = 'hidden' | 'visible' | 'closing'
 
-export function GameScreen({ game, onExit, onGameChange }: GameScreenProps) {
+export function GameScreen({ animateEntrance = false, game, onExit, onGameChange }: GameScreenProps) {
   const [manualType, setManualType] = useState<CardType | null>(null)
   const [exitStage, setExitStage] = useState<ExitStage>('closed')
   const [skipDialogOpen, setSkipDialogOpen] = useState(false)
@@ -163,7 +164,7 @@ export function GameScreen({ game, onExit, onGameChange }: GameScreenProps) {
 
   return (
     <FocusRegion>
-      <main className={`game-screen game-screen--${packTheme(pack?.name)}`}>
+      <main className={`game-screen game-screen--${packTheme(pack?.name)}${animateEntrance ? ' game-screen--enter' : ''}`}>
         <DecorativeCircles />
         <div className="game-shell">
           <header className="game-header">

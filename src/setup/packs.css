@@ -11,6 +11,13 @@
   animation: packs-background-enter 520ms ease-out both;
 }
 
+.setup-screen.setup-screen--packs.setup-screen--leaving-game {
+  pointer-events: none;
+  animation: packs-game-exit 420ms ease-in-out both;
+}
+
+@keyframes packs-game-exit { to { opacity: 0; } }
+
 .packs {
   --packs-gutter: 29px;
   width: 100%;

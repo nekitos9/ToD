@@ -19,15 +19,28 @@ interface PacksScreenProps {
 
 export function PacksScreen({ animateTransition, onBack, onSetupChange, onStart, setup }: PacksScreenProps) {
   const [inactiveNoticeState, setInactiveNoticeState] = useState<'hidden' | 'visible' | 'closing'>('hidden')
+  const [leavingForGame, setLeavingForGame] = useState(false)
   const noticeClosingTimeout = useRef<number | undefined>(undefined)
   const noticeRemovalTimeout = useRef<number | undefined>(undefined)
+  const startGameTimeout = useRef<number | undefined>(undefined)
   const availability = getPackAvailability(setup)
   const selectedIds = new Set(setup.selectedPackIds)
 
   useEffect(() => () => {
     window.clearTimeout(noticeClosingTimeout.current)
     window.clearTimeout(noticeRemovalTimeout.current)
+    window.clearTimeout(startGameTimeout.current)
   }, [])
+
+  function beginGame() {
+    if (leavingForGame) return
+    if (typeof window.matchMedia !== 'function' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      onStart()
+      return
+    }
+    setLeavingForGame(true)
+    startGameTimeout.current = window.setTimeout(onStart, 420)
+  }
 
   function showInactiveNotice() {
     window.clearTimeout(noticeClosingTimeout.current)
@@ -68,7 +81,7 @@ export function PacksScreen({ animateTransition, onBack, onSetupChange, onStart,
 
   return (
     <FocusRegion>
-      <main className={`setup-screen setup-screen--packs${animateTransition ? ' setup-screen--transition' : ''}`}>
+      <main className={`setup-screen setup-screen--packs${animateTransition ? ' setup-screen--transition' : ''}${leavingForGame ? ' setup-screen--leaving-game' : ''}`}>
         <DecorativeCircles />
         <div className="setup-screen__scroll">
           <div className="packs">
@@ -92,7 +105,7 @@ export function PacksScreen({ animateTransition, onBack, onSetupChange, onStart,
         </div>
         <BottomNavigation>
           <Button onClick={onBack}>Назад</Button>
-          <Button disabled={setup.selectedPackIds.length === 0} onClick={onStart}>Далее</Button>
+          <Button disabled={setup.selectedPackIds.length === 0 || leavingForGame} onClick={beginGame}>Далее</Button>
         </BottomNavigation>
         {inactiveNoticeState !== 'hidden' && (
           <div className="packs__notice" data-state={inactiveNoticeState} role="status">

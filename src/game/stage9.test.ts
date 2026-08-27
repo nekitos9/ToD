@@ -6,6 +6,7 @@ import {
   createGame,
   drawCard,
   getCurrentPlayer,
+  getResultPlayers,
   isPackBaseExhausted,
   recordTypeChoice,
   replaceCurrentCard,
@@ -22,13 +23,23 @@ const boundaries: BoundaryDefinition[] = [
 ]
 
 describe('skips and player removal', () => {
-  it('keeps both reasons independent and ignores a disabled rule', () => {
+  it('tracks both reasons independently even when the related removal rule is disabled', () => {
     let game = activeTurn(makeGame({ removeAfterAbsence: false, removeAfterRefusal: true }))
     game = skipCurrentTurn(game, 'absence')
-    expect(game.players[0].absenceSkips).toBe(0)
+    expect(game.players[0].absenceSkips).toBe(1)
     game = activeTurn({ ...game, currentPlayerIndex: 0 })
     game = skipCurrentTurn(game, 'refusal')
-    expect(game.players[0]).toMatchObject({ absenceSkips: 0, refusalSkips: 1 })
+    expect(game.players[0]).toMatchObject({ absenceSkips: 1, refusalSkips: 1, refusedDares: 1 })
+  })
+
+  it('records skipped Truth and Dare cards without enabling player removal', () => {
+    let game = activeTurn(makeGame({ removeAfterRefusal: false }))
+    game = skipCurrentTurn({ ...game, selectedType: 'truth', currentTurn: { ...game.currentTurn!, type: 'truth' } }, 'refusal')
+    game = activeTurn({ ...game, currentPlayerIndex: 0 })
+    game = skipCurrentTurn(game, 'refusal')
+
+    expect(game.players).toHaveLength(3)
+    expect(game.players[0]).toMatchObject({ refusalSkips: 2, refusedDares: 1, refusedTruths: 1 })
   })
 
   it.each([
@@ -45,6 +56,8 @@ describe('skips and player removal', () => {
       if (count < 2) game = { ...game, currentPlayerIndex: game.players.findIndex((player) => player.id === removedId) }
     }
     expect(game.players.map((player) => player.id)).not.toContain(removedId)
+    expect(game.eliminatedPlayers.map((player) => player.id)).toContain(removedId)
+    expect(getResultPlayers(game).map((player) => player.id)).toEqual(['p1', 'p2', 'p3'])
     expect(getCurrentPlayer(game).id).toBe(nextId)
   })
 

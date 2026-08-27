@@ -17,6 +17,8 @@ export interface ActiveGamePlayer {
   readonly truthCount: TruthCount
   readonly absenceSkips: number
   readonly refusalSkips: number
+  readonly refusedDares: number
+  readonly refusedTruths: number
 }
 
 export type SkipReason = 'absence' | 'refusal'
@@ -39,6 +41,8 @@ export interface ActiveGameState {
   readonly currentTurn: CurrentTurn | null
   readonly cooldown: readonly CooldownEntry[]
   readonly mode: GameMode
+  readonly eliminatedPlayers: readonly ActiveGamePlayer[]
+  readonly playerOrder: readonly string[]
   readonly players: readonly ActiveGamePlayer[]
   readonly queue: readonly string[]
   readonly removeAfterAbsence: boolean
@@ -79,11 +83,15 @@ export function createGame(
         boundary: player.boundary,
         completedDares: 0,
         refusalSkips: 0,
+        refusedDares: 0,
+        refusedTruths: 0,
         truthCount: 0,
       }
     }),
     queue,
     cooldown: [],
+    eliminatedPlayers: [],
+    playerOrder: setup.players.map((player) => player.id),
     removeAfterAbsence: setup.removeAfterAbsence,
     removeAfterRefusal: setup.removeAfterRefusal,
     selectedType: null,
@@ -214,14 +222,22 @@ export function skipCurrentTurn(state: ActiveGameState, reason: SkipReason): Act
   const actor = getCurrentPlayer(state)
   const enabled = reason === 'absence' ? state.removeAfterAbsence : state.removeAfterRefusal
   const field = reason === 'absence' ? 'absenceSkips' : 'refusalSkips'
-  const count = enabled ? actor[field] + 1 : actor[field]
+  const count = actor[field] + 1
   const shouldRemove = enabled && count >= 3
   const cardId = state.currentTurn?.cardId
   const withoutTurn: ActiveGameState = {
     ...state,
     currentTurn: null,
     selectedType: null,
-    players: state.players.map((player) => player.id === actor.id ? { ...player, [field]: count } : player),
+    players: state.players.map((player) => player.id === actor.id ? {
+      ...player,
+      [field]: count,
+      ...(reason === 'refusal'
+        ? state.selectedType === 'truth'
+          ? { refusedTruths: player.refusedTruths + 1 }
+          : { refusedDares: player.refusedDares + 1 }
+        : {}),
+    } : player),
   }
   const progressed = tickCooldown(withoutTurn)
   const withCooldown = cardId ? putOnCooldown(progressed, cardId, state.players.length) : progressed
@@ -288,8 +304,22 @@ function putOnCooldown(state: ActiveGameState, cardId: string, turnsRemaining: n
 
 function removeCurrentPlayer(state: ActiveGameState): ActiveGameState {
   const index = state.currentPlayerIndex
+  const removed = state.players[index]
   const players = state.players.filter((_, playerIndex) => playerIndex !== index)
-  return { ...state, players, currentPlayerIndex: players.length === 0 ? 0 : index % players.length }
+  return {
+    ...state,
+    players,
+    eliminatedPlayers: removed ? [...state.eliminatedPlayers, removed] : state.eliminatedPlayers,
+    currentPlayerIndex: players.length === 0 ? 0 : index % players.length,
+  }
+}
+
+export function getResultPlayers(state: ActiveGameState): readonly ActiveGamePlayer[] {
+  const byId = new Map([...state.players, ...state.eliminatedPlayers].map((player) => [player.id, player]))
+  return state.playerOrder.flatMap((id) => {
+    const player = byId.get(id)
+    return player ? [player] : []
+  })
 }
 
 export function isCardPlayableForTurn(

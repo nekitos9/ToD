@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { GameScreen } from '../game/GameScreen'
 import { createGame, type ActiveGameState } from '../game/game-state'
 import { gameData } from '../generated/game-data'
+import { ResultsScreen } from '../results/ResultsScreen'
 import { RulesScreen } from '../setup/RulesScreen'
 import { PlayersScreen } from '../setup/PlayersScreen'
 import { PacksScreen } from '../setup/PacksScreen'
@@ -29,14 +30,30 @@ export function App() {
     navigate('game')
   }
 
-  function finishGame() {
+  function showResults() {
+    setHasNavigated(true)
+    setStep('results')
+  }
+
+  function restartFromWelcome() {
     setGame(null)
+    setSetup(initialSetupState)
     setHasNavigated(false)
     setStep('welcome')
   }
 
+  function reusePlayers() {
+    setGame(null)
+    setHasNavigated(true)
+    setStep('players')
+  }
+
   if (step === 'game' && game) {
-    return <GameScreen game={game} onExit={finishGame} onGameChange={setGame} />
+    return <GameScreen animateEntrance game={game} onExit={showResults} onGameChange={setGame} />
+  }
+
+  if (step === 'results' && game) {
+    return <ResultsScreen game={game} onRestart={restartFromWelcome} onReusePlayers={reusePlayers} />
   }
 
   if (step === 'rules') {

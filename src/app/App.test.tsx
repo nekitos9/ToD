@@ -16,6 +16,8 @@ describe('App', () => {
       inRelationship: false,
       name: 'Катя',
       refusalSkips: 1,
+      refusedDares: 0,
+      refusedTruths: 0,
       truthCount: 0 as const,
     }
     expect(getSkipNotice(player, 'absence', true, 2)).toBe('Если игрока не будет за столом ещё раз — он выйдет из игры.')
@@ -305,6 +307,10 @@ describe('App', () => {
       skipDare('Он так захотел')
       expect(screen.getByRole('status')).toHaveTextContent('Игрок «Игрок 1» удалён из игры, потому что ничего не хочет делать.')
       expect(screen.getByText('Кажется, у тебя кончились друзья. Начнем заново?')).toBeInTheDocument()
+      fireEvent.click(screen.getByRole('button', { name: 'Начать заново' }))
+      expect(screen.getByRole('heading', { name: 'Результаты' })).toBeInTheDocument()
+      expect(screen.getAllByText('Игрок 1')).toHaveLength(1)
+      expect(screen.getAllByText('Игрок 2')).toHaveLength(1)
     } finally {
       vi.useRealTimers()
     }
@@ -392,7 +398,7 @@ describe('App', () => {
     } finally {
       vi.useRealTimers()
     }
-  })
+  }, 15_000)
 
   it('keeps a generated phone number stable across rerenders', () => {
     const random = vi.spyOn(Math, 'random').mockReturnValue(0)
@@ -409,15 +415,34 @@ describe('App', () => {
     }
   })
 
-  it('uses two confirmations and clears the in-memory game on exit', async () => {
+  it('uses two confirmations and keeps the game snapshot for Results', async () => {
     render(<App />)
     startGame()
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
     fireEvent.click(screen.getByRole('button', { name: 'Выход' }))
     expect(screen.getByRole('dialog', { name: 'Конец?' })).toBeVisible()
     fireEvent.click(within(screen.getByRole('dialog', { name: 'Конец?' })).getByRole('button', { name: 'Да' }))
     expect(screen.getByRole('dialog', { name: 'Точно конец?' })).toBeVisible()
     fireEvent.click(within(screen.getByRole('dialog', { name: 'Точно конец?' })).getByRole('button', { name: 'Да' }))
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Правда или Действие' })).toBeInTheDocument())
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Результаты' })).toBeInTheDocument())
+    expect(screen.getAllByText(/выполнил 0 действий и ответил 0 правд/)).toHaveLength(2)
+  })
+
+  it('ends a manual game at Results and routes both restart choices correctly', async () => {
+    const view = render(<App />)
+    startGame({ manual: true })
+    finishGameFromDialog()
+    expect(await screen.findByRole('heading', { name: 'Результаты' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'С теми же игроками' }))
+    expect(screen.getByRole('heading', { name: 'Игроки' })).toBeInTheDocument()
+    expect(screen.getAllByRole('textbox', { name: 'Имя игрока' })[0]).toHaveValue('Игрок 1')
+
+    view.unmount()
+    render(<App />)
+    startGame()
+    finishGameFromDialog()
+    fireEvent.click(await screen.findByRole('button', { name: 'С нуля' }))
+    expect(screen.getByRole('heading', { name: 'Правда или Действие' })).toBeInTheDocument()
   })
 })
 
@@ -466,4 +491,10 @@ function completeManualTurn(type: 'Правда' | 'Действие') {
   fireEvent.click(screen.getByRole('button', { name: type }))
   fireEvent.click(screen.getByRole('button', { name: 'Готово' }))
   act(() => vi.advanceTimersByTime(320))
+}
+
+function finishGameFromDialog() {
+  fireEvent.click(screen.getByRole('button', { name: 'Выход' }))
+  fireEvent.click(within(screen.getByRole('dialog', { name: 'Конец?' })).getByRole('button', { name: 'Да' }))
+  fireEvent.click(within(screen.getByRole('dialog', { name: 'Точно конец?' })).getByRole('button', { name: 'Да' }))
 }
