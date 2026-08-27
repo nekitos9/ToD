@@ -1,4 +1,5 @@
 import { useEffect, useRef, type KeyboardEvent, type PropsWithChildren } from 'react'
+import { focusAndReveal } from './focus-utils'
 
 const FOCUSABLE_SELECTOR = [
   'button:not(:disabled)',
@@ -57,6 +58,13 @@ export function FocusRegion({ children }: PropsWithChildren) {
       return
     }
 
+    const navigationTarget = findBottomNavigationTarget(event.target, direction, event.currentTarget)
+    if (navigationTarget) {
+      event.preventDefault()
+      focusAndReveal(navigationTarget)
+      return
+    }
+
     const localTarget = findPlayerCardTarget(event.target, direction)
     if (localTarget) {
       event.preventDefault()
@@ -103,25 +111,25 @@ function findPlayerCardTarget(element: HTMLElement, direction: Direction): HTMLE
   return undefined
 }
 
-function focusAndReveal(element: HTMLElement) {
-  element.focus({ preventScroll: true })
-
-  const revealTarget = element.matches('input[type="checkbox"], input[type="radio"]')
-    ? element.closest('label')
-    : element
-  if (!revealTarget || typeof revealTarget.scrollIntoView !== 'function') return
-
-  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-  revealTarget.scrollIntoView({
-    behavior: reducedMotion ? 'auto' : 'smooth',
-    block: 'nearest',
-    inline: 'nearest',
-  })
+function findBottomNavigationTarget(
+  element: HTMLElement,
+  direction: Direction,
+  region: HTMLElement,
+): HTMLElement | undefined {
+  const navigation = element.closest<HTMLElement>('.bottom-navigation')
+  if (!navigation) return undefined
+  const buttons = getFocusableElements(navigation)
+  const index = buttons.indexOf(element)
+  if (direction === 'left') return buttons[index - 1]
+  if (direction === 'right') return buttons[index + 1]
+  if (direction !== 'up') return undefined
+  const content = getFocusableElements(region).filter((candidate) => !candidate.closest('.bottom-navigation'))
+  return content.at(-1)
 }
 
 function getFocusableElements(region: HTMLElement): HTMLElement[] {
   return [...region.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)]
-    .filter((element) => !element.closest('[inert]'))
+    .filter((element) => !element.closest('[inert], dialog:not([open])'))
 }
 
 function directionFromKey(key: string): Direction | undefined {

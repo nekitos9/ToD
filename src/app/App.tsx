@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { GameScreen } from '../game/GameScreen'
+import { createGame, type ActiveGameState } from '../game/game-state'
+import { gameData } from '../generated/game-data'
 import { RulesScreen } from '../setup/RulesScreen'
 import { PlayersScreen } from '../setup/PlayersScreen'
 import { PacksScreen } from '../setup/PacksScreen'
@@ -10,7 +13,7 @@ export function App() {
   const [step, setStep] = useState<SetupStep>('welcome')
   const [setup, setSetup] = useState<SetupState>(initialSetupState)
   const [hasNavigated, setHasNavigated] = useState(false)
-
+  const [game, setGame] = useState<ActiveGameState | null>(null)
   function navigate(nextStep: SetupStep) {
     setHasNavigated(true)
     setStep(nextStep)
@@ -19,6 +22,21 @@ export function App() {
   function openPacks() {
     setSetup((current) => normalizeSetupPackSelection(current))
     navigate('packs')
+  }
+
+  function startGame() {
+    setGame(createGame(setup, gameData))
+    navigate('game')
+  }
+
+  function finishGame() {
+    setGame(null)
+    setHasNavigated(false)
+    setStep('welcome')
+  }
+
+  if (step === 'game' && game) {
+    return <GameScreen game={game} onExit={finishGame} onGameChange={setGame} />
   }
 
   if (step === 'rules') {
@@ -52,6 +70,7 @@ export function App() {
         animateTransition={hasNavigated}
         onBack={() => navigate('players')}
         onSetupChange={setSetup}
+        onStart={startGame}
         setup={setup}
       />
     )

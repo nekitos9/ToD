@@ -49,6 +49,7 @@
   background: #fff;
   color: #000;
   cursor: pointer;
+  scroll-margin-block: 16px calc(var(--navigation-height) + 24px);
 }
 
 .pack-card[data-theme='personal'] { background: #5aa092; color: #fff; }

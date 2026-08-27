@@ -241,6 +241,120 @@ describe('App', () => {
       vi.useRealTimers()
     }
   })
+
+  it('starts an automatic game from Packs and completes a generated turn', async () => {
+    render(<App />)
+    startGame()
+    expect(screen.getByRole('heading', { name: 'Игрок 1' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+    expect(document.querySelector('.game-card__type--dare')).toHaveTextContent('Действие')
+    fireEvent.click(screen.getByRole('button', { name: 'Готово' }))
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Игрок 2' })).toBeInTheDocument())
+  })
+
+  it('crossfades the initial choice into the generated question', () => {
+    render(<App />)
+    startGame()
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+    const stage = document.querySelector('.game-card-stage')
+    expect(stage?.querySelector('.game-card--reveal')).not.toBeNull()
+    expect(stage?.querySelector('.game-card--choice-exit')).toHaveAttribute('aria-hidden', 'true')
+  })
+
+  it('completes a table-generated manual turn and can request a pack card', async () => {
+    render(<App />)
+    startGame({ manual: true })
+    fireEvent.click(screen.getByRole('button', { name: 'Правда' }))
+    expect(screen.getByText(/Стол задает/)).toBeInTheDocument()
+    expect(screen.getByText('Стол')).toBeInTheDocument()
+    expect(screen.getByText(/выбрал грань «Полный раж»/)).toBeInTheDocument()
+    expect(screen.queryByText(/не в отношениях/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/«full»/)).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Готово' }))
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Игрок 2' })).toBeInTheDocument())
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Выдать' }))
+    const stage = document.querySelector('.game-card-stage')
+    const dealtCard = stage?.querySelector('.game-card--deal')
+    const tableCard = screen.getByText(/Стол задает/).closest('.game-card')
+    expect(stage?.children).toHaveLength(2)
+    expect(tableCard).toHaveAttribute('aria-hidden', 'true')
+    expect(dealtCard).not.toBeNull()
+    expect(dealtCard).not.toBe(tableCard)
+    expect(screen.getByRole('button', { name: 'Готово' })).toBeEnabled()
+  })
+
+  it('renders the next turn below a completed card while it leaves', () => {
+    render(<App />)
+    startGame()
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Готово' }))
+    const stage = document.querySelector('.game-card-stage')
+    const leavingCard = stage?.querySelector('.game-card--leave-dare')
+    expect(stage?.children).toHaveLength(2)
+    expect(leavingCard).toHaveAttribute('aria-hidden', 'true')
+    expect(screen.getByRole('heading', { name: 'Игрок 2' })).toBeInTheDocument()
+  })
+
+  it('renders resolved PLAYER names inline with the card sentence', () => {
+    const random = vi.spyOn(Math, 'random').mockReturnValue(0)
+    try {
+      render(<App />)
+      startGame({ pack: 'Спайси' })
+      fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+      const copy = document.querySelector('.game-card__copy')
+      const playerName = copy?.querySelector('mark')
+      expect(copy).not.toBeNull()
+      expect(playerName).not.toBeNull()
+      expect(playerName?.parentElement).toBe(copy)
+      expect(playerName).toHaveTextContent('Игрок 2')
+    } finally {
+      random.mockRestore()
+    }
+  })
+
+  it('disables Truth for a player after two consecutive manual Truth turns', () => {
+    vi.useFakeTimers()
+    try {
+      render(<App />)
+      startGame({ manual: true })
+      completeManualTurn('Правда')
+      completeManualTurn('Действие')
+      completeManualTurn('Правда')
+      completeManualTurn('Действие')
+      expect(screen.getByRole('heading', { name: 'Игрок 1' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Правда' })).toBeDisabled()
+      expect(screen.getByText('Ты уже выбирал две правды.')).toBeInTheDocument()
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+
+  it('keeps a generated phone number stable across rerenders', () => {
+    const random = vi.spyOn(Math, 'random').mockReturnValue(0)
+    try {
+      render(<App />)
+      startGame({ pack: 'Другие люди' })
+      fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+      const number = screen.getByText(/\+7 \(900\) 000-00-00/).textContent
+      fireEvent.click(screen.getByRole('button', { name: 'Выход' }))
+      fireEvent.click(screen.getByRole('button', { name: 'Нет' }))
+      expect(screen.getByText(/\+7 \(900\) 000-00-00/)).toHaveTextContent(number ?? '')
+    } finally {
+      random.mockRestore()
+    }
+  })
+
+  it('uses two confirmations and clears the in-memory game on exit', async () => {
+    render(<App />)
+    startGame()
+    fireEvent.click(screen.getByRole('button', { name: 'Выход' }))
+    expect(screen.getByRole('dialog', { name: 'Конец?' })).toBeVisible()
+    fireEvent.click(within(screen.getByRole('dialog', { name: 'Конец?' })).getByRole('button', { name: 'Да' }))
+    expect(screen.getByRole('dialog', { name: 'Точно конец?' })).toBeVisible()
+    fireEvent.click(within(screen.getByRole('dialog', { name: 'Точно конец?' })).getByRole('button', { name: 'Да' }))
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Правда или Действие' })).toBeInTheDocument())
+  })
 })
 
 function openPlayers() {
@@ -255,4 +369,22 @@ function openPacks() {
   names.forEach((name, index) => fireEvent.change(name, { target: { value: `Игрок ${index + 1}` } }))
   boundaries.forEach((boundary) => fireEvent.change(boundary, { target: { value: 'full' } }))
   fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
+}
+
+function startGame({ manual = false, pack = 'Обычный' } = {}) {
+  openPlayers()
+  const names = screen.getAllByRole('textbox', { name: 'Имя игрока' })
+  const boundaries = screen.getAllByRole('combobox', { name: 'Грань игрока' })
+  names.forEach((name, index) => fireEvent.change(name, { target: { value: `Игрок ${index + 1}` } }))
+  boundaries.forEach((boundary) => fireEvent.change(boundary, { target: { value: 'full' } }))
+  if (manual) fireEvent.click(screen.getByRole('switch'))
+  fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
+  fireEvent.click(screen.getByRole('checkbox', { name: pack }))
+  fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
+}
+
+function completeManualTurn(type: 'Правда' | 'Действие') {
+  fireEvent.click(screen.getByRole('button', { name: type }))
+  fireEvent.click(screen.getByRole('button', { name: 'Готово' }))
+  act(() => vi.advanceTimersByTime(320))
 }

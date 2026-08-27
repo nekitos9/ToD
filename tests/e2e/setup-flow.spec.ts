@@ -209,6 +209,119 @@ test('scrolls the complete checkbox label above fixed navigation when focused', 
   })).toBe(true)
 })
 
+test('keeps BottomNavigation as the final logical row with many players', async ({ page }) => {
+  await page.setViewportSize({ width: 424, height: 917 })
+  await openPlayers(page)
+  const add = page.getByRole('button', { name: 'Добавить игрока' })
+  for (let index = 0; index < 6; index += 1) await add.click()
+  for (const [index, input] of (await page.getByRole('textbox', { name: 'Имя игрока' }).all()).entries()) {
+    await input.fill(`Игрок ${index + 1}`)
+  }
+  const back = page.getByRole('button', { name: 'Назад' })
+  const next = page.getByRole('button', { name: 'Далее' })
+  await back.focus()
+  await page.keyboard.press('ArrowRight')
+  await expect(next).toBeFocused()
+  await page.keyboard.press('ArrowLeft')
+  await expect(back).toBeFocused()
+  await page.keyboard.press('ArrowUp')
+  await expect(page.getByRole('switch')).toBeFocused()
+})
+
+test('scrolls focused player controls clear of fixed navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 424, height: 917 })
+  await openPlayers(page)
+  const add = page.getByRole('button', { name: 'Добавить игрока' })
+  for (let index = 0; index < 6; index += 1) await add.click()
+  await page.getByRole('button', { name: 'Назад' }).focus()
+  await page.keyboard.press('ArrowUp')
+  await page.keyboard.press('ArrowUp')
+  await expect.poll(async () => page.evaluate(() => {
+    const focused = document.activeElement as HTMLElement | null
+    const navigation = document.querySelector('.bottom-navigation')
+    if (!focused || !navigation) return false
+    return focused.getBoundingClientRect().bottom <= navigation.getBoundingClientRect().top - 12
+  })).toBe(true)
+})
+
+test('reveals the full focused bottom pack card above navigation', async ({ page }) => {
+  await page.setViewportSize({ width: 424, height: 917 })
+  await openPacks(page)
+  await page.keyboard.press('ArrowDown')
+  for (let index = 0; index < 7; index += 1) await page.keyboard.press('ArrowDown')
+  await expect.poll(async () => page.evaluate(() => {
+    const input = document.activeElement as HTMLInputElement | null
+    const card = input?.closest('.pack-card')
+    const navigation = document.querySelector('.bottom-navigation')
+    if (!card || !navigation) return false
+    return card.getBoundingClientRect().bottom <= navigation.getBoundingClientRect().top - 12
+  })).toBe(true)
+})
+
+test('completes an automatic game turn using only the keyboard on the game screen', async ({ page }) => {
+  await startGame(page)
+  const truth = page.getByRole('button', { name: 'Правда' })
+  await expect(truth).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.getByRole('button', { name: 'Готово' })).toBeEnabled()
+  await page.keyboard.press('ArrowDown')
+  await expect(page.getByRole('button', { name: 'Готово' })).toBeFocused()
+  await page.keyboard.press('Enter')
+  await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
+})
+
+test('uses reduced motion for game-card completion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await startGame(page)
+  await page.getByRole('button', { name: 'Действие' }).click()
+  await page.getByRole('button', { name: 'Готово' }).click()
+  await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
+})
+
+test('reduces manual deal and setup content animations', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await openPlayers(page)
+  const setupAnimation = await page.locator('.players').evaluate((element) => getComputedStyle(element).animationName)
+  expect(setupAnimation).toBe('none')
+  await completePlayers(page)
+  await page.getByRole('checkbox', { name: 'Обычный' }).check({ force: true })
+  await page.getByRole('button', { name: 'Назад' }).click()
+  await page.getByRole('switch').click()
+  await page.getByRole('button', { name: 'Далее' }).click()
+  await page.getByRole('button', { name: 'Далее' }).click()
+  await page.getByRole('button', { name: 'Действие' }).click()
+  const duration = await page.locator('.game-card').evaluate((card) => {
+    card.classList.add('game-card--deal')
+    return getComputedStyle(card).animationDuration
+  })
+  expect(['0s', '0.02s']).toContain(duration)
+  await page.getByRole('button', { name: 'Выдать' }).click()
+  await expect(page.getByRole('button', { name: 'Готово' })).toBeEnabled()
+})
+
+for (const viewport of [
+  { width: 320, height: 480 },
+  { width: 424, height: 917 },
+  { width: 768, height: 1024 },
+  { width: 1024, height: 768 },
+  { width: 1280, height: 800 },
+  { width: 1440, height: 1024 },
+  { width: 1920, height: 1080 },
+  { width: 2560, height: 1440 },
+]) {
+  test(`game layout has no horizontal overflow at ${viewport.width}x${viewport.height}`, async ({ page }) => {
+    await page.setViewportSize(viewport)
+    await startGame(page)
+    await assertNoHorizontalOverflow(page)
+    const exit = page.getByRole('button', { name: 'Выход' })
+    await expect(exit).toBeVisible()
+    expect(await exit.evaluate((element) => {
+      const rect = element.getBoundingClientRect()
+      return rect.left >= 0 && rect.right <= innerWidth && rect.top >= 0 && rect.bottom <= innerHeight
+    })).toBe(true)
+  })
+}
+
 async function assertNoHorizontalOverflow(page: Page) {
   const dimensions = await page.evaluate(() => ({
     body: document.body.scrollWidth,
@@ -282,6 +395,13 @@ async function openPacks(page: Page) {
   await openPlayers(page)
   await completePlayers(page)
   await expect(page.getByRole('heading', { name: 'Паки вопросов' })).toBeVisible()
+}
+
+async function startGame(page: Page) {
+  await openPacks(page)
+  await page.getByRole('checkbox', { name: 'Обычный' }).check({ force: true })
+  await page.getByRole('button', { name: 'Далее' }).click()
+  await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
 }
 
 async function chooseFirstSelectOption(page: Page) {

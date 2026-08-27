@@ -1,0 +1,151 @@
+.game-screen {
+  --game-background: #427cbe;
+  position: relative;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: var(--game-background);
+  color: #fff;
+  transition: background-color 700ms ease-in-out;
+}
+
+.game-screen--spicy { --game-background: #9242be; }
+.game-screen--hot { --game-background: #be4244; }
+.game-screen--underworld { --game-background: #111; }
+
+.game-shell {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(1240px, calc(100% - 58px));
+  min-height: 100dvh;
+  margin: auto;
+  padding: clamp(48px, 8dvh, 82px) 0 40px;
+  grid-template: auto minmax(516px, 1fr) / minmax(0, 925px) 295px;
+  gap: clamp(24px, 4dvh, 40px) 20px;
+  align-content: start;
+}
+
+.game-header { grid-column: 1 / -1; }
+.game-header h1 { margin: 0; font-family: var(--font-display); font-size: 45px; line-height: 1.1; }
+.game-header p { margin: 8px 0 0; font-size: 14px; }
+
+.game-card-stage {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+}
+
+.game-card {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #fff;
+  color: #000;
+  transform-origin: center bottom;
+}
+
+.game-card h2 { margin: 0; padding: 8px 24px 0; font-family: var(--font-display); font-size: 42px; line-height: 54px; text-align: center; }
+.game-card__type { margin: -2px 0 0; font-size: 20px; text-align: center; }
+.game-card__type--truth { color: #00ad1d; }
+.game-card__type--dare { color: #ff2a2d; }
+.game-card__text {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  padding: 22px 54px;
+  place-items: center;
+  overflow: auto;
+  font-size: 24px;
+  line-height: 1.15;
+  text-align: center;
+}
+.game-card__copy { margin: 0; }
+.game-card__text mark {
+  display: inline;
+  background: transparent;
+  font-family: var(--font-display);
+  font-size: 1.12em;
+  font-weight: 700;
+}
+.game-card__pack { margin: 0; padding: 8px 24px 14px; color: #427cbe; font-size: 20px; text-align: center; }
+.game-card__message { margin: auto; font-size: 30px; }
+
+.game-choice { display: grid; flex: 1; place-items: center; align-content: center; gap: 14px; }
+.game-choice strong { color: #000; font-size: 36px; text-align: center; }
+
+.game-actions { display: grid; min-height: 0; grid-template-rows: repeat(5, minmax(0, 1fr)); gap: 18px; }
+.game-actions .game-action {
+  display: flex;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  padding: 0 24px;
+  justify-content: flex-start;
+  gap: 44px;
+  border-radius: 45px;
+}
+.game-actions .game-action::after { content: attr(aria-label); color: #5081c1; font: 700 30px/1 var(--font-display); }
+.game-actions .game-action > span { width: 40px; height: 40px; flex: 0 0 40px; }
+.game-actions .game-action--exit > span { color: #ff4650; }
+
+.game-card--leave-truth { z-index: 2; animation: game-card-left 320ms cubic-bezier(.4, 0, .2, 1) both; }
+.game-card--leave-dare { z-index: 2; animation: game-card-right 320ms cubic-bezier(.4, 0, .2, 1) both; }
+.game-card--deal { z-index: 2; animation: game-card-deal 320ms cubic-bezier(.2, .75, .25, 1) both; }
+.game-card--reveal { animation: game-card-reveal 260ms ease-in both; }
+.game-card--choice-exit { z-index: 2; pointer-events: none; animation: game-card-choice-exit 260ms ease-out both; }
+@keyframes game-card-left { to { opacity: 0; transform: translateX(-48%) rotate(-2deg); } }
+@keyframes game-card-right { to { opacity: 0; transform: translateX(48%) rotate(2deg); } }
+@keyframes game-card-deal { from { opacity: 0; transform: translateY(45%); } to { opacity: 1; transform: translateY(0); } }
+@keyframes game-card-reveal { from { opacity: 0; } to { opacity: 1; } }
+@keyframes game-card-choice-exit { from { opacity: 1; } to { opacity: 0; } }
+
+@media (max-width: 899px) {
+  .game-shell {
+    width: calc(100% - 58px);
+    padding: clamp(48px, 7dvh, 64px) 0 36px;
+    grid-template: auto minmax(563px, calc(100dvh - 267px)) 64px / minmax(0, 1fr);
+    gap: 16px;
+  }
+  .game-header h1 { font-size: 37.13px; white-space: nowrap; }
+  .game-header p { margin-top: 6px; }
+  .game-card h2 { padding-top: 8px; font-size: 38px; line-height: 44px; }
+  .game-card__type { font-size: 19px; }
+  .game-card__text { padding: 20px 21px; font-size: 25px; }
+  .game-card__pack { font-size: 20px; }
+  .game-actions { display: flex; justify-content: space-between; gap: 8px; }
+  .game-actions .game-action { width: 64px; height: 64px; flex: 0 0 64px; padding: 0; justify-content: center; }
+  .game-actions .game-action::after { content: none; }
+}
+
+@media (max-width: 374px), (max-height: 700px) and (max-width: 899px) {
+  .game-shell { width: calc(100% - 36px); padding: 24px 0; grid-template-rows: auto minmax(260px, 1fr) 56px; }
+  .game-header h1 { font-size: 30px; }
+  .game-card h2 { font-size: 30px; line-height: 36px; }
+  .game-card__text { font-size: 20px; }
+  .game-actions { gap: 5px; }
+  .game-actions .game-action { width: 52px; height: 52px; flex-basis: 52px; }
+}
+
+@media (min-width: 900px) and (max-height: 820px) {
+  .game-shell {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    grid-template-rows: auto minmax(420px, 1fr);
+    gap: 20px;
+  }
+  .game-header h1 { font-size: 38px; }
+  .game-header p { margin-top: 3px; }
+  .game-actions { gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-screen { transition-duration: 20ms; }
+  .game-card--leave-truth, .game-card--leave-dare, .game-card--deal,
+  .game-card--reveal, .game-card--choice-exit { animation: game-card-fade 20ms linear both; }
+  @keyframes game-card-fade { to { opacity: 0; } }
+}

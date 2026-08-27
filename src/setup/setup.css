@@ -1,5 +1,6 @@
 .setup-screen { position: relative; width: 100%; min-width: 320px; min-height: 100dvh; overflow: hidden; isolation: isolate; }
 .setup-screen__scroll { position: relative; z-index: 1; height: 100dvh; overflow-y: auto; overscroll-behavior-y: contain; }
+.setup-screen--transition .setup-screen__scroll > * { animation: setup-content-enter 240ms ease-out both; }
 .setup-screen__circle { position: absolute; z-index: 0; width: 1012px; height: 1012px; border-radius: 50%; pointer-events: none; }
 .setup-screen__circle--first { top: 0; left: -713px; }
 .setup-screen__circle--second { top: 536px; left: -571px; }
@@ -123,7 +124,14 @@
   to { transform: translate3d(-7px, 5px, 0) scale(0.996); }
 }
 
+@keyframes setup-content-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   .setup-screen,
-  .setup-screen__circle { animation: none; }
+  .setup-screen__circle,
+  .setup-screen--transition .setup-screen__scroll > * { animation: none; }
 }

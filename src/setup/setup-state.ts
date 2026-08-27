@@ -1,4 +1,4 @@
-export type SetupStep = 'welcome' | 'rules' | 'players' | 'packs'
+export type SetupStep = 'welcome' | 'rules' | 'players' | 'packs' | 'game'
 
 export type Boundary = 'virgin' | 'regular' | 'full'
 export type GameMode = 'automatic' | 'manual'

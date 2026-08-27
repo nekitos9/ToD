@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { BottomNavigation } from '../components/BottomNavigation'
 import { Button } from '../components/Button'
 import { FocusRegion } from '../components/FocusRegion'
+import { focusAndReveal } from '../components/focus-utils'
 import { PackCard } from './PackCard'
 import { getPackAvailability } from './pack-selection'
 import type { SetupState } from './setup-state'
@@ -12,10 +13,11 @@ interface PacksScreenProps {
   readonly animateTransition: boolean
   readonly onBack: () => void
   readonly onSetupChange: (setup: SetupState) => void
+  readonly onStart: () => void
   readonly setup: SetupState
 }
 
-export function PacksScreen({ animateTransition, onBack, onSetupChange, setup }: PacksScreenProps) {
+export function PacksScreen({ animateTransition, onBack, onSetupChange, onStart, setup }: PacksScreenProps) {
   const [inactiveNoticeState, setInactiveNoticeState] = useState<'hidden' | 'visible' | 'closing'>('hidden')
   const noticeClosingTimeout = useRef<number | undefined>(undefined)
   const noticeRemovalTimeout = useRef<number | undefined>(undefined)
@@ -57,8 +59,7 @@ export function PacksScreen({ animateTransition, onBack, onSetupChange, setup }:
       if (event.key === 'ArrowRight' && nextIndex % columns <= currentColumn) return
       if (!inputs[nextIndex].disabled) {
         event.preventDefault()
-        inputs[nextIndex].focus()
-        inputs[nextIndex].scrollIntoView({ block: 'nearest', inline: 'nearest' })
+        focusAndReveal(inputs[nextIndex])
         return
       }
       nextIndex += step
@@ -91,7 +92,7 @@ export function PacksScreen({ animateTransition, onBack, onSetupChange, setup }:
         </div>
         <BottomNavigation>
           <Button onClick={onBack}>Назад</Button>
-          <Button disabled={setup.selectedPackIds.length === 0}>Далее</Button>
+          <Button disabled={setup.selectedPackIds.length === 0} onClick={onStart}>Далее</Button>
         </BottomNavigation>
         {inactiveNoticeState !== 'hidden' && (
           <div className="packs__notice" data-state={inactiveNoticeState} role="status">
