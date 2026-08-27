@@ -46,7 +46,7 @@
   min-height: 100%;
   margin: 0 auto;
   padding: var(--screen-top) var(--screen-gutter)
-    calc(var(--navigation-height) + 2rem);
+    calc(var(--navigation-height) + var(--safe-area-bottom) + 2rem);
 }
 
 .screen__header h1 {
@@ -78,8 +78,8 @@
   bottom: 0;
   left: 0;
   z-index: 10;
-  height: var(--navigation-height);
-  padding: 0 var(--screen-gutter) 34px;
+  height: calc(var(--navigation-height) + var(--safe-area-bottom));
+  padding: 0 var(--screen-gutter) calc(34px + var(--safe-area-bottom));
   background: linear-gradient(to bottom, transparent, rgb(66 105 190 / 82%) 30%);
   pointer-events: none;
 }
@@ -118,7 +118,7 @@
   }
 
   .bottom-navigation {
-    padding-bottom: 56px;
+    padding-bottom: calc(56px + var(--safe-area-bottom));
     background: linear-gradient(to bottom, transparent, rgb(66 124 190 / 82%) 35%);
   }
 
@@ -128,4 +128,3 @@
     margin-left: max(var(--screen-gutter), calc((100% - var(--screen-max-width)) / 2));
   }
 }
-
