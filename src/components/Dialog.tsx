@@ -4,12 +4,13 @@ import './dialog.css'
 interface DialogProps {
   readonly actions: ReactNode
   readonly children: ReactNode
+  readonly className?: string
   readonly onClose: () => void
   readonly open: boolean
   readonly title: string
 }
 
-export function Dialog({ actions, children, onClose, open, title }: DialogProps) {
+export function Dialog({ actions, children, className, onClose, open, title }: DialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const openerRef = useRef<HTMLElement | null>(null)
   const titleId = useId()
@@ -35,7 +36,7 @@ export function Dialog({ actions, children, onClose, open, title }: DialogProps)
     <dialog
       ref={dialogRef}
       aria-labelledby={titleId}
-      className="dialog"
+      className={`dialog${className ? ` ${className}` : ''}`}
       onCancel={(event) => {
         event.preventDefault()
         onClose()

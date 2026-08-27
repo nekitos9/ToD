@@ -73,6 +73,18 @@
   outline-offset: 0;
 }
 
+.dialog--resume h2 {
+  height: auto;
+  min-height: 32.39px;
+}
+
+.dialog--resume .dialog__actions {
+  height: auto;
+  min-height: 50px;
+}
+
+.dialog--resume .dialog__actions button { min-width: 0; line-height: 1.05; }
+
 @media (max-width: 767px) {
   .dialog {
     width: min(366px, calc(100% - 58px));

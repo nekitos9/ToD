@@ -335,6 +335,149 @@ test('replaces an allowed generated card using only the keyboard on the game scr
   await expect(dialog).not.toBeVisible()
   await expect.poll(() => activeCopy.textContent()).not.toBe(textBefore)
   await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
+  const replaced = await persistedGame(page)
+  await reloadAndContinue(page)
+  expect((await persistedGame(page)).currentTurn).toEqual(replaced.currentTurn)
+  await expect(page.locator('.game-card:not([aria-hidden]) .game-card__copy')).toHaveText(replaced.currentTurn?.resolvedText ?? '')
+})
+
+test('reloads immediately after game start and resumes using only arrows and Enter', async ({ page }) => {
+  await startGame(page)
+  const before = await persistedGame(page)
+  await page.reload()
+
+  const dialog = page.getByRole('dialog', { name: 'Вижу незаконченную игру' })
+  const resume = dialog.getByRole('button', { name: 'Продолжить' })
+  const restart = dialog.getByRole('button', { name: 'Начать другую' })
+  await expect(dialog).toBeVisible()
+  await expect(resume).toBeFocused()
+  await page.keyboard.press('ArrowRight')
+  await expect(restart).toBeFocused()
+  await page.keyboard.press('ArrowLeft')
+  await page.keyboard.press('Enter')
+
+  await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
+  expect(await persistedGame(page)).toEqual(before)
+})
+
+test('reload preserves a resolved card, participants, phone number and queue order', async ({ page }) => {
+  await startGame(page, 'Другие люди')
+  await page.getByRole('button', { name: 'Действие' }).click()
+  const before = await persistedGame(page)
+  const resolvedText = before.currentTurn?.resolvedText
+  expect(resolvedText).toBeTruthy()
+
+  await reloadAndContinue(page)
+
+  await expect(page.locator('.game-card:not([aria-hidden]) .game-card__copy')).toHaveText(resolvedText ?? '')
+  const after = await persistedGame(page)
+  expect(after.currentTurn).toEqual(before.currentTurn)
+  expect(after.queue).toEqual(before.queue)
+  expect(after.usedCardIds).toEqual(before.usedCardIds)
+})
+
+test('reload preserves a manual type choice and the exact card issued afterwards', async ({ page }) => {
+  await startManualGame(page, 'Другие люди')
+  await page.getByRole('button', { name: 'Действие' }).click()
+  expect((await persistedGame(page)).selectedType).toBe('dare')
+
+  await reloadAndContinue(page)
+  await expect(page.getByRole('button', { name: 'Выдать' })).toBeEnabled()
+  await page.getByRole('button', { name: 'Выдать' }).click()
+  const issued = await persistedGame(page)
+  expect(issued.currentTurn).not.toBeNull()
+
+  await reloadAndContinue(page)
+  expect((await persistedGame(page)).currentTurn).toEqual(issued.currentTurn)
+  await expect(page.locator('.game-card:not([aria-hidden]) .game-card__copy')).toHaveText(issued.currentTurn?.resolvedText ?? '')
+})
+
+test('reload preserves skip counters and cooldown', async ({ page }) => {
+  await startGame(page)
+  await page.getByRole('button', { name: 'Действие' }).click()
+  await page.getByRole('button', { name: 'Пропуск' }).click()
+  await page.getByRole('dialog', { name: 'Пропуск?' }).getByRole('button', { name: 'Он так захотел' }).click()
+  const before = await persistedGame(page)
+  expect(before.cooldown).not.toHaveLength(0)
+  expect(before.players[0].refusedDares).toBe(1)
+
+  await reloadAndContinue(page)
+  const after = await persistedGame(page)
+  expect(after.cooldown).toEqual(before.cooldown)
+  expect(after.players).toEqual(before.players)
+  await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
+})
+
+test('starting another game and completing a game both remove the resumable snapshot', async ({ page }) => {
+  await startGame(page)
+  await page.reload()
+  await page.getByRole('button', { name: 'Начать другую' }).click()
+  await expect(page.getByRole('heading', { name: 'Правда или Действие' })).toBeVisible()
+  expect(await page.evaluate(() => localStorage.getItem('truth-or-dare:unfinished-game'))).toBeNull()
+
+  await startGame(page)
+  await finishGame(page)
+  await expect(page.getByRole('heading', { name: 'Результаты' })).toBeVisible()
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'Правда или Действие' })).toBeVisible()
+  await expect(page.getByRole('dialog', { name: 'Вижу незаконченную игру' })).not.toBeVisible()
+})
+
+test('reload torture preserves multi-turn stats, removal, mode switch and pre-exit state', async ({ page }) => {
+  test.setTimeout(120_000)
+  await startGame(page)
+  await page.getByRole('button', { name: 'Действие' }).click()
+  await page.getByRole('button', { name: 'Готово' }).click()
+  await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
+  await page.getByRole('button', { name: 'Правда' }).click()
+  await page.getByRole('button', { name: 'Готово' }).click()
+  await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
+  const afterTurns = await persistedGame(page)
+  expect(afterTurns.players[0].completedDares).toBe(1)
+  expect(afterTurns.players[1].answeredTruths).toBe(1)
+  await reloadAndContinue(page)
+  expect((await persistedGame(page)).players).toEqual(afterTurns.players)
+
+  await page.evaluate(() => {
+    const key = 'truth-or-dare:unfinished-game'
+    const session = JSON.parse(localStorage.getItem(key)!)
+    session.setup.removeAfterRefusal = true
+    session.game.removeAfterRefusal = true
+    session.game.players[0].refusalSkips = 2
+    session.game.players[0].refusedDares = 2
+    localStorage.setItem(key, JSON.stringify(session))
+  })
+  await reloadAndContinue(page)
+  await page.getByRole('button', { name: 'Действие' }).click()
+  await page.getByRole('button', { name: 'Пропуск' }).click()
+  await page.getByRole('dialog', { name: 'Пропуск?' }).getByRole('button', { name: 'Он так захотел' }).click()
+  expect((await persistedGame(page)).eliminatedPlayers.map((player) => player.id)).toEqual(['player-1'])
+  await reloadAndContinue(page)
+  await expect(page.getByText('Кажется, у тебя кончились друзья. Начнем заново?')).toBeVisible()
+
+  await page.evaluate(() => localStorage.clear())
+  await page.reload()
+  await startGame(page)
+  await page.evaluate(() => {
+    const key = 'truth-or-dare:unfinished-game'
+    const session = JSON.parse(localStorage.getItem(key)!)
+    session.game.usedCardIds = [...session.game.queue]
+    session.game.queue = []
+    localStorage.setItem(key, JSON.stringify(session))
+  })
+  await reloadAndContinue(page)
+  await page.getByRole('button', { name: 'Действие' }).click()
+  await page.getByRole('dialog', { name: 'Упс..' }).getByRole('button', { name: 'Продолжить' }).click()
+  expect((await persistedGame(page)).mode).toBe('manual')
+  await reloadAndContinue(page)
+  await expect(page.locator('.game-header p')).toHaveText('Ручной')
+
+  const beforeExit = await persistedGame(page)
+  await page.getByRole('button', { name: 'Выход' }).click()
+  await page.getByRole('dialog', { name: 'Конец?' }).getByRole('button', { name: 'Да' }).click()
+  await expect(page.getByRole('dialog', { name: 'Точно конец?' })).toBeVisible()
+  await reloadAndContinue(page)
+  expect(await persistedGame(page)).toEqual(beforeExit)
 })
 
 test('navigates Results and reuses players using only arrows and Enter', async ({ page }) => {
@@ -377,6 +520,15 @@ test('uses reduced motion for game-card completion', async ({ page }) => {
   await page.getByRole('button', { name: 'Действие' }).click()
   await page.getByRole('button', { name: 'Готово' }).click()
   await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
+})
+
+test('decorative game circles do not create an empty extra screen below the content', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 642 })
+  await startGame(page)
+  await expect.poll(() => page.locator('.game-screen').evaluate((element) => ({
+    clientHeight: element.clientHeight,
+    scrollHeight: element.scrollHeight,
+  }))).toEqual({ clientHeight: 642, scrollHeight: 642 })
 })
 
 test('reduces manual deal and setup content animations', async ({ page }) => {
@@ -527,6 +679,39 @@ async function startGame(page: Page, pack = 'Обычный') {
   await page.getByRole('checkbox', { name: pack }).check({ force: true })
   await page.getByRole('button', { name: 'Далее' }).click()
   await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
+}
+
+async function startManualGame(page: Page, pack = 'Обычный') {
+  await openPlayers(page)
+  await completePlayers(page)
+  await page.getByRole('button', { name: 'Назад' }).click()
+  await page.getByRole('switch').click()
+  await page.getByRole('button', { name: 'Далее' }).click()
+  await page.getByRole('checkbox', { name: pack }).check({ force: true })
+  await page.getByRole('button', { name: 'Далее' }).click()
+  await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
+}
+
+async function reloadAndContinue(page: Page) {
+  await page.reload()
+  await page.getByRole('dialog', { name: 'Вижу незаконченную игру' }).getByRole('button', { name: 'Продолжить' }).click()
+}
+
+async function persistedGame(page: Page) {
+  return page.evaluate(() => {
+    const raw = localStorage.getItem('truth-or-dare:unfinished-game')
+    if (!raw) throw new Error('Persisted game is missing')
+    return JSON.parse(raw).game as {
+      cooldown: unknown[]
+      currentTurn: { resolvedText: string } | null
+      eliminatedPlayers: Array<{ id: string }>
+      mode: 'automatic' | 'manual'
+      players: Array<{ answeredTruths: number; completedDares: number; refusedDares: number }>
+      queue: string[]
+      selectedType: 'truth' | 'dare' | null
+      usedCardIds: string[]
+    }
+  })
 }
 
 async function finishGame(page: Page) {

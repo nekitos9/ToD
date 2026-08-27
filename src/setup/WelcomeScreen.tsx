@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Button } from '../components/Button'
 import { FocusRegion } from '../components/FocusRegion'
 import { welcomeContent } from './content'
@@ -6,9 +7,10 @@ import './setup.css'
 interface WelcomeScreenProps {
   readonly animateTransition: boolean
   readonly onStart: () => void
+  readonly overlay?: ReactNode
 }
 
-export function WelcomeScreen({ animateTransition, onStart }: WelcomeScreenProps) {
+export function WelcomeScreen({ animateTransition, onStart, overlay }: WelcomeScreenProps) {
   return (
     <FocusRegion>
       <main className={`setup-screen setup-screen--welcome${animateTransition ? ' setup-screen--transition' : ''}`}>
@@ -23,6 +25,7 @@ export function WelcomeScreen({ animateTransition, onStart }: WelcomeScreenProps
           </div>
         </div>
       </main>
+      {overlay}
     </FocusRegion>
   )
 }

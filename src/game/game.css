@@ -14,9 +14,16 @@
 .game-screen--underworld { --game-background: #111; }
 .game-screen--enter { animation: game-screen-enter 680ms cubic-bezier(.22, 1, .36, 1) both; }
 
+.game-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 @keyframes game-screen-enter {
-  from { opacity: 0; transform: translateX(clamp(72px, 18vw, 240px)); }
-  to { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; clip-path: inset(0 0 0 100%); }
+  to { opacity: 1; clip-path: inset(0); }
 }
 
 .game-shell {

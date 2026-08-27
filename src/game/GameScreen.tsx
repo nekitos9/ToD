@@ -47,7 +47,6 @@ const playerPalette = ['#BE4244', '#7642BE', '#008F5B', '#CF25E9', '#AF6B00', '#
 type NoticeState = 'hidden' | 'visible' | 'closing'
 
 export function GameScreen({ animateEntrance = false, game, onExit, onGameChange }: GameScreenProps) {
-  const [manualType, setManualType] = useState<CardType | null>(null)
   const [exitStage, setExitStage] = useState<ExitStage>('closed')
   const [skipDialogOpen, setSkipDialogOpen] = useState(false)
   const [replacementDialogOpen, setReplacementDialogOpen] = useState(false)
@@ -59,6 +58,7 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
   const noticeRemovalTimer = useRef<number | undefined>(undefined)
   const firstControlRef = useRef<HTMLButtonElement>(null)
   const turn = game.currentTurn
+  const manualType = game.mode === 'manual' ? game.selectedType : null
   const card = turn ? gameData.cards.find((item) => item.id === turn.cardId) : undefined
   const pack = card ? gameData.packs.find((item) => item.id === card.packId) : undefined
   const selectedType = turn?.type ?? manualType ?? game.selectedType
@@ -81,7 +81,7 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
     setCardTransition({ kind: 'revealing', game, manualType })
     scheduleTransitionEnd()
     if (game.mode === 'manual') {
-      setManualType(type)
+      onGameChange(recordTypeChoice(game, type))
       return
     }
     const chosen = recordTypeChoice(game, type)
@@ -98,12 +98,11 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
 
   function issueQuestion() {
     if (!manualType) return
-    const chosen = recordTypeChoice(game, manualType)
     setCardTransition({ kind: 'dealing', game, manualType })
     window.clearTimeout(transitionTimer.current)
     const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     transitionTimer.current = window.setTimeout(() => setCardTransition(null), reduced ? 20 : 320)
-    onGameChange(drawCard(chosen, manualType, gameData).state)
+    onGameChange(drawCard(game, manualType, gameData).state)
   }
 
   function finishTurn() {
@@ -121,7 +120,6 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
     setCardTransition(transition === 'skip'
       ? { kind: 'skipping', game, manualType }
       : { kind: 'leaving', game, manualType, type })
-    setManualType(null)
     onGameChange(next)
     window.clearTimeout(transitionTimer.current)
     transitionTimer.current = window.setTimeout(() => setCardTransition(null), reduced ? 20 : 320)
@@ -129,12 +127,9 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
 
   function skip(reason: SkipReason) {
     if (!selectedType) return
-    const skipState = game.selectedType === null && manualType !== null
-      ? recordTypeChoice(game, manualType)
-      : game
-    const next = skipCurrentTurn(skipState, reason)
-    const actor = getCurrentPlayer(skipState)
-    const enabled = reason === 'absence' ? skipState.removeAfterAbsence : skipState.removeAfterRefusal
+    const next = skipCurrentTurn(game, reason)
+    const actor = getCurrentPlayer(game)
+    const enabled = reason === 'absence' ? game.removeAfterAbsence : game.removeAfterRefusal
     const previousCount = reason === 'absence' ? actor.absenceSkips : actor.refusalSkips
     const noticeMessage = getSkipNotice(actor, reason, enabled, previousCount + 1)
     if (noticeMessage) showNotice(noticeMessage)
@@ -165,7 +160,9 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
   return (
     <FocusRegion>
       <main className={`game-screen game-screen--${packTheme(pack?.name)}${animateEntrance ? ' game-screen--enter' : ''}`}>
-        <DecorativeCircles />
+        <div className="game-background" aria-hidden="true">
+          <DecorativeCircles />
+        </div>
         <div className="game-shell">
           <header className="game-header">
             <h1>Правда или действие</h1>

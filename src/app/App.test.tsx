@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, waitFor, within } from '@testing-librar
 import { describe, expect, it, vi } from 'vitest'
 import { gameData } from '../generated/game-data'
 import { getSkipNotice } from '../game/skip-notice'
+import { GAME_SESSION_KEY, loadGameSession } from '../persistence/game-session'
 import { App } from './App'
 
 describe('App', () => {
@@ -307,6 +308,7 @@ describe('App', () => {
       skipDare('Он так захотел')
       expect(screen.getByRole('status')).toHaveTextContent('Игрок «Игрок 1» удалён из игры, потому что ничего не хочет делать.')
       expect(screen.getByText('Кажется, у тебя кончились друзья. Начнем заново?')).toBeInTheDocument()
+      expect(loadGameSession(localStorage, gameData)?.game.eliminatedPlayers.map((player) => player.id)).toEqual(['player-1'])
       fireEvent.click(screen.getByRole('button', { name: 'Начать заново' }))
       expect(screen.getByRole('heading', { name: 'Результаты' })).toBeInTheDocument()
       expect(screen.getAllByText('Игрок 1')).toHaveLength(1)
@@ -443,6 +445,50 @@ describe('App', () => {
     finishGameFromDialog()
     fireEvent.click(await screen.findByRole('button', { name: 'С нуля' }))
     expect(screen.getByRole('heading', { name: 'Правда или Действие' })).toBeInTheDocument()
+  })
+
+  it('persists meaningful game changes and resumes the exact resolved card after a remount', () => {
+    const random = vi.spyOn(Math, 'random').mockReturnValue(0)
+    try {
+      const view = render(<App />)
+      startGame({ pack: 'Другие люди' })
+      fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+      const beforeReload = loadGameSession(localStorage, gameData)
+      expect(beforeReload?.game.currentTurn).not.toBeNull()
+
+      view.unmount()
+      render(<App />)
+      expect(screen.getByRole('dialog', { name: 'Вижу незаконченную игру' })).toBeVisible()
+      fireEvent.click(screen.getByRole('button', { name: 'Продолжить' }))
+
+      expect(screen.getByRole('heading', { name: 'Игрок 1' })).toBeInTheDocument()
+      expect(document.querySelector('.game-card__copy')).toHaveTextContent(beforeReload?.game.currentTurn?.resolvedText ?? '')
+      expect(loadGameSession(localStorage, gameData)).toEqual(beforeReload)
+    } finally {
+      random.mockRestore()
+    }
+  })
+
+  it('deletes an unfinished session before starting another game', () => {
+    const view = render(<App />)
+    startGame()
+    expect(localStorage.getItem(GAME_SESSION_KEY)).not.toBeNull()
+    view.unmount()
+
+    render(<App />)
+    fireEvent.click(screen.getByRole('button', { name: 'Начать другую' }))
+    expect(localStorage.getItem(GAME_SESSION_KEY)).toBeNull()
+    expect(screen.getByRole('heading', { name: 'Правда или Действие' })).toBeInTheDocument()
+    expect(screen.queryByRole('dialog', { name: 'Вижу незаконченную игру' })).not.toBeInTheDocument()
+  })
+
+  it('does not keep a completed game as resumable after opening Results', async () => {
+    render(<App />)
+    startGame()
+    expect(localStorage.getItem(GAME_SESSION_KEY)).not.toBeNull()
+    finishGameFromDialog()
+    expect(await screen.findByRole('heading', { name: 'Результаты' })).toBeInTheDocument()
+    expect(localStorage.getItem(GAME_SESSION_KEY)).toBeNull()
   })
 })
 
