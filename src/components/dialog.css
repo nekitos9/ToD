@@ -85,8 +85,23 @@
 
 .dialog--resume .dialog__actions button { min-width: 0; line-height: 1.05; }
 
+.dialog--skip .dialog__body { line-height: 1.18; }
+
+.dialog--skip .dialog__actions,
+.dialog--resume .dialog__actions { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); }
+
+.dialog--skip .dialog__actions button,
+.dialog--resume .dialog__actions button {
+  padding-inline: 2px;
+  white-space: nowrap;
+}
+
 @media (max-width: 767px) {
   .dialog {
-    width: min(366px, calc(100% - 58px));
+    width: min(380px, calc(100% - 40px));
   }
+
+  .dialog--skip .dialog__actions { gap: 4px; }
+  .dialog--skip .dialog__actions button,
+  .dialog--resume .dialog__actions button { font-size: clamp(16px, 4.5vw, 18px); }
 }

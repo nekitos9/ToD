@@ -352,6 +352,49 @@ test('completes an automatic game turn using only the keyboard on the game scree
   await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
 })
 
+test('keeps mobile game-card spacing and choice state free of scrollbar artifacts', async ({ page }) => {
+  await page.setViewportSize({ width: 412, height: 915 })
+  await startGame(page)
+  const choiceHeading = page.locator('.game-card--choosing h2')
+  await expect(choiceHeading).toBeVisible()
+  expect(await choiceHeading.evaluate((element) => ({
+    overflowY: getComputedStyle(element).overflowY,
+    paddingTop: Number.parseFloat(getComputedStyle(element).paddingTop),
+  }))).toMatchObject({ overflowY: 'hidden', paddingTop: 13 })
+
+  await page.getByRole('button', { name: 'Действие' }).click()
+  const card = page.locator('.game-card:not([aria-hidden])')
+  const pack = card.locator('.game-card__pack')
+  expect(await pack.evaluate((element) =>
+    Number.parseFloat(getComputedStyle(element).paddingBottom) >= 13 && element.scrollHeight <= element.clientHeight,
+  )).toBe(true)
+})
+
+test('keeps skip and resume dialog actions on one mobile row without wrapping', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 })
+  await startGame(page)
+  await page.getByRole('button', { name: 'Действие' }).click()
+  await page.getByRole('button', { name: 'Пропуск' }).click()
+  await assertDialogActionsSingleLine(page, 'Пропуск?')
+  await page.getByRole('dialog', { name: 'Пропуск?' }).getByRole('button', { name: 'Он так захотел' }).click()
+  await page.reload()
+  await assertDialogActionsSingleLine(page, 'Вижу незаконченную игру')
+})
+
+test('keeps the mobile player-help close control inside viewport and clear of its surface', async ({ page }) => {
+  await page.setViewportSize({ width: 412, height: 915 })
+  await openPlayers(page)
+  await page.getByRole('button', { name: 'Открыть справку о настройках игроков' }).click()
+  expect(await page.evaluate(() => {
+    const surface = document.querySelector('.players-help__surface')?.getBoundingClientRect()
+    const close = document.querySelector('.players-help__close')?.getBoundingClientRect()
+    if (!surface || !close) return false
+    const insideViewport = close.left >= 0 && close.top >= 0 && close.right <= innerWidth && close.bottom <= innerHeight
+    const clearOfSurface = close.bottom <= surface.top
+    return insideViewport && clearOfSurface
+  })).toBe(true)
+})
+
 test('reveals focused lower game actions in a 740x360 landscape viewport', async ({ page }) => {
   await startGame(page)
   await page.setViewportSize({ width: 740, height: 360 })
@@ -697,6 +740,19 @@ async function assertNoHorizontalOverflow(page: Page) {
   }))
   expect(dimensions.body).toBeLessThanOrEqual(dimensions.viewport)
   expect(dimensions.document).toBeLessThanOrEqual(dimensions.viewport)
+}
+
+async function assertDialogActionsSingleLine(page: Page, name: string) {
+  const dialog = page.getByRole('dialog', { name })
+  await expect(dialog).toBeVisible()
+  expect(await dialog.locator('.dialog__actions button').evaluateAll((buttons) => {
+    if (buttons.length !== 2) return false
+    const [first, second] = buttons.map((button) => button.getBoundingClientRect())
+    return Math.abs(first.top - second.top) < 1 && buttons.every((button) => {
+      const style = getComputedStyle(button)
+      return style.whiteSpace === 'nowrap' && button.scrollWidth <= button.clientWidth
+    })
+  })).toBe(true)
 }
 
 async function expectElementsDoNotOverlap(page: Page, firstSelector: string, secondSelector: string) {

@@ -332,9 +332,9 @@
 }
 
 .players-help__close {
-  position: fixed;
-  top: 70px;
-  right: 29px;
+  position: absolute;
+  top: -58px;
+  right: 8px;
   width: 50px;
   height: 50px;
   font-family: Arial, sans-serif;
@@ -408,7 +408,7 @@
   .game-mode[aria-checked='true'] .game-mode__track span { transform: translateX(42px); }
   .players-help { width: min(1035px, calc(100% - 200px)); }
   .players-help__surface { max-height: 420px; padding: 11px 40px 30px; }
-  .players-help__close { top: 129px; right: 100px; width: 57px; height: 57px; }
+  .players-help__close { position: fixed; top: 129px; right: 100px; width: 57px; height: 57px; }
   .players-help__confirm { width: 402px; margin: 32px 0 0 3px; }
   .setup-screen--players .bottom-navigation__inner { margin-left: 0; }
 }

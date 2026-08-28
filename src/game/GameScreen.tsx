@@ -238,6 +238,7 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
       ><p>Вы точно уверены?</p></Dialog>
       <Dialog
         actions={<><Button onClick={() => skip('refusal')}>Он так захотел</Button><Button onClick={() => skip('absence')}>Нет за столом</Button></>}
+        className="dialog--skip"
         onClose={() => setSkipDialogOpen(false)}
         open={skipDialogOpen}
         title="Пропуск?"
@@ -285,7 +286,7 @@ function GameCard({ ariaHidden = false, className, colors, firstControlRef, game
   const noCard = game.mode === 'automatic' && game.selectedType !== null && turn === null
 
   return (
-    <section className={`game-card${className ? ` ${className}` : ''}`} aria-hidden={ariaHidden || undefined}>
+    <section className={`game-card${choosing ? ' game-card--choosing' : ''}${className ? ` ${className}` : ''}`} aria-hidden={ariaHidden || undefined}>
       <h2 style={{ color: colors.get(player.id) }}>{player.name}</h2>
       {choosing ? (
         <div className="game-choice">

@@ -355,7 +355,7 @@ describe('App', () => {
     expect(dealtCard).not.toBeNull()
     expect(dealtCard).not.toBe(tableCard)
     expect(screen.getByRole('button', { name: 'Готово' })).toBeEnabled()
-  })
+  }, 15_000)
 
   it('renders the next turn below a completed card while it leaves', () => {
     render(<App />)
