@@ -121,9 +121,14 @@
 
 .player-card__options {
   display: grid;
-  grid-template-columns: minmax(0, 1.38fr) minmax(0, 1fr);
-  gap: 12px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 8px;
   margin-top: 12px;
+}
+
+.relationship-toggle > span:first-child {
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .player-card__boundary,
@@ -385,7 +390,7 @@
   .players { padding-inline: 20px; }
   .players__help { right: 20px; }
   .player-card { padding-inline: 10px; }
-  .player-card__options { grid-template-columns: minmax(0, 1.32fr) minmax(0, 1fr); gap: 5px; }
+  .player-card__options { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 5px; }
   .player-card__boundary, .relationship-toggle { font-size: 15px; }
   .relationship-toggle { padding-left: 6px; }
   .game-mode { grid-template-columns: max-content 52px minmax(0, max-content); gap: 8px; font-size: 16px; }
