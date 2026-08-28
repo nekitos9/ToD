@@ -364,6 +364,7 @@ test('keeps mobile game-card spacing and choice state free of scrollbar artifact
 
   await page.getByRole('button', { name: 'Действие' }).click()
   const card = page.locator('.game-card:not([aria-hidden])')
+  expect(await card.locator('.game-card__text').evaluate((element) => getComputedStyle(element).scrollbarWidth)).toBe('none')
   const pack = card.locator('.game-card__pack')
   expect(await pack.evaluate((element) =>
     Number.parseFloat(getComputedStyle(element).paddingBottom) >= 13 && element.scrollHeight <= element.clientHeight,
@@ -376,8 +377,9 @@ test('keeps all mobile game action icons inset from their touch targets', async 
   expect(await page.locator('.game-actions .game-action').evaluateAll((buttons) => buttons.every((button) => {
     const control = button.getBoundingClientRect()
     const icon = button.querySelector('span')?.getBoundingClientRect()
-    return Boolean(icon && icon.left - control.left >= 8 && control.right - icon.right >= 8 &&
-      icon.top - control.top >= 8 && control.bottom - icon.bottom >= 8)
+    const inset = button.classList.contains('game-action--change-question') ? 6 : 10
+    return Boolean(icon && icon.left - control.left >= inset && control.right - icon.right >= inset &&
+      icon.top - control.top >= inset && control.bottom - icon.bottom >= inset)
   }))).toBe(true)
 })
 

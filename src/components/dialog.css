@@ -86,6 +86,7 @@
 .dialog--resume .dialog__actions button { min-width: 0; line-height: 1.05; }
 
 .dialog--skip .dialog__body { line-height: 1.18; }
+.dialog--exit .dialog__body { line-height: 1.18; }
 
 .dialog--skip .dialog__actions,
 .dialog--resume .dialog__actions { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); }

@@ -226,12 +226,14 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
 
       <Dialog
         actions={<><Button onClick={() => setExitStage('second')}>Да</Button><Button onClick={() => setExitStage('closed')}>Нет</Button></>}
+        className="dialog--exit"
         onClose={() => setExitStage('closed')}
         open={exitStage === 'first'}
         title="Конец?"
       ><p>Уверены, что хотите прекратить?</p></Dialog>
       <Dialog
         actions={<><Button onClick={onExit}>Да</Button><Button onClick={() => setExitStage('closed')}>Нет</Button></>}
+        className="dialog--exit"
         onClose={() => setExitStage('closed')}
         open={exitStage === 'second'}
         title="Точно конец?"
@@ -326,7 +328,7 @@ function GameAction({ disabled = false, label, name, onClick, ref }: {
   readonly onClick?: () => void
   readonly ref?: Ref<HTMLButtonElement>
 }) {
-  return <IconButton className="game-action" disabled={disabled} icon={<ActionIcon name={name} />} label={label} onClick={onClick} ref={ref} />
+  return <IconButton className={`game-action game-action--${name}`} disabled={disabled} icon={<ActionIcon name={name} />} label={label} onClick={onClick} ref={ref} />
 }
 
 function packTheme(name?: string) {

@@ -158,7 +158,8 @@
 .relationship-toggle {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 18px;
-  padding: 0 4px 0 8px;
+  gap: 6px;
+  padding: 0 6px 0 8px;
   align-items: center;
   cursor: pointer;
 }
@@ -341,6 +342,13 @@
   font-size: 46px;
   font-weight: 300;
   line-height: 1;
+  padding: 0;
+}
+
+.players-help__close span {
+  display: block;
+  line-height: 1;
+  transform: translateY(-2px);
 }
 
 .players-help__confirm {

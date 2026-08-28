@@ -48,7 +48,7 @@ export function PlayersHelpDialog({ onClose, open }: PlayersHelpDialogProps) {
       onCancel={(event) => { event.preventDefault(); onClose() }}
       ref={dialogRef}
     >
-      <button aria-label="Закрыть справку" className="players-help__close" onClick={onClose} type="button">×</button>
+      <button aria-label="Закрыть справку" className="players-help__close" onClick={onClose} type="button"><span aria-hidden="true">×</span></button>
       <div className="players-help__surface">
         <h2 id={titleId}>Грани и «Отношения»</h2>
         <div className="players-help__body">

@@ -73,6 +73,14 @@
   line-height: 54px;
   text-align: center;
 }
+.game-card h2,
+.game-card__text {
+  scrollbar-width: none;
+}
+.game-card h2::-webkit-scrollbar,
+.game-card__text::-webkit-scrollbar {
+  display: none;
+}
 .game-card--choosing h2 {
   max-height: none;
   overflow: hidden;
@@ -175,8 +183,10 @@
   .game-actions { display: flex; justify-content: space-between; gap: 8px; }
   .game-actions .game-action { width: 56px; height: 56px; flex: 0 0 56px; padding: 0; justify-content: center; }
   .game-actions .game-action::after { content: none; }
-  .game-actions .game-action > span { width: 36px; height: 36px; flex-basis: 36px; }
-  .game-actions .game-action .action-icon--composite { width: 36px; height: 36px; transform: none; }
+  .game-actions .game-action > span { width: 32px; height: 32px; flex-basis: 32px; }
+  .game-actions .game-action--change-question > span { width: 42px; height: 42px; flex-basis: 42px; }
+  .game-actions .game-action .action-icon--composite { width: 32px; height: 32px; transform: none; }
+  .game-actions .game-action--change-question .action-icon--composite { width: 42px; height: 42px; }
 }
 
 @media (max-width: 374px), (max-height: 700px) and (max-width: 899px) {
@@ -188,8 +198,10 @@
   .game-card__pack { padding-bottom: 13px; }
   .game-actions { gap: 5px; }
   .game-actions .game-action { width: 48px; height: 48px; flex-basis: 48px; }
-  .game-actions .game-action > span { width: 30px; height: 30px; flex-basis: 30px; }
-  .game-actions .game-action .action-icon--composite { width: 30px; height: 30px; }
+  .game-actions .game-action > span { width: 28px; height: 28px; flex-basis: 28px; }
+  .game-actions .game-action--change-question > span { width: 36px; height: 36px; flex-basis: 36px; }
+  .game-actions .game-action .action-icon--composite { width: 28px; height: 28px; }
+  .game-actions .game-action--change-question .action-icon--composite { width: 36px; height: 36px; }
 }
 
 @media (min-width: 900px) and (max-height: 820px) {
