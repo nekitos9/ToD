@@ -370,6 +370,17 @@ test('keeps mobile game-card spacing and choice state free of scrollbar artifact
   )).toBe(true)
 })
 
+test('keeps all mobile game action icons inset from their touch targets', async ({ page }) => {
+  await page.setViewportSize({ width: 412, height: 915 })
+  await startGame(page)
+  expect(await page.locator('.game-actions .game-action').evaluateAll((buttons) => buttons.every((button) => {
+    const control = button.getBoundingClientRect()
+    const icon = button.querySelector('span')?.getBoundingClientRect()
+    return Boolean(icon && icon.left - control.left >= 8 && control.right - icon.right >= 8 &&
+      icon.top - control.top >= 8 && control.bottom - icon.bottom >= 8)
+  }))).toBe(true)
+})
+
 test('keeps skip and resume dialog actions on one mobile row without wrapping', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 740 })
   await startGame(page)

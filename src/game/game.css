@@ -175,6 +175,8 @@
   .game-actions { display: flex; justify-content: space-between; gap: 8px; }
   .game-actions .game-action { width: 56px; height: 56px; flex: 0 0 56px; padding: 0; justify-content: center; }
   .game-actions .game-action::after { content: none; }
+  .game-actions .game-action > span { width: 36px; height: 36px; flex-basis: 36px; }
+  .game-actions .game-action .action-icon--composite { width: 36px; height: 36px; transform: none; }
 }
 
 @media (max-width: 374px), (max-height: 700px) and (max-width: 899px) {
@@ -186,6 +188,8 @@
   .game-card__pack { padding-bottom: 13px; }
   .game-actions { gap: 5px; }
   .game-actions .game-action { width: 48px; height: 48px; flex-basis: 48px; }
+  .game-actions .game-action > span { width: 30px; height: 30px; flex-basis: 30px; }
+  .game-actions .game-action .action-icon--composite { width: 30px; height: 30px; }
 }
 
 @media (min-width: 900px) and (max-height: 820px) {
