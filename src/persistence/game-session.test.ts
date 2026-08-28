@@ -22,6 +22,10 @@ describe('unfinished game persistence', () => {
       currentTurn: {
         cardId: card.id,
         phoneNumber: '+7 (912) 345-67-89',
+        renderSegments: [
+          { kind: 'player', playerId: 'p2', text: 'Одинаково' },
+          { kind: 'text', text: ' звонит по номеру +7 (912) 345-67-89' },
+        ],
         resolvedText: 'Одинаково звонит по номеру +7 (912) 345-67-89',
         secondaryPlayerIds: ['p2'],
         type: card.type,
@@ -101,6 +105,45 @@ describe('unfinished game persistence', () => {
       saveGameSession(localStorage, setup, { ...initial, currentPlayerIndex: index % 2 })
     }
     expect(loadGameSession(localStorage, gameData)?.game.currentPlayerIndex).toBe(1)
+  })
+
+  it('restores immutable render content without consulting changed catalog text', () => {
+    const setup = makeSetup('Одинаково')
+    const initial = createGame(setup, gameData, fixedRandom)
+    const card = gameData.cards.find((item) => setup.selectedPackIds.includes(item.packId))!
+    const game: ActiveGameState = {
+      ...initial,
+      selectedType: card.type,
+      queue: initial.queue.filter((id) => id !== card.id),
+      currentTurn: {
+        cardId: card.id,
+        phoneNumber: null,
+        renderSegments: [{ kind: 'text', text: 'Старый сохранённый текст' }],
+        resolvedText: 'Старый сохранённый текст',
+        secondaryPlayerIds: [],
+        type: card.type,
+      },
+    }
+    saveGameSession(localStorage, setup, game)
+    const changedCatalog = {
+      ...gameData,
+      cards: gameData.cards.map((item) => item.id === card.id ? { ...item, text: '*PLAYER9* Новый текст' } : item),
+    }
+    expect(loadGameSession(localStorage, changedCatalog)?.game.currentTurn).toEqual(game.currentTurn)
+  })
+
+  it('upgrades a schema 1 snapshot without colors or render segments safely', () => {
+    const setup = makeSetup()
+    const game = createGame(setup, gameData, fixedRandom)
+    const legacy = JSON.parse(JSON.stringify({ schemaVersion: 1, setup, game }))
+    for (const player of legacy.game.players) delete player.colorId
+    legacy.game.selectedType = 'truth'
+    const cardId = legacy.game.queue.shift()
+    legacy.game.currentTurn = { cardId, phoneNumber: null, resolvedText: 'Готовый текст', secondaryPlayerIds: [], type: 'truth' }
+    localStorage.setItem(GAME_SESSION_KEY, JSON.stringify(legacy))
+    const restored = loadGameSession(localStorage, gameData)
+    expect(restored?.game.players.map((player) => player.colorId)).toEqual([0, 1])
+    expect(restored?.game.currentTurn?.renderSegments).toEqual([{ kind: 'text', text: 'Готовый текст' }])
   })
 
   it('clears a saved game idempotently', () => {

@@ -62,7 +62,17 @@
   transform-origin: center bottom;
 }
 
-.game-card h2 { margin: 0; padding: 8px 24px 0; font-family: var(--font-display); font-size: 42px; line-height: 54px; text-align: center; }
+.game-card h2 {
+  max-height: 32%;
+  margin: 0;
+  padding: 8px 24px 0;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  font-family: var(--font-display);
+  font-size: 42px;
+  line-height: 54px;
+  text-align: center;
+}
 .game-card__type { margin: -2px 0 0; font-size: 20px; text-align: center; }
 .game-card__type--truth { color: #00ad1d; }
 .game-card__type--dare { color: #ff2a2d; }
@@ -77,7 +87,7 @@
   line-height: 1.15;
   text-align: center;
 }
-.game-card__copy { margin: 0; }
+.game-card__copy { min-width: 0; margin: 0; overflow-wrap: anywhere; }
 .game-card__text mark {
   display: inline;
   background: transparent;

@@ -165,6 +165,21 @@ describe('replacement and exhaustion', () => {
     expect(result.card).toBeNull()
     expect(result.state.queue).toBe(snapshot)
   })
+
+  it('keeps replacement fully atomic when no alternative card exists', () => {
+    const initial = { ...activeTurn(makeGame()), queue: [] }
+    const snapshot = structuredClone(initial)
+    const result = replaceCurrentCard(initial, data, fixedRandom(0))
+    expect(result.card).toBeNull()
+    expect(result.state).toEqual(snapshot)
+  })
+
+  it('rejects an automatic skip when no card was found without mutating state', () => {
+    const noCard = recordTypeChoice({ ...makeGame(), queue: ['truth-1'] }, 'dare')
+    const snapshot = structuredClone(noCard)
+    expect(() => skipCurrentTurn(noCard, 'refusal')).toThrow('без карточки')
+    expect(noCard).toEqual(snapshot)
+  })
 })
 
 const cards: GameCard[] = [
@@ -208,7 +223,7 @@ function makeGame(options: { playerCount?: number; removeAfterAbsence?: boolean;
 
 function activeTurn(game: ActiveGameState, cardId = 'people-1'): ActiveGameState {
   const chosen = recordTypeChoice(game, 'dare')
-  return { ...chosen, currentTurn: { cardId, phoneNumber: null, resolvedText: cardId, secondaryPlayerIds: [], type: 'dare' }, queue: chosen.queue.filter((id) => id !== cardId) }
+  return { ...chosen, currentTurn: { cardId, phoneNumber: null, renderSegments: [{ kind: 'text', text: cardId }], resolvedText: cardId, secondaryPlayerIds: [], type: 'dare' }, queue: chosen.queue.filter((id) => id !== cardId) }
 }
 
 function fixedRandom(value: number): RandomSource {

@@ -352,6 +352,38 @@ test('completes an automatic game turn using only the keyboard on the game scree
   await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
 })
 
+test('reveals focused lower game actions in a 740x360 landscape viewport', async ({ page }) => {
+  await startGame(page)
+  await page.setViewportSize({ width: 740, height: 360 })
+  await page.keyboard.press('Enter')
+  for (let index = 0; index < 5; index += 1) await page.keyboard.press('ArrowDown')
+  const focused = page.locator(':focus')
+  await expect(focused).toHaveAttribute('aria-label', 'Выход')
+  await expect.poll(() => focused.evaluate((element) => {
+    const rect = element.getBoundingClientRect()
+    return rect.top >= 0 && rect.bottom <= innerHeight
+  })).toBe(true)
+})
+
+test('keeps very long player names readable and usable at mobile text scaling', async ({ page }) => {
+  await page.setViewportSize({ width: 424, height: 917 })
+  await openPlayers(page)
+  const names = page.getByRole('textbox', { name: 'Имя игрока' })
+  await names.nth(0).fill('СверхдлинноеИмяИгрокаБезЕдиногоПробелаКотороеДолжноПереноситься')
+  await names.nth(1).fill('Очень длинное имя игрока с несколькими пробелами для проверки')
+  const boundaries = page.getByRole('combobox', { name: 'Грань игрока' })
+  await boundaries.nth(0).selectOption('full')
+  await boundaries.nth(1).selectOption('full')
+  await page.getByRole('button', { name: 'Далее' }).click()
+  await page.getByRole('checkbox', { name: 'Обычный' }).check({ force: true })
+  await page.getByRole('button', { name: 'Далее' }).click()
+  await page.addStyleTag({ content: '.game-card h2, .game-card__text { font-size: 200% !important; }' })
+  await page.getByRole('button', { name: 'Действие' }).click()
+  await assertNoHorizontalOverflow(page)
+  await expect(page.getByRole('button', { name: 'Готово' })).toBeVisible()
+  expect(await page.locator('.game-card h2').evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true)
+})
+
 test('skips a generated card with a keyboard-only reason dialog flow', async ({ page }) => {
   await startGame(page)
   await page.keyboard.press('ArrowDown')

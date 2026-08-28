@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode, type Ref } from 'react'
+import { useEffect, useMemo, useRef, useState, type Ref } from 'react'
 import { ActionIcon } from '../components/ActionIcon'
 import { Button } from '../components/Button'
 import { Dialog } from '../components/Dialog'
@@ -43,7 +43,6 @@ type CardTransition =
   | { readonly kind: 'dealing'; readonly game: ActiveGameState; readonly manualType: CardType | null }
   | { readonly kind: 'revealing'; readonly game: ActiveGameState; readonly manualType: CardType | null }
 
-const playerPalette = ['#BE4244', '#7642BE', '#008F5B', '#CF25E9', '#AF6B00', '#4269BE']
 type NoticeState = 'hidden' | 'visible' | 'closing'
 
 export function GameScreen({ animateEntrance = false, game, onExit, onGameChange }: GameScreenProps) {
@@ -63,8 +62,8 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
   const pack = card ? gameData.packs.find((item) => item.id === card.packId) : undefined
   const selectedType = turn?.type ?? manualType ?? game.selectedType
   const colors = useMemo(
-    () => new Map(game.players.map((item, index) => [item.id, playerPalette[index % playerPalette.length]])),
-    [game.players],
+    () => new Map([...game.players, ...game.eliminatedPlayers].map((item) => [item.id, playerColor(item.colorId)])),
+    [game.players, game.eliminatedPlayers],
   )
 
   useEffect(() => {
@@ -126,7 +125,7 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
   }
 
   function skip(reason: SkipReason) {
-    if (!selectedType) return
+    if (!selectedType || game.mode === 'automatic' && turn === null) return
     const next = skipCurrentTurn(game, reason)
     const actor = getCurrentPlayer(game)
     const enabled = reason === 'absence' ? game.removeAfterAbsence : game.removeAfterRefusal
@@ -155,6 +154,7 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
   }
 
   const choosing = !turn && manualType === null && game.selectedType === null
+  const noCard = game.mode === 'automatic' && game.selectedType !== null && turn === null
   const replacementAllowed = Boolean(card && isReplacementAllowed(card))
 
   return (
@@ -216,7 +216,7 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
 
           <div className="game-actions">
             <GameAction ref={choosing ? undefined : firstControlRef} disabled={choosing} label="Готово" name="complete" onClick={finishTurn} />
-            <GameAction disabled={choosing} label="Пропуск" name="skip" onClick={() => setSkipDialogOpen(true)} />
+            <GameAction disabled={choosing || noCard} label="Пропуск" name="skip" onClick={() => setSkipDialogOpen(true)} />
             <GameAction disabled={!replacementAllowed} label="Перезадать" name="reroll" onClick={() => setReplacementDialogOpen(true)} />
             <GameAction disabled={game.mode !== 'manual' || manualType === null || turn !== null} label="Выдать" name="change-question" onClick={issueQuestion} />
             <IconButton className="game-action game-action--exit" icon={<ExitIcon />} label="Выход" onClick={() => setExitStage('first')} tone="danger" />
@@ -308,7 +308,7 @@ function GameCard({ ariaHidden = false, className, colors, firstControlRef, game
           </p>
           <div className="game-card__text">
             <p className="game-card__copy">
-              {turn ? renderResolvedText(card?.text, turn, game, colors) : manualPrompt(player)}
+              {turn ? renderResolvedText(turn, colors) : manualPrompt(player)}
             </p>
           </div>
           <p className="game-card__pack">{turn ? pack?.name : 'Стол'}</p>
@@ -350,28 +350,15 @@ function ExitIcon() {
 }
 
 function renderResolvedText(
-  source: string | undefined,
   turn: CurrentTurn,
-  game: ActiveGameState,
   colors: ReadonlyMap<string, string>,
 ) {
-  if (!source) return turn.resolvedText
-  const parts: ReactNode[] = []
-  const pattern = /\*(PLAYER(\d*)|PHONE_NUM)\*/g
-  let cursor = 0
-  for (const match of source.matchAll(pattern)) {
-    const offset = match.index
-    if (offset > cursor) parts.push(source.slice(cursor, offset))
-    if (match[1] === 'PHONE_NUM') {
-      parts.push(turn.phoneNumber)
-    } else {
-      const participantIndex = match[2] === '' ? 0 : Number(match[2]) - 1
-      const id = turn.secondaryPlayerIds[participantIndex]
-      const participant = game.players.find((player) => player.id === id)
-      parts.push(<mark key={`${offset}-${id}`} style={{ color: colors.get(id) }}>{participant?.name}</mark>)
-    }
-    cursor = offset + match[0].length
-  }
-  parts.push(source.slice(cursor))
-  return parts
+  return turn.renderSegments.map((segment, index) => segment.kind === 'player'
+    ? <mark key={`${index}-${segment.playerId}`} style={{ color: colors.get(segment.playerId) }}>{segment.text}</mark>
+    : segment.text)
+}
+
+function playerColor(colorId: number) {
+  const hue = (colorId * 137.508 + 358) % 360
+  return `hsl(${hue.toFixed(1)} 58% 42%)`
 }

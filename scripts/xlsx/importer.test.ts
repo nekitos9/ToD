@@ -29,6 +29,8 @@ function createValidWorkbook(): InstanceType<typeof ExcelJS.Workbook> {
   const boundaries = workbook.addWorksheet('Грани')
   boundaries.addRow(['Грани', 'Ур', 'Описание'])
   boundaries.addRow(['Целочка', 0, 'Базовая грань'])
+  boundaries.addRow(['Обычный', 1, 'Средняя грань'])
+  boundaries.addRow(['Полный раж', 2, 'Полная грань'])
 
   const cardTypes = workbook.addWorksheet('Действия')
   cardTypes.addRow(['Действие', 'Описание'])
@@ -144,6 +146,46 @@ describe('XLSX importer', () => {
     workbook.getWorksheet('Вопросы')!.getCell('B2').value = 'Ответь вместе с *PLAYER 2*.'
 
     expect(validationMessage(workbook)).toContain('неизвестный токен «*PLAYER 2*»')
+  })
+
+  it.each(['*PLAYER', 'PLAYER*', '*PHONE_NUM', '**PLAYER**', '*PLAYER**'])('rejects unmatched token delimiters in %s', (text) => {
+    const workbook = createValidWorkbook()
+    workbook.getWorksheet('Вопросы')!.getCell('B2').value = `Ответь ${text}.`
+    expect(validationMessage(workbook)).toContain('некорректная конструкция токена')
+  })
+
+  it('allows ordinary asterisks that are not token-like', () => {
+    const workbook = createValidWorkbook()
+    workbook.getWorksheet('Вопросы')!.getCell('B2').value = 'Оцени 2 * 2 и слово *важно*.'
+    expect(importGameDataFromWorkbook(workbook).cards).toHaveLength(1)
+  })
+
+  it('rejects a renamed required boundary with its cell', () => {
+    const workbook = createValidWorkbook()
+    workbook.getWorksheet('Грани')!.getCell('A2').value = 'Другая грань'
+    const message = validationMessage(workbook)
+    expect(message).toContain('Грани!A2')
+    expect(message).toContain('неподдерживаемая грань')
+  })
+
+  it('rejects a wrong required boundary level with its cell', () => {
+    const workbook = createValidWorkbook()
+    workbook.getWorksheet('Грани')!.getCell('B3').value = 7
+    const message = validationMessage(workbook)
+    expect(message).toContain('Грани!B3')
+    expect(message).toContain('ожидается уровень 1, получен 7')
+  })
+
+  it('rejects a missing required boundary', () => {
+    const workbook = createValidWorkbook()
+    workbook.getWorksheet('Грани')!.spliceRows(4, 1)
+    expect(validationMessage(workbook)).toContain('отсутствует обязательная грань «Полный раж»')
+  })
+
+  it('rejects an extra incompatible boundary', () => {
+    const workbook = createValidWorkbook()
+    workbook.getWorksheet('Грани')!.addRow(['Лишняя', 3, 'Не поддерживается'])
+    expect(validationMessage(workbook)).toContain('неподдерживаемая грань «Лишняя»')
   })
 
   it('resolves direct formula references without using cached results', () => {

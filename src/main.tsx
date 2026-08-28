@@ -7,6 +7,7 @@ import '@fontsource/brygada-1918/cyrillic-700.css'
 import { App } from './app/App'
 import './styles/tokens.css'
 import './styles/global.css'
+import './pwa'
 
 const rootElement = document.getElementById('root')
 

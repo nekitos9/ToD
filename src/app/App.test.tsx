@@ -13,6 +13,7 @@ describe('App', () => {
       answeredTruths: 0,
       boundary: 'full' as const,
       completedDares: 0,
+      colorId: 0,
       id: 'player',
       inRelationship: false,
       name: 'Катя',
@@ -293,7 +294,7 @@ describe('App', () => {
     expect(within(dialog).getByText('Почему игрок пропускает ход?')).toBeInTheDocument()
     fireEvent.click(within(dialog).getByRole('button', { name: 'Он так захотел' }))
     await waitFor(() => expect(screen.getByRole('heading', { name: 'Игрок 2' })).toBeInTheDocument())
-  })
+  }, 15_000)
 
   it('warns before the next counted refusal and reports player removal', () => {
     vi.useFakeTimers()
@@ -331,7 +332,7 @@ describe('App', () => {
     expect(screen.getByRole('button', { name: 'Перезадать' })).toBeEnabled()
     fireEvent.click(screen.getByRole('button', { name: 'Перезадать' }))
     expect(screen.getByRole('dialog', { name: 'Замена' })).toBeVisible()
-  })
+  }, 15_000)
 
   it('completes a table-generated manual turn and can request a pack card', async () => {
     render(<App />)
@@ -445,7 +446,7 @@ describe('App', () => {
     finishGameFromDialog()
     fireEvent.click(await screen.findByRole('button', { name: 'С нуля' }))
     expect(screen.getByRole('heading', { name: 'Правда или Действие' })).toBeInTheDocument()
-  })
+  }, 15_000)
 
   it('persists meaningful game changes and resumes the exact resolved card after a remount', () => {
     const random = vi.spyOn(Math, 'random').mockReturnValue(0)

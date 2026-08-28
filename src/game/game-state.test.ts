@@ -52,6 +52,24 @@ describe('active game state', () => {
     expect(getCurrentPlayer(game).id).toBe('p1')
   })
 
+  it('assigns unique stable colors to 8 duplicate-named players across elimination', () => {
+    const many = {
+      ...setup(),
+      nextPlayerId: 9,
+      players: Array.from({ length: 8 }, (_, index) => ({
+        boundary: 'full' as const,
+        id: `duplicate-${index}`,
+        inRelationship: false,
+        name: 'Одинаково',
+      })),
+    }
+    const game = createGame(many, data)
+    expect(new Set(game.players.map((player) => player.colorId)).size).toBe(8)
+    const colorsBefore = new Map(game.players.map((player) => [player.id, player.colorId]))
+    const afterEarlyRemoval = { ...game, players: game.players.slice(1), eliminatedPlayers: [game.players[0]] }
+    expect(afterEarlyRemoval.players.every((player) => colorsBefore.get(player.id) === player.colorId)).toBe(true)
+  })
+
   it('allows at most two Truth choices per player and resets the count after Dare', () => {
     let game: ActiveGameState = { ...createGame(setup(), data), mode: 'manual' }
     game = completeTableTurn(game, 'truth')

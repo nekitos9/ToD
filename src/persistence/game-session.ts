@@ -35,7 +35,8 @@ export function loadGameSession(storage: StorageAccess, catalog: GameCatalog): P
 
   try {
     const value: unknown = JSON.parse(raw)
-    if (isPersistedGameSession(value, catalog)) return value
+    const normalized = normalizeLegacySession(value)
+    if (isPersistedGameSession(normalized, catalog)) return normalized
   } catch {
     // Invalid JSON is discarded below.
   }
@@ -101,7 +102,7 @@ function isGameState(
 
 function isGamePlayer(value: unknown): value is ActiveGamePlayer {
   if (!isRecord(value) || !isBoundary(value.boundary) || typeof value.id !== 'string' || value.id.length === 0) return false
-  if (typeof value.name !== 'string' || typeof value.inRelationship !== 'boolean') return false
+  if (typeof value.name !== 'string' || typeof value.inRelationship !== 'boolean' || !isNonNegativeInteger(value.colorId)) return false
   return ['activityPoints', 'answeredTruths', 'completedDares', 'absenceSkips', 'refusalSkips', 'refusedDares', 'refusedTruths']
     .every((field) => isNonNegativeInteger(value[field])) &&
     isNonNegativeInteger(value.truthCount) && value.truthCount <= 2
@@ -117,9 +118,41 @@ function isCurrentTurn(
   if (value === null) return true
   if (!isRecord(value) || typeof value.cardId !== 'string' || !cardIds.has(value.cardId)) return false
   if (!isCardType(value.type) || value.type !== selectedType || typeof value.resolvedText !== 'string') return false
+  if (!Array.isArray(value.renderSegments) || !value.renderSegments.every(isRenderSegment)) return false
+  if (value.renderSegments.map((segment) => segment.text).join('') !== value.resolvedText) return false
   if (value.phoneNumber !== null && (typeof value.phoneNumber !== 'string' || !/^\+7 \(9\d{2}\) \d{3}-\d{2}-\d{2}$/.test(value.phoneNumber))) return false
-  return isStringArray(value.secondaryPlayerIds) && isUnique(value.secondaryPlayerIds) &&
-    value.secondaryPlayerIds.every((id) => activeIds.has(id) && id !== currentPlayerId)
+  if (!isStringArray(value.secondaryPlayerIds) || !isUnique(value.secondaryPlayerIds)) return false
+  const secondaryPlayerIds = value.secondaryPlayerIds
+  return secondaryPlayerIds.every((id) => activeIds.has(id) && id !== currentPlayerId) &&
+    value.renderSegments.every((segment) => segment.kind !== 'player' || secondaryPlayerIds.includes(segment.playerId))
+}
+
+function isRenderSegment(value: unknown): value is CurrentTurn['renderSegments'][number] {
+  return isRecord(value) && typeof value.text === 'string' && (
+    value.kind === 'text' || value.kind === 'player' && typeof value.playerId === 'string'
+  )
+}
+
+function normalizeLegacySession(value: unknown): unknown {
+  if (!isRecord(value) || value.schemaVersion !== GAME_SESSION_SCHEMA_VERSION || !isRecord(value.game)) return value
+  const game = value.game
+  const order = Array.isArray(game.playerOrder) ? game.playerOrder.filter((id): id is string => typeof id === 'string') : []
+  const colorById = new Map(order.map((id, index) => [id, index]))
+  const normalizePlayer = (player: unknown) => isRecord(player) && typeof player.id === 'string' && player.colorId === undefined
+    ? { ...player, colorId: colorById.get(player.id) ?? colorById.size }
+    : player
+  const turn = isRecord(game.currentTurn) && typeof game.currentTurn.resolvedText === 'string' && game.currentTurn.renderSegments === undefined
+    ? { ...game.currentTurn, renderSegments: [{ kind: 'text', text: game.currentTurn.resolvedText }] }
+    : game.currentTurn
+  return {
+    ...value,
+    game: {
+      ...game,
+      currentTurn: turn,
+      players: Array.isArray(game.players) ? game.players.map(normalizePlayer) : game.players,
+      eliminatedPlayers: Array.isArray(game.eliminatedPlayers) ? game.eliminatedPlayers.map(normalizePlayer) : game.eliminatedPlayers,
+    },
+  }
 }
 
 function isCooldownEntry(value: unknown, cardIds: ReadonlySet<string>) {

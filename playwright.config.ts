@@ -22,6 +22,6 @@ export default defineConfig({
   webServer: {
     command: serverCommand,
     url: baseURL,
-    reuseExistingServer: true,
+    reuseExistingServer: false,
   },
 })

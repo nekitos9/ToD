@@ -2,7 +2,7 @@ import type { BoundaryDefinition, CardType, GameCard, GameData } from '../data/g
 import { BOUNDARY_DATA_NAMES, type Boundary, type GameMode, type SetupState } from '../setup/setup-state'
 import { selectSecondaryParticipants } from './participants'
 import { mathRandomSource, shuffle, type RandomSource } from './random'
-import { resolveCardTokens } from './token-resolver'
+import { resolveCardTokens, type ResolvedTextSegment } from './token-resolver'
 
 export type TruthCount = 0 | 1 | 2
 
@@ -11,6 +11,7 @@ export interface ActiveGamePlayer {
   readonly id: string
   readonly inRelationship: boolean
   readonly name: string
+  readonly colorId: number
   readonly activityPoints: number
   readonly answeredTruths: number
   readonly completedDares: number
@@ -32,6 +33,7 @@ export interface CurrentTurn {
   readonly cardId: string
   readonly phoneNumber: string | null
   readonly resolvedText: string
+  readonly renderSegments: readonly ResolvedTextSegment[]
   readonly secondaryPlayerIds: readonly string[]
   readonly type: CardType
 }
@@ -73,10 +75,11 @@ export function createGame(
     currentPlayerIndex: 0,
     currentTurn: null,
     mode: setup.mode,
-    players: setup.players.map((player) => {
+    players: setup.players.map((player, colorId) => {
       if (player.boundary === null) throw new Error(`У игрока ${player.id} не выбрана грань`)
       return {
         ...player,
+        colorId,
         activityPoints: 0,
         absenceSkips: 0,
         answeredTruths: 0,
@@ -161,6 +164,7 @@ export function drawCard(
         cardId,
         phoneNumber: resolved.phoneNumber,
         resolvedText: resolved.text,
+        renderSegments: resolved.segments,
         secondaryPlayerIds: participants.map((player) => player.id),
         type: card.type,
       },
@@ -219,6 +223,9 @@ export function completeUnavailableTurn(state: ActiveGameState): ActiveGameState
 
 export function skipCurrentTurn(state: ActiveGameState, reason: SkipReason): ActiveGameState {
   if (state.selectedType === null) throw new Error('Нет активного хода для пропуска')
+  if (state.mode === 'automatic' && state.currentTurn === null) {
+    throw new Error('Нельзя пропустить ход без карточки')
+  }
   const actor = getCurrentPlayer(state)
   const enabled = reason === 'absence' ? state.removeAfterAbsence : state.removeAfterRefusal
   const field = reason === 'absence' ? 'absenceSkips' : 'refusalSkips'
@@ -253,8 +260,12 @@ export function replaceCurrentCard(
   if (turn === null) throw new Error('Нет карточки для замены')
   const card = data.cards.find((item) => item.id === turn.cardId)
   if (!card || !isReplacementAllowed(card)) throw new Error('Эту карточку нельзя заменить')
-  const withoutCard = putOnCooldown({ ...state, currentTurn: null }, turn.cardId, state.players.length)
-  return drawCard(withoutCard, turn.type, data, random)
+  const candidate = drawCard({ ...state, currentTurn: null }, turn.type, data, random)
+  if (candidate.card === null) return { card: null, state }
+  return {
+    card: candidate.card,
+    state: putOnCooldown(candidate.state, turn.cardId, state.players.length),
+  }
 }
 
 export function isReplacementAllowed(card: GameCard): boolean {

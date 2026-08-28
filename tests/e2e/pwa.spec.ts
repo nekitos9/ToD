@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { readFileSync, readdirSync } from 'node:fs'
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 
 test('production output has valid /ToD/ PWA metadata and no development materials', async ({ page }) => {
@@ -50,6 +50,7 @@ test('production output has valid /ToD/ PWA metadata and no development material
   for (const required of ['actions/checkout@v4', 'actions/setup-node@v4', 'npm ci', 'npm run build', 'actions/upload-pages-artifact@v3', 'actions/deploy-pages@v4']) {
     expect(workflow).toContain(required)
   }
+  expect(readFileSync('playwright.config.ts', 'utf8')).toContain('reuseExistingServer: false')
 })
 
 test('automatic gameplay reaches Results while the browser is offline', async ({ context, page }) => {
@@ -65,7 +66,7 @@ test('automatic gameplay reaches Results while the browser is offline', async ({
   await expect.poll(() => page.locator('.game-card:not([aria-hidden]) .game-card__copy').textContent()).not.toBe(firstCard)
   await page.getByRole('button', { name: 'Готово' }).click()
   await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
-  await page.getByRole('button', { name: 'Правда' }).click()
+  await page.getByRole('button', { name: 'Действие' }).click()
   await page.getByRole('button', { name: 'Пропуск' }).click()
   await page.getByRole('dialog', { name: 'Пропуск?' }).getByRole('button', { name: 'Он так захотел' }).click()
   await expect(page.getByRole('heading', { name: 'Игрок 1' })).toBeVisible()
@@ -108,6 +109,32 @@ test('manual mode can issue and complete a pack card entirely offline', async ({
   await page.getByRole('button', { name: 'Готово' }).click()
   await expect(page.getByRole('heading', { name: 'Игрок 2' })).toBeVisible()
   expect((await persistedGame(page)).mode).toBe('manual')
+})
+
+test('activates a changed service worker without losing an unfinished game', async ({ page }) => {
+  await page.goto('./')
+  await waitForServiceWorker(page)
+  await startGame(page, false, 'Другие люди')
+  await page.getByRole('button', { name: 'Действие' }).click()
+  const before = await persistedGame(page)
+  const swPath = join('dist', 'sw.js')
+  const original = readFileSync(swPath, 'utf8')
+  try {
+    writeFileSync(swPath, `${original}\n/* e2e-update-${Date.now()} */\n`)
+    await page.evaluate(async () => {
+      const registration = await navigator.serviceWorker.ready
+      const changed = new Promise<void>((resolve) => navigator.serviceWorker.addEventListener('controllerchange', () => resolve(), { once: true }))
+      await registration.update()
+      await changed
+    })
+    await page.reload()
+    const dialog = page.getByRole('dialog', { name: 'Вижу незаконченную игру' })
+    await expect(dialog).toBeVisible()
+    await dialog.getByRole('button', { name: 'Продолжить' }).click()
+    expect(await persistedGame(page)).toEqual(before)
+  } finally {
+    writeFileSync(swPath, original)
+  }
 })
 
 async function waitForServiceWorker(page: Page) {

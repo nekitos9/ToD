@@ -34,6 +34,12 @@ const CARD_TYPE_IDS: Readonly<Record<string, CardType>> = {
   Действие: 'dare',
 }
 
+const REQUIRED_BOUNDARIES = new Map([
+  ['Целочка', 0],
+  ['Обычный', 1],
+  ['Полный раж', 2],
+])
+
 interface ValidationIssue {
   readonly sheet: string
   readonly cell?: string
@@ -213,6 +219,16 @@ function readBoundaries(
     const level = requiredInteger(context, table, rowNumber, 'Ур', values, false)
     if (!name || !description || level === undefined) return
 
+    const expectedLevel = REQUIRED_BOUNDARIES.get(name)
+    if (expectedLevel === undefined) {
+      addCellIssue(context, table, rowNumber, 'Грани', `неподдерживаемая грань «${name}»`)
+      return
+    }
+    if (level !== expectedLevel) {
+      addCellIssue(context, table, rowNumber, 'Ур', `для грани «${name}» ожидается уровень ${expectedLevel}, получен ${level}`)
+      return
+    }
+
     if (names.has(name)) {
       addCellIssue(context, table, rowNumber, 'Грани', `грань «${name}» указана повторно`)
       return
@@ -226,6 +242,10 @@ function readBoundaries(
     levels.add(level)
     result.push({ name, level, description })
   })
+
+  for (const [name] of REQUIRED_BOUNDARIES) {
+    if (!names.has(name)) addIssue(context, table.sheet.name, `отсутствует обязательная грань «${name}»`)
+  }
 
   return result.sort((left, right) => left.level - right.level)
 }
@@ -458,7 +478,19 @@ function validateTokens(
   otherPlayers: number,
   cardId?: string,
 ): void {
-  const rawTokens = [...text.matchAll(/\*([^*]+)\*/g)].map((match) => match[1].trim())
+  const validTokenSpans = [...text.matchAll(/\*(PLAYER(?:[2-9][0-9]*)?|PHONE_NUM)\*/g)]
+    .map((match) => ({ start: match.index, end: match.index + match[0].length }))
+  for (const fragment of text.matchAll(/PLAYER\d*|PHONE_NUM/g)) {
+    const insideValidToken = validTokenSpans.some(({ start, end }) =>
+      fragment.index > start && fragment.index + fragment[0].length < end &&
+      text[start - 1] !== '*' && text[end] !== '*')
+    if (!insideValidToken) {
+      addCellIssue(context, table, rowNumber, 'Вопрос', `некорректная конструкция токена рядом с «${fragment[0]}»`, cardId)
+    }
+  }
+  const rawTokens = [...text.matchAll(/\*([^*]+)\*/g)]
+    .map((match) => match[1].trim())
+    .filter((token) => /^[A-Z][A-Z0-9_ ]*$/.test(token))
   const playerIndexes = new Set<number>()
 
   for (const token of rawTokens) {

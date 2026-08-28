@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      injectRegister: 'auto',
+      injectRegister: null,
       manifest: {
         background_color: '#427cbe',
         description: 'Локальная игра «Правда или действие» для компании.',
