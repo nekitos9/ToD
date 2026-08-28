@@ -35,10 +35,14 @@ export function RulesScreen({ animateTransition, onBack, onNext, onSettingsChang
               <RuleCheckbox checked={settings.removeAfterAbsence} onChange={(removeAfterAbsence) => onSettingsChange({ ...settings, removeAfterAbsence })}>
                 {rulesContent.absence}
               </RuleCheckbox>
-              <RuleCheckbox checked={settings.unlimitedReplacement} onChange={(unlimitedReplacement) => onSettingsChange({ ...settings, unlimitedReplacement })}>
+              <RuleCheckbox checked={settings.unlimitedReplacement} onChange={(unlimitedReplacement) => onSettingsChange({
+                ...settings,
+                penalizeReplacement: unlimitedReplacement ? settings.penalizeReplacement : false,
+                unlimitedReplacement,
+              })}>
                 {rulesContent.unlimitedReplacement}
               </RuleCheckbox>
-              <RuleCheckbox checked={settings.penalizeReplacement} onChange={(penalizeReplacement) => onSettingsChange({ ...settings, penalizeReplacement })}>
+              <RuleCheckbox checked={settings.penalizeReplacement} disabled={!settings.unlimitedReplacement} onChange={(penalizeReplacement) => onSettingsChange({ ...settings, penalizeReplacement })}>
                 {rulesContent.replacementPenalty}
               </RuleCheckbox>
             </div>

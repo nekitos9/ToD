@@ -30,6 +30,8 @@
 .rule-checkbox > span:last-child { grid-column: 2; }
 .rule-checkbox__control svg { width: 14px; height: 14px; }
 .rule-checkbox input:focus-visible + .rule-checkbox__control { outline: var(--focus-width) solid var(--color-focus); outline-offset: var(--focus-offset); }
+.rule-checkbox--disabled { opacity: 0.46; cursor: default; }
+.rule-checkbox--disabled input { cursor: default; }
 
 @media (max-width: 767px) {
   .welcome {
