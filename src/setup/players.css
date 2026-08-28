@@ -150,6 +150,13 @@
   cursor: pointer;
 }
 
+@media (max-width: 767px) {
+  .player-card__boundary {
+    padding-right: 22px;
+    font-size: clamp(15px, 4vw, 17px);
+  }
+}
+
 .player-card__boundary[aria-invalid='true'] {
   outline: 2px solid #be4244;
 }
