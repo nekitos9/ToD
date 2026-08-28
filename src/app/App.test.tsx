@@ -20,6 +20,7 @@ describe('App', () => {
       refusalSkips: 1,
       refusedDares: 0,
       refusedTruths: 0,
+      replacementPenaltyTurns: 0,
       truthCount: 0 as const,
     }
     expect(getSkipNotice(player, 'absence', true, 2)).toBe('Если игрока не будет за столом ещё раз — он выйдет из игры.')
@@ -38,25 +39,35 @@ describe('App', () => {
     expect(screen.getByRole('heading', { name: 'Правда или Действие' })).toBeInTheDocument()
   })
 
-  it('keeps both independent rule settings after navigating back and forward', () => {
+  it('keeps all independent rule settings off by default and preserves them between screens', () => {
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: 'Начать' }))
 
     const refusal = screen.getByRole('checkbox', { name: /От заданий нельзя отказываться/ })
     const absence = screen.getByRole('checkbox', { name: /У пользователя есть право пропустить/ })
+    const unlimitedReplacement = screen.getByRole('checkbox', { name: /Безлимитная «Перезадать»/ })
+    const replacementPenalty = screen.getByRole('checkbox', { name: /Штраф на «Перезадать»/ })
     expect(refusal).not.toBeChecked()
     expect(absence).not.toBeChecked()
+    expect(unlimitedReplacement).not.toBeChecked()
+    expect(replacementPenalty).not.toBeChecked()
     fireEvent.click(refusal)
     expect(refusal).toBeChecked()
     expect(absence).not.toBeChecked()
     fireEvent.click(absence)
     expect(refusal).toBeChecked()
     expect(absence).toBeChecked()
+    fireEvent.click(unlimitedReplacement)
+    fireEvent.click(replacementPenalty)
+    expect(unlimitedReplacement).toBeChecked()
+    expect(replacementPenalty).toBeChecked()
 
     fireEvent.click(screen.getByRole('button', { name: 'Назад' }))
     fireEvent.click(screen.getByRole('button', { name: 'Начать' }))
     expect(screen.getByRole('checkbox', { name: /От заданий нельзя отказываться/ })).toBeChecked()
     expect(screen.getByRole('checkbox', { name: /У пользователя есть право пропустить/ })).toBeChecked()
+    expect(screen.getByRole('checkbox', { name: /Безлимитная «Перезадать»/ })).toBeChecked()
+    expect(screen.getByRole('checkbox', { name: /Штраф на «Перезадать»/ })).toBeChecked()
   })
 
   it('starts Players with two empty independent players and automatic mode', () => {
@@ -319,19 +330,38 @@ describe('App', () => {
     }
   }, 15_000)
 
-  it('enables replacement for an allowed generated pack and keeps it disabled for an ordinary pack', () => {
+  it('enables replacement for both replaceable generated packs and keeps it disabled for an ordinary pack', () => {
     const first = render(<App />)
     startGame({ pack: 'Обычный' })
     fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
     expect(screen.getByRole('button', { name: 'Перезадать' })).toBeDisabled()
     first.unmount()
 
-    render(<App />)
+    const second = render(<App />)
     startGame({ pack: 'Другие люди' })
     fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
     expect(screen.getByRole('button', { name: 'Перезадать' })).toBeEnabled()
     fireEvent.click(screen.getByRole('button', { name: 'Перезадать' }))
     expect(screen.getByRole('dialog', { name: 'Замена' })).toBeVisible()
+
+    second.unmount()
+    render(<App />)
+    startGame({ pack: 'Безграничная улица' })
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+    expect(screen.getByRole('button', { name: 'Перезадать' })).toBeEnabled()
+  }, 15_000)
+
+  it('enables unlimited replacement for an ordinary pack and applies a stacked penalty turn', () => {
+    render(<App />)
+    startGame({ pack: 'Обычный', penalizeReplacement: true, unlimitedReplacement: true })
+    fireEvent.click(screen.getByRole('button', { name: 'Действие' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Перезадать' }))
+    fireEvent.click(within(screen.getByRole('dialog', { name: 'Замена' })).getByRole('button', { name: 'Да' }))
+
+    expect(loadGameSession(localStorage, gameData)?.game.players[0].replacementPenaltyTurns).toBe(1)
+    fireEvent.click(screen.getByRole('button', { name: 'Готово' }))
+    expect(screen.getByRole('heading', { name: 'Игрок 1' })).toBeInTheDocument()
+    expect(loadGameSession(localStorage, gameData)?.game.players[0].replacementPenaltyTurns).toBe(0)
   }, 15_000)
 
   it('completes a table-generated manual turn and can request a pack card', async () => {
@@ -507,9 +537,17 @@ function openPacks() {
   fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
 }
 
-function startGame({ manual = false, pack = 'Обычный', removeAfterRefusal = false } = {}) {
+function startGame({
+  manual = false,
+  pack = 'Обычный',
+  penalizeReplacement = false,
+  removeAfterRefusal = false,
+  unlimitedReplacement = false,
+} = {}) {
   fireEvent.click(screen.getByRole('button', { name: 'Начать' }))
   if (removeAfterRefusal) fireEvent.click(screen.getByRole('checkbox', { name: /От заданий нельзя отказываться/ }))
+  if (unlimitedReplacement) fireEvent.click(screen.getByRole('checkbox', { name: /Безлимитная «Перезадать»/ }))
+  if (penalizeReplacement) fireEvent.click(screen.getByRole('checkbox', { name: /Штраф на «Перезадать»/ }))
   fireEvent.click(screen.getByRole('button', { name: 'Далее' }))
   const names = screen.getAllByRole('textbox', { name: 'Имя игрока' })
   const boundaries = screen.getAllByRole('combobox', { name: 'Грань игрока' })

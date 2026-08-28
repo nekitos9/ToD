@@ -18,6 +18,7 @@ export interface ActiveGamePlayer {
   readonly truthCount: TruthCount
   readonly absenceSkips: number
   readonly refusalSkips: number
+  readonly replacementPenaltyTurns: number
   readonly refusedDares: number
   readonly refusedTruths: number
 }
@@ -49,9 +50,11 @@ export interface ActiveGameState {
   readonly queue: readonly string[]
   readonly removeAfterAbsence: boolean
   readonly removeAfterRefusal: boolean
+  readonly penalizeReplacement: boolean
   readonly selectedType: CardType | null
   readonly selectedPackIds: readonly string[]
   readonly usedCardIds: readonly string[]
+  readonly unlimitedReplacement: boolean
 }
 
 export interface CardDrawResult {
@@ -86,6 +89,7 @@ export function createGame(
         boundary: player.boundary,
         completedDares: 0,
         refusalSkips: 0,
+        replacementPenaltyTurns: 0,
         refusedDares: 0,
         refusedTruths: 0,
         truthCount: 0,
@@ -97,9 +101,11 @@ export function createGame(
     playerOrder: setup.players.map((player) => player.id),
     removeAfterAbsence: setup.removeAfterAbsence,
     removeAfterRefusal: setup.removeAfterRefusal,
+    penalizeReplacement: setup.penalizeReplacement,
     selectedType: null,
     selectedPackIds: [...setup.selectedPackIds],
     usedCardIds: [],
+    unlimitedReplacement: setup.unlimitedReplacement,
   }
 }
 
@@ -248,7 +254,7 @@ export function skipCurrentTurn(state: ActiveGameState, reason: SkipReason): Act
   }
   const progressed = tickCooldown(withoutTurn)
   const withCooldown = cardId ? putOnCooldown(progressed, cardId, state.players.length) : progressed
-  return shouldRemove ? removeCurrentPlayer(withCooldown) : advanceTurn(withCooldown)
+  return shouldRemove ? removeCurrentPlayer(withCooldown) : advanceAfterCompletedTurn(withCooldown)
 }
 
 export function replaceCurrentCard(
@@ -259,17 +265,24 @@ export function replaceCurrentCard(
   const turn = state.currentTurn
   if (turn === null) throw new Error('Нет карточки для замены')
   const card = data.cards.find((item) => item.id === turn.cardId)
-  if (!card || !isReplacementAllowed(card)) throw new Error('Эту карточку нельзя заменить')
+  if (!card || !isReplacementAllowed(card, state.unlimitedReplacement)) throw new Error('Эту карточку нельзя заменить')
   const candidate = drawCard({ ...state, currentTurn: null }, turn.type, data, random)
   if (candidate.card === null) return { card: null, state }
   return {
     card: candidate.card,
-    state: putOnCooldown(candidate.state, turn.cardId, state.players.length),
+    state: putOnCooldown({
+      ...candidate.state,
+      players: candidate.state.penalizeReplacement
+        ? candidate.state.players.map((player, index) => index === candidate.state.currentPlayerIndex
+          ? { ...player, replacementPenaltyTurns: player.replacementPenaltyTurns + 1 }
+          : player)
+        : candidate.state.players,
+    }, turn.cardId, state.players.length),
   }
 }
 
-export function isReplacementAllowed(card: GameCard): boolean {
-  return card.pack === 'Другие люди' || card.pack === 'Безграничная улица'
+export function isReplacementAllowed(card: GameCard, unlimited = false): boolean {
+  return unlimited || card.pack === 'Другие люди' || card.pack === 'Безграничная улица'
 }
 
 export function isPackBaseExhausted(state: ActiveGameState): boolean {
@@ -284,7 +297,18 @@ export function switchGameToManual(state: ActiveGameState): ActiveGameState {
 }
 
 function finishTurn(state: ActiveGameState): ActiveGameState {
-  return advanceTurn(tickCooldown(state))
+  return advanceAfterCompletedTurn(tickCooldown(state))
+}
+
+function advanceAfterCompletedTurn(state: ActiveGameState): ActiveGameState {
+  const actor = getCurrentPlayer(state)
+  if (actor.replacementPenaltyTurns === 0) return advanceTurn(state)
+  return {
+    ...state,
+    players: state.players.map((player, index) => index === state.currentPlayerIndex
+      ? { ...player, replacementPenaltyTurns: player.replacementPenaltyTurns - 1 }
+      : player),
+  }
 }
 
 function tickCooldown(state: ActiveGameState): ActiveGameState {

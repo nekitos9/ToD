@@ -6,7 +6,8 @@ import { GameScreen } from './GameScreen'
 import { createGame, recordTypeChoice } from './game-state'
 
 const setup: SetupState = {
-  mode: 'automatic', nextPlayerId: 3, removeAfterAbsence: true, removeAfterRefusal: true,
+  mode: 'automatic', nextPlayerId: 3, penalizeReplacement: false, removeAfterAbsence: true, removeAfterRefusal: true,
+  unlimitedReplacement: false,
   selectedPackIds: [gameData.packs[0].id],
   players: [
     { boundary: 'full', id: 'p1', inRelationship: false, name: 'Первый' },

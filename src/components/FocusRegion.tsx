@@ -113,6 +113,11 @@ function findPlayerCardTarget(element: HTMLElement, direction: Direction): HTMLE
   if (element === name && direction === 'down') return boundary ?? relationship ?? undefined
   if (element === boundary && direction === 'right') return relationship ?? undefined
   if (element === relationship && direction === 'left') return boundary ?? undefined
+  if (element === relationship && direction === 'right') {
+    const cards = card.parentElement?.querySelectorAll<HTMLElement>('[data-player-id]')
+    const index = cards ? [...cards].indexOf(card) : -1
+    return index >= 0 ? cards?.[index + 1]?.querySelector<HTMLElement>('.player-card__boundary') ?? undefined : undefined
+  }
   if ((element === boundary || element === relationship) && direction === 'up') return name ?? undefined
   return undefined
 }

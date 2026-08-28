@@ -136,13 +136,21 @@ describe('unfinished game persistence', () => {
     const setup = makeSetup()
     const game = createGame(setup, gameData, fixedRandom)
     const legacy = JSON.parse(JSON.stringify({ schemaVersion: 1, setup, game }))
+    delete legacy.setup.unlimitedReplacement
+    delete legacy.setup.penalizeReplacement
+    delete legacy.game.unlimitedReplacement
+    delete legacy.game.penalizeReplacement
     for (const player of legacy.game.players) delete player.colorId
+    for (const player of legacy.game.players) delete player.replacementPenaltyTurns
     legacy.game.selectedType = 'truth'
     const cardId = legacy.game.queue.shift()
     legacy.game.currentTurn = { cardId, phoneNumber: null, resolvedText: 'Готовый текст', secondaryPlayerIds: [], type: 'truth' }
     localStorage.setItem(GAME_SESSION_KEY, JSON.stringify(legacy))
     const restored = loadGameSession(localStorage, gameData)
     expect(restored?.game.players.map((player) => player.colorId)).toEqual([0, 1])
+    expect(restored?.setup).toMatchObject({ unlimitedReplacement: false, penalizeReplacement: false })
+    expect(restored?.game).toMatchObject({ unlimitedReplacement: false, penalizeReplacement: false })
+    expect(restored?.game.players.map((player) => player.replacementPenaltyTurns)).toEqual([0, 0])
     expect(restored?.game.currentTurn?.renderSegments).toEqual([{ kind: 'text', text: 'Готовый текст' }])
   })
 
@@ -165,6 +173,8 @@ function makeSetup(sharedName?: string): SetupState {
     ],
     removeAfterAbsence: true,
     removeAfterRefusal: true,
+    penalizeReplacement: false,
+    unlimitedReplacement: false,
     selectedPackIds: gameData.packs.map((pack) => pack.id),
   }
 }

@@ -206,6 +206,8 @@ function setup(): SetupState {
     ],
     removeAfterAbsence: false,
     removeAfterRefusal: false,
+    penalizeReplacement: false,
+    unlimitedReplacement: false,
     selectedPackIds: ['pack-a'],
   }
 }

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { BoundaryDefinition, GameCard, GameData } from '../data/game-data'
 import type { SetupState } from '../setup/setup-state'
 import {
+  completePackCard,
   completeTableTurn,
   createGame,
   drawCard,
@@ -137,6 +138,29 @@ describe('replacement and exhaustion', () => {
     expect(() => replaceCurrentCard(game, data)).toThrow('нельзя заменить')
   })
 
+  it('allows replacing a card from any pack when unlimited replacement is enabled', () => {
+    const game = { ...activeTurn(makeGame(), 'ordinary-1'), unlimitedReplacement: true }
+    expect(replaceCurrentCard(game, data, fixedRandom(0)).card).not.toBeNull()
+  })
+
+  it('stacks one immediate extra turn for every successful penalized replacement', () => {
+    let game = { ...activeTurn(makeGame()), penalizeReplacement: true }
+    game = replaceCurrentCard(game, data, fixedRandom(0)).state
+    game = replaceCurrentCard(game, data, fixedRandom(0)).state
+    expect(getCurrentPlayer(game).replacementPenaltyTurns).toBe(2)
+
+    game = completePackCard(game)
+    expect(game.currentPlayerIndex).toBe(0)
+    expect(getCurrentPlayer(game).replacementPenaltyTurns).toBe(1)
+
+    game = completeTableTurn({ ...game, mode: 'manual' }, 'dare')
+    expect(game.currentPlayerIndex).toBe(0)
+    expect(getCurrentPlayer(game).replacementPenaltyTurns).toBe(0)
+
+    game = completeTableTurn(game, 'dare')
+    expect(game.currentPlayerIndex).toBe(1)
+  })
+
   it('applies ordinary skip and replacement rules to a card generated in manual mode', () => {
     const generated = { ...activeTurn(makeGame()), mode: 'manual' as const }
     const replaced = replaceCurrentCard(generated, data, fixedRandom(0)).state
@@ -216,6 +240,8 @@ function makeGame(options: { playerCount?: number; removeAfterAbsence?: boolean;
     })),
     removeAfterAbsence: options.removeAfterAbsence ?? false,
     removeAfterRefusal: options.removeAfterRefusal ?? false,
+    penalizeReplacement: false,
+    unlimitedReplacement: false,
     selectedPackIds: ['Другие люди', 'Безграничная улица', 'Обычный'],
   }
   return { ...createGame(setup, data, fixedRandom(0)), queue: cards.map((item) => item.id) }

@@ -66,6 +66,8 @@ function setup(count: number, sharedName?: string): SetupState {
     })),
     removeAfterAbsence: true,
     removeAfterRefusal: true,
+    penalizeReplacement: false,
+    unlimitedReplacement: false,
     selectedPackIds: [gameData.packs[0].id],
   }
 }

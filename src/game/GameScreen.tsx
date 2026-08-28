@@ -155,7 +155,7 @@ export function GameScreen({ animateEntrance = false, game, onExit, onGameChange
 
   const choosing = !turn && manualType === null && game.selectedType === null
   const noCard = game.mode === 'automatic' && game.selectedType !== null && turn === null
-  const replacementAllowed = Boolean(card && isReplacementAllowed(card))
+  const replacementAllowed = Boolean(card && isReplacementAllowed(card, game.unlimitedReplacement))
 
   return (
     <FocusRegion>

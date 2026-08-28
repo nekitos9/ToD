@@ -62,6 +62,7 @@ function isPersistedGameSession(value: unknown, catalog: GameCatalog): value is 
 function isSetupState(value: unknown, packIds: ReadonlySet<string>): value is SetupState {
   if (!isRecord(value) || !isMode(value.mode) || !isNonNegativeInteger(value.nextPlayerId)) return false
   if (typeof value.removeAfterAbsence !== 'boolean' || typeof value.removeAfterRefusal !== 'boolean') return false
+  if (typeof value.unlimitedReplacement !== 'boolean' || typeof value.penalizeReplacement !== 'boolean') return false
   if (!isStringArray(value.selectedPackIds) || !isUnique(value.selectedPackIds) || value.selectedPackIds.some((id) => !packIds.has(id))) return false
   if (!Array.isArray(value.players) || value.players.length < 2 || !value.players.every(isSetupPlayer)) return false
   return isUnique(value.players.map((player) => player.id))
@@ -79,6 +80,8 @@ function isGameState(
   setup: SetupState,
 ): value is ActiveGameState {
   if (!isRecord(value) || !isMode(value.mode) || typeof value.removeAfterAbsence !== 'boolean' || typeof value.removeAfterRefusal !== 'boolean') return false
+  if (typeof value.unlimitedReplacement !== 'boolean' || typeof value.penalizeReplacement !== 'boolean') return false
+  if (value.unlimitedReplacement !== setup.unlimitedReplacement || value.penalizeReplacement !== setup.penalizeReplacement) return false
   if (!Array.isArray(value.players) || value.players.length < 1 || !value.players.every(isGamePlayer)) return false
   if (!Array.isArray(value.eliminatedPlayers) || !value.eliminatedPlayers.every(isGamePlayer)) return false
 
@@ -103,7 +106,7 @@ function isGameState(
 function isGamePlayer(value: unknown): value is ActiveGamePlayer {
   if (!isRecord(value) || !isBoundary(value.boundary) || typeof value.id !== 'string' || value.id.length === 0) return false
   if (typeof value.name !== 'string' || typeof value.inRelationship !== 'boolean' || !isNonNegativeInteger(value.colorId)) return false
-  return ['activityPoints', 'answeredTruths', 'completedDares', 'absenceSkips', 'refusalSkips', 'refusedDares', 'refusedTruths']
+  return ['activityPoints', 'answeredTruths', 'completedDares', 'absenceSkips', 'refusalSkips', 'refusedDares', 'refusedTruths', 'replacementPenaltyTurns']
     .every((field) => isNonNegativeInteger(value[field])) &&
     isNonNegativeInteger(value.truthCount) && value.truthCount <= 2
 }
@@ -134,20 +137,32 @@ function isRenderSegment(value: unknown): value is CurrentTurn['renderSegments']
 }
 
 function normalizeLegacySession(value: unknown): unknown {
-  if (!isRecord(value) || value.schemaVersion !== GAME_SESSION_SCHEMA_VERSION || !isRecord(value.game)) return value
+  if (!isRecord(value) || value.schemaVersion !== GAME_SESSION_SCHEMA_VERSION || !isRecord(value.game) || !isRecord(value.setup)) return value
   const game = value.game
+  const setup = {
+    ...value.setup,
+    unlimitedReplacement: value.setup.unlimitedReplacement ?? false,
+    penalizeReplacement: value.setup.penalizeReplacement ?? false,
+  }
   const order = Array.isArray(game.playerOrder) ? game.playerOrder.filter((id): id is string => typeof id === 'string') : []
   const colorById = new Map(order.map((id, index) => [id, index]))
-  const normalizePlayer = (player: unknown) => isRecord(player) && typeof player.id === 'string' && player.colorId === undefined
-    ? { ...player, colorId: colorById.get(player.id) ?? colorById.size }
+  const normalizePlayer = (player: unknown) => isRecord(player) && typeof player.id === 'string'
+    ? {
+        ...player,
+        colorId: player.colorId ?? colorById.get(player.id) ?? colorById.size,
+        replacementPenaltyTurns: player.replacementPenaltyTurns ?? 0,
+      }
     : player
   const turn = isRecord(game.currentTurn) && typeof game.currentTurn.resolvedText === 'string' && game.currentTurn.renderSegments === undefined
     ? { ...game.currentTurn, renderSegments: [{ kind: 'text', text: game.currentTurn.resolvedText }] }
     : game.currentTurn
   return {
     ...value,
+    setup,
     game: {
       ...game,
+      unlimitedReplacement: game.unlimitedReplacement ?? setup.unlimitedReplacement,
+      penalizeReplacement: game.penalizeReplacement ?? setup.penalizeReplacement,
       currentTurn: turn,
       players: Array.isArray(game.players) ? game.players.map(normalizePlayer) : game.players,
       eliminatedPlayers: Array.isArray(game.eliminatedPlayers) ? game.eliminatedPlayers.map(normalizePlayer) : game.eliminatedPlayers,

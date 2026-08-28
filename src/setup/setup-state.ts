@@ -17,8 +17,10 @@ export interface SetupPlayer {
 }
 
 export interface SetupState {
+  readonly penalizeReplacement: boolean
   readonly removeAfterAbsence: boolean
   readonly removeAfterRefusal: boolean
+  readonly unlimitedReplacement: boolean
   readonly mode: GameMode
   readonly nextPlayerId: number
   readonly players: readonly SetupPlayer[]
@@ -26,8 +28,10 @@ export interface SetupState {
 }
 
 export const initialSetupState: SetupState = {
+  penalizeReplacement: false,
   removeAfterAbsence: false,
   removeAfterRefusal: false,
+  unlimitedReplacement: false,
   mode: 'automatic',
   nextPlayerId: 3,
   players: [createPlayer('player-1'), createPlayer('player-2')],

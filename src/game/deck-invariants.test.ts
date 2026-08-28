@@ -8,7 +8,8 @@ describe('deck lifecycle invariants', () => {
   it('preserves disjoint card zones through a long deterministic scenario', () => {
     const random = seededRandom(0x13b)
     const setup: SetupState = {
-      mode: 'automatic', nextPlayerId: 5, removeAfterAbsence: false, removeAfterRefusal: false,
+      mode: 'automatic', nextPlayerId: 5, penalizeReplacement: false, removeAfterAbsence: false, removeAfterRefusal: false,
+      unlimitedReplacement: false,
       selectedPackIds: ['pack'],
       players: Array.from({ length: 4 }, (_, index) => ({
         boundary: 'full', id: `p${index + 1}`, inRelationship: false, name: `Player ${index + 1}`,
