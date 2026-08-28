@@ -122,7 +122,7 @@
 .player-card__options {
   display: grid;
   grid-template-columns: minmax(0, 1.38fr) minmax(0, 1fr);
-  gap: 6px;
+  gap: 12px;
   margin-top: 12px;
 }
 
