@@ -239,7 +239,6 @@
   .pack-card__description { font-size: 20px; line-height: 23px; }
   .pack-card__count { bottom: 9px; left: 15.3px; font-size: 16px; }
   .pack-card > input, .pack-card__selection { right: 15.3px; bottom: 13px; width: 21.86px; height: 20px; }
-  .setup-screen--packs .bottom-navigation__inner { margin-left: 0; }
 }
 
 @media (min-width: 875px) {

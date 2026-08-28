@@ -125,6 +125,6 @@
   .bottom-navigation__inner {
     max-width: 610px;
     gap: 20px;
-    margin-left: max(var(--screen-gutter), calc((100% - var(--screen-max-width)) / 2));
+    margin-inline: auto;
   }
 }

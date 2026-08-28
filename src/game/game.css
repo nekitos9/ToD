@@ -34,7 +34,7 @@
   min-height: 100dvh;
   margin: auto;
   padding: clamp(48px, 8dvh, 82px) 0 40px;
-  grid-template: auto minmax(516px, 1fr) / minmax(0, 925px) 295px;
+  grid-template: auto 516px / minmax(0, 925px) 295px;
   gap: clamp(24px, 4dvh, 40px) 20px;
   align-content: start;
 }
@@ -208,7 +208,7 @@
   .game-shell {
     padding-top: 32px;
     padding-bottom: 32px;
-    grid-template-rows: auto minmax(420px, 1fr);
+    grid-template-rows: auto min(516px, calc(100dvh - 130px));
     gap: 20px;
   }
   .game-header h1 { font-size: 38px; }

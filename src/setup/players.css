@@ -430,7 +430,6 @@
   .players-help__surface { max-height: 420px; padding: 11px 40px 30px; }
   .players-help__close { position: fixed; top: 129px; right: 100px; width: 57px; height: 57px; }
   .players-help__confirm { width: 402px; margin: 32px 0 0 3px; }
-  .setup-screen--players .bottom-navigation__inner { margin-left: 0; }
 }
 
 @media (min-width: 875px) {
