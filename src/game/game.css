@@ -111,7 +111,7 @@
 .game-card__message { margin: auto; font-size: 30px; }
 
 .game-choice { display: grid; flex: 1; place-items: center; align-content: center; gap: 14px; }
-.game-choice strong { color: #000; font-size: 36px; text-align: center; }
+.game-choice strong { color: #000; font-size: 18px; text-align: center; }
 
 .game-actions { display: grid; min-height: 0; grid-template-rows: repeat(5, minmax(0, 1fr)); gap: 18px; }
 .game-actions .game-action {
